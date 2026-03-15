@@ -1,0 +1,639 @@
+openapi: 3.0.3
+info:
+  title: Physical AI Textbook API
+  description: API for AI-native textbook platform with RAG chatbot, personalization, and Urdu translation
+  version: 1.0.0
+  contact:
+    name: API Support
+    email: support@physicalai-book.com
+
+servers:
+  - url: http://localhost:8000
+    description: Development server
+  - url: https://api.physicalai-book.com
+    description: Production server
+
+tags:
+  - name: Authentication
+    description: BetterAuth authentication endpoints
+  - name: User Profile
+    description: User profile management
+  - name: Chat
+    description: RAG chatbot endpoints
+  - name: Personalization
+    description: AI-powered content personalization
+  - name: Translation
+    description: Urdu translation endpoints
+
+paths:
+  # ==================== Authentication ====================
+  /api/auth/sign-up/email:
+    post:
+      tags:
+        - Authentication
+      summary: Sign up with email and password
+      operationId: signUpEmail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  minLength: 8
+                name:
+                  type: string
+              required:
+                - email
+                - password
+                - name
+      responses:
+        '200':
+          description: Successfully signed up
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: Invalid input or email already exists
+        '429':
+          description: Too many requests
+
+  /api/auth/sign-in/email:
+    post:
+      tags:
+        - Authentication
+      summary: Sign in with email and password
+      operationId: signInEmail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: Successfully signed in
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Invalid credentials
+        '429':
+          description: Too many requests
+
+  /api/auth/sign-out:
+    post:
+      tags:
+        - Authentication
+      summary: Sign out current session
+      operationId: signOut
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successfully signed out
+        '401':
+          description: Unauthorized
+
+  /api/auth/session:
+    get:
+      tags:
+        - Authentication
+      summary: Get current session
+      operationId: getSession
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Current session data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionResponse'
+        '401':
+          description: No active session
+
+  # ==================== User Profile ====================
+  /api/users/me:
+    get:
+      tags:
+        - User Profile
+      summary: Get current user profile
+      operationId: getCurrentUserProfile
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: User profile data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Profile not found
+
+    put:
+      tags:
+        - User Profile
+      summary: Update current user profile
+      operationId: updateCurrentUserProfile
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProfileUpdate'
+      responses:
+        '200':
+          description: Profile updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorized
+
+  /api/users/me/progress:
+    get:
+      tags:
+        - User Profile
+      summary: Get user's learning progress
+      operationId: getUserProgress
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Learning progress data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProgress'
+        '401':
+          description: Unauthorized
+
+  # ==================== Chat ====================
+  /api/chat:
+    post:
+      tags:
+        - Chat
+      summary: Send message and get AI response
+      operationId: sendChatMessage
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatRequest'
+      responses:
+        '200':
+          description: AI response with sources
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatResponse'
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorized
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Server error
+
+  /api/chat/history/{chapterId}:
+    get:
+      tags:
+        - Chat
+      summary: Get chat history for a chapter
+      operationId: getChatHistory
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: chapterId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Chat history
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChatMessage'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Chapter not found
+
+  # ==================== Personalization ====================
+  /api/chapters/{chapterId}/personalize:
+    post:
+      tags:
+        - Personalization
+      summary: Generate personalized chapter content
+      operationId: personalizeChapter
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: chapterId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonalizeRequest'
+      responses:
+        '200':
+          description: Personalized content generated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonalizeResponse'
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorized
+        '404':
+          description: Chapter not found
+        '500':
+          description: Generation failed
+
+  /api/chapters/{chapterId}/personalized:
+    get:
+      tags:
+        - Personalization
+      summary: Get cached personalized content
+      operationId: getPersonalizedContent
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: chapterId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: mode
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [beginner, advanced]
+      responses:
+        '200':
+          description: Personalized content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonalizeResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Content not found
+
+  # ==================== Translation ====================
+  /api/translate/urdu:
+    post:
+      tags:
+        - Translation
+      summary: Translate chapter content to Urdu
+      operationId: translateToUrdu
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TranslateRequest'
+      responses:
+        '200':
+          description: Translation successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslateResponse'
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorized
+        '500':
+          description: Translation failed
+
+  /api/translate/{chapterId}/urdu:
+    get:
+      tags:
+        - Translation
+      summary: Get cached Urdu translation
+      operationId: getUrduTranslation
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: chapterId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Urdu translation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslateResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Translation not found
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token from BetterAuth session
+
+  schemas:
+    # ==================== Auth Schemas ====================
+    AuthResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        session:
+          $ref: '#/components/schemas/Session'
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        emailVerified:
+          type: boolean
+
+    Session:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+        expiresAt:
+          type: string
+          format: date-time
+
+    SessionResponse:
+      type: object
+      properties:
+        session:
+          $ref: '#/components/schemas/Session'
+        user:
+          $ref: '#/components/schemas/User'
+
+    # ==================== User Profile Schemas ====================
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+        programmingLevel:
+          type: string
+          enum: [beginner, intermediate, advanced]
+        aiKnowledge:
+          type: string
+          enum: [none, basic, intermediate, advanced]
+        hardwareAvailability:
+          $ref: '#/components/schemas/HardwareAvailability'
+        learningPace:
+          type: string
+          enum: [slow, normal, fast]
+        preferredExplanationStyle:
+          type: string
+          enum: [conceptual, practical, both]
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    HardwareAvailability:
+      type: object
+      properties:
+        hasRobot:
+          type: boolean
+        hasROS2:
+          type: boolean
+        hasGPU:
+          type: boolean
+        simulationOnly:
+          type: boolean
+
+    UserProfileUpdate:
+      type: object
+      properties:
+        programmingLevel:
+          type: string
+          enum: [beginner, intermediate, advanced]
+        aiKnowledge:
+          type: string
+          enum: [none, basic, intermediate, advanced]
+        hardwareAvailability:
+          $ref: '#/components/schemas/HardwareAvailability'
+        learningPace:
+          type: string
+          enum: [slow, normal, fast]
+        preferredExplanationStyle:
+          type: string
+          enum: [conceptual, practical, both]
+
+    UserProgress:
+      type: object
+      properties:
+        totalChapters:
+          type: integer
+        completedChapters:
+          type: integer
+        inProgressChapters:
+          type: integer
+        chapters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChapterProgress'
+
+    ChapterProgress:
+      type: object
+      properties:
+        chapterId:
+          type: string
+          format: uuid
+        title:
+          type: string
+        status:
+          type: string
+          enum: [not_started, in_progress, completed]
+        completedAt:
+          type: string
+          format: date-time
+        timeSpentSeconds:
+          type: integer
+
+    # ==================== Chat Schemas ====================
+    ChatRequest:
+      type: object
+      properties:
+        chapterId:
+          type: string
+          format: uuid
+        message:
+          type: string
+          minLength: 1
+          maxLength: 2000
+        conversationHistory:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatMessage'
+          maxItems: 10
+      required:
+        - chapterId
+        - message
+
+    ChatResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        answer:
+          type: string
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+
+    ChatMessage:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        role:
+          type: string
+          enum: [user, assistant]
+        content:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
+    Source:
+      type: object
+      properties:
+        chapterId:
+          type: string
+        section:
+          type: string
+        score:
+          type: number
+          format: float
+
+    # ==================== Personalization Schemas ====================
+    PersonalizeRequest:
+      type: object
+      properties:
+        mode:
+          type: string
+          enum: [beginner, advanced, auto]
+      required:
+        - mode
+
+    PersonalizeResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        content:
+          type: object
+          properties:
+            chapterId:
+              type: string
+            mode:
+              type: string
+            personalizedContent:
+              type: string
+            generatedAt:
+              type: string
+              format: date-time
+        userProfile:
+          $ref: '#/components/schemas/UserProfile'
+
+    # ==================== Translation Schemas ====================
+    TranslateRequest:
+      type: object
+      properties:
+        content:
+          type: string
+          minLength: 1
+        language:
+          type: string
+          enum: [urdu]
+          default: urdu
+      required:
+        - content
+
+    TranslateResponse:
+      type: object
+      properties:
+        translated:
+          type: string
+        fromCache:
+          type: boolean
+        language:
+          type: string
+          enum: [urdu]

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Chatbot - Demo Page</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #f8fafc;
+        }
+        
+        h1 {
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card h2 {
+            color: #1e293b;
+            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+        
+        .card p {
+            color: #475569;
+            line-height: 1.6;
+            margin: 8px 0;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+            color: #475569;
+        }
+        
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        .api-test {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            margin: 16px 0;
+            overflow-x: auto;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .status.healthy {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .button:hover {
+            background: #1d4ed8;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        code {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #dc2626;
+        }
+    </style>
+</head>
+<body>
+    <h1>🤖 RAG Chatbot for Physical AI Textbook</h1>
+    <p class="subtitle">Retrieval-Augmented Generation chatbot for robotics education</p>
+    
+    <div class="card">
+        <h2>✅ System Status</h2>
+        <p>
+            Backend Server: <span id="server-status">Checking...</span>
+        </p>
+        <p>
+            Vector Store: <span id="vector-status">Checking...</span>
+        </p>
+        <p>
+            Total Chunks: <span id="chunk-count">-</span>
+        </p>
+    </div>
+    
+    <div class="card">
+        <h2>📚 Textbook Content</h2>
+        <p>The chatbot has been trained on 11 comprehensive chapters covering:</p>
+        <ul class="feature-list">
+            <li>Introduction to RAG Systems</li>
+            <li>Vector Databases and Embeddings</li>
+            <li>Introduction to Physical AI</li>
+            <li>Humanoid Robotics Fundamentals</li>
+            <li>ROS 2 for Robotics Development</li>
+            <li>Sensors and Perception Systems</li>
+            <li>Motion Planning and Control</li>
+            <li>Machine Learning for Robotics</li>
+            <li>Vision-Language-Action (VLA) Models</li>
+            <li>Digital Twins and Simulation</li>
+            <li>System Integration and Deployment</li>
+        </ul>
+    </div>
+    
+    <div class="card">
+        <h2>🧪 Test the API</h2>
+        <p>Try these example queries:</p>
+        <div class="button-group">
+            <button class="button" onclick="testQuery('What is RAG?')">What is RAG?</button>
+            <button class="button" onclick="testQuery('Explain humanoid robot locomotion')">Humanoid Locomotion</button>
+            <button class="button" onclick="testQuery('What is ROS 2?')">What is ROS 2?</button>
+            <button class="button" onclick="testQuery('How do VLA models work?')">VLA Models</button>
+        </div>
+        
+        <div id="test-result" class="api-test" style="display: none;">
+            <pre id="test-output"></pre>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2>💬 Chat Widget</h2>
+        <p>Click the chat button in the bottom-right corner to start a conversation!</p>
+        <p>The widget is loaded automatically on this page.</p>
+    </div>
+    
+    <div class="card">
+        <h2>📖 Integration Guide</h2>
+        <p>To integrate the chatbot with your Docusaurus site:</p>
+        <ol style="color: #475569; line-height: 1.8;">
+            <li>Copy <code>chat-widget.js</code> to your Docusaurus <code>static/js/</code> folder</li>
+            <li>Add the script to <code>docusaurus.config.js</code></li>
+            <li>Update the <code>API_URL</code> in the widget configuration</li>
+            <li>Build and deploy your Docusaurus site</li>
+        </ol>
+        <p style="margin-top: 16px;">
+            See <code>SETUP.md</code> for complete instructions.
+        </p>
+    </div>
+
+    <!-- Load the chat widget -->
+    <script src="chat-widget.js"></script>
+    
+    <script>
+        // Check server status
+        async function checkStatus() {
+            try {
+                const response = await fetch('http://localhost:8000/health');
+                const data = await response.json();
+                
+                document.getElementById('server-status').innerHTML = 
+                    data.status === 'healthy' 
+                        ? '<span class="status healthy">✓ Online</span>'
+                        : '<span class="status">⚠ Degraded</span>';
+                
+                document.getElementById('vector-status').innerHTML = 
+                    data.vector_store_connected 
+                        ? '<span class="status healthy">✓ Connected</span>'
+                        : '<span class="status">✗ Disconnected</span>';
+                
+                document.getElementById('chunk-count').textContent = data.vector_count || 0;
+            } catch (error) {
+                document.getElementById('server-status').innerHTML = 
+                    '<span class="status" style="background: #fee2e2; color: #991b1b;">✗ Offline</span>';
+                document.getElementById('vector-status').textContent = 'Unknown';
+                document.getElementById('chunk-count').textContent = 'Unknown';
+            }
+        }
+        
+        // Test query
+        async function testQuery(query) {
+            const resultDiv = document.getElementById('test-result');
+            const outputPre = document.getElementById('test-output');
+            
+            resultDiv.style.display = 'block';
+            outputPre.textContent = 'Loading...';
+            
+            try {
+                const response = await fetch('http://localhost:8000/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query: query,
+                        top_k: 3,
+                        include_sources: true
+                    })
+                });
+                
+                const data = await response.json();
+                outputPre.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                outputPre.textContent = 'Error: ' + error.message;
+            }
+        }
+        
+        // Check status on load
+        checkStatus();
+        
+        // Refresh status every 30 seconds
+        setInterval(checkStatus, 30000);
+    </script>
+</body>
+</html>

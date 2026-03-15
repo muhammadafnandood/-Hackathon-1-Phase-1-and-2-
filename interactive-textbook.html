@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physical AI & Humanoid Robotics - Interactive Textbook</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f8fafc;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Main Layout */
+        .textbook-container {
+            display: grid;
+            grid-template-columns: 280px 1fr 400px;
+            height: 100vh;
+            gap: 0;
+        }
+
+        /* Left Sidebar - Chapters */
+        .chapters-sidebar {
+            background: #1e293b;
+            color: white;
+            overflow-y: auto;
+            border-right: 1px solid #334155;
+        }
+
+        .chapters-header {
+            padding: 20px;
+            background: #0f172a;
+            border-bottom: 1px solid #334155;
+        }
+
+        .chapters-header h2 {
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chapter-list {
+            list-style: none;
+            padding: 10px 0;
+        }
+
+        .chapter-item {
+            padding: 14px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .chapter-item:hover {
+            background: #334155;
+            border-left-color: #667eea;
+        }
+
+        .chapter-item.active {
+            background: #334155;
+            border-left-color: #667eea;
+        }
+
+        .chapter-number {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 4px;
+        }
+
+        .chapter-title {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* Center - Content */
+        .content-area {
+            background: white;
+            overflow-y: auto;
+            padding: 40px 60px;
+        }
+
+        .chapter-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .chapter-content h1 {
+            font-size: 36px;
+            color: #1e293b;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .chapter-content h2 {
+            font-size: 24px;
+            color: #334155;
+            margin: 32px 0 16px;
+        }
+
+        .chapter-content p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .chapter-content ul, .chapter-content ol {
+            margin: 16px 0;
+            padding-left: 32px;
+        }
+
+        .chapter-content li {
+            line-height: 1.8;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+
+        .chapter-content .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .chapter-content .highlight-box h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .chapter-content .highlight-box p {
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 0;
+        }
+
+        .chapter-content .info-box {
+            background: #dbeafe;
+            border-left: 4px solid #2563eb;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin: 24px 0;
+        }
+
+        .chapter-content .info-box p {
+            color: #1e40af;
+            margin-bottom: 0;
+        }
+
+        .chapter-content .warning-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin: 24px 0;
+        }
+
+        .chapter-content .warning-box p {
+            color: #92400e;
+            margin-bottom: 0;
+        }
+
+        /* Right Sidebar - Chat */
+        .chat-sidebar {
+            background: white;
+            border-left: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .chat-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .chat-header h3 {
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .message {
+            display: flex;
+            gap: 12px;
+            max-width: 85%;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message.ai {
+            align-self: flex-start;
+        }
+
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .message.ai .message-avatar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .message.user .message-avatar {
+            background: #e2e8f0;
+        }
+
+        .message-content {
+            background: #f1f5f9;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #334155;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .message.ai .message-content {
+            background: #f1f5f9;
+        }
+
+        .ai-explanation {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 12px;
+        }
+
+        .ai-explanation h4 {
+            font-size: 13px;
+            color: #166534;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ai-explanation p {
+            font-size: 14px;
+            color: #166534;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .chat-input-area {
+            padding: 20px;
+            border-top: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input {
+            flex: 1;
+            border: 2px solid #e2e8f0;
+            border-radius: 24px;
+            padding: 12px 20px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .chat-input:focus {
+            border-color: #667eea;
+        }
+
+        .chat-send-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .chat-send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Text Selection Popup */
+        .selection-popup {
+            position: fixed;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
+            display: none;
+            z-index: 10000;
+            transition: all 0.2s;
+        }
+
+        .selection-popup:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.7);
+        }
+
+        /* Level Selector */
+        .level-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .level-selector label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .level-selector select {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            padding: 4px 8px;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .level-selector select option {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .textbook-container {
+                grid-template-columns: 240px 1fr 350px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .textbook-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr auto;
+            }
+
+            .chapters-sidebar {
+                display: none;
+            }
+
+            .chat-sidebar {
+                height: 50vh;
+                border-left: none;
+                border-top: 1px solid #e2e8f0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Text Selection Popup -->
+    <div id="selection-popup" class="selection-popup" onclick="askSelectedText()">
+        💬 Ask AI about this
+    </div>
+
+    <div class="textbook-container">
+        <!-- Left Sidebar: Chapters -->
+        <aside class="chapters-sidebar">
+            <div class="chapters-header">
+                <h2>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                    Chapters
+                </h2>
+            </div>
+            <ul class="chapter-list">
+                <li class="chapter-item active" onclick="loadChapter(1, this)">
+                    <div class="chapter-number">Chapter 1</div>
+                    <div class="chapter-title">Introduction to ROS 2</div>
+                </li>
+                <li class="chapter-item" onclick="loadChapter(2, this)">
+                    <div class="chapter-number">Chapter 2</div>
+                    <div class="chapter-title">Physical AI Fundamentals</div>
+                </li>
+                <li class="chapter-item" onclick="loadChapter(3, this)">
+                    <div class="chapter-number">Chapter 3</div>
+                    <div class="chapter-title">Humanoid Robotics</div>
+                </li>
+                <li class="chapter-item" onclick="loadChapter(4, this)">
+                    <div class="chapter-number">Chapter 4</div>
+                    <div class="chapter-title">Sensors and Perception</div>
+                </li>
+                <li class="chapter-item" onclick="loadChapter(5, this)">
+                    <div class="chapter-number">Chapter 5</div>
+                    <div class="chapter-title">Motion Planning and Control</div>
+                </li>
+                <li class="chapter-item" onclick="loadChapter(6, this)">
+                    <div class="chapter-number">Chapter 6</div>
+                    <div class="chapter-title">Machine Learning for Robotics</div>
+                </li>
+                <li class="chapter-item" onclick="loadChapter(7, this)">
+                    <div class="chapter-number">Chapter 7</div>
+                    <div class="chapter-title">Vision-Language-Action Models</div>
+                </li>
+                <li class="chapter-item" onclick="loadChapter(8, this)">
+                    <div class="chapter-number">Chapter 8</div>
+                    <div class="chapter-title">System Integration</div>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Center: Content -->
+        <main class="content-area">
+            <div class="chapter-content" id="chapter-content">
+                <h1>Introduction to ROS 2</h1>
+                
+                <p>
+                    ROS 2 (Robot Operating System 2) is a set of software libraries and tools
+                    for building robot applications. It uses a publish-subscribe model for
+                    communication between nodes. This decentralized architecture makes ROS 2
+                    highly scalable and suitable for complex robotic systems.
+                </p>
+
+                <div class="highlight-box">
+                    <h3>🎯 Key Concept</h3>
+                    <p>
+                        ROS 2 uses DDS (Data Distribution Service) as its middleware protocol
+                        that allows nodes to communicate in a distributed system without a
+                        central coordinator.
+                    </p>
+                </div>
+
+                <h2>What is ROS 2?</h2>
+                <p>
+                    ROS 2 is the next generation of ROS, designed to address the limitations
+                    of the original system while maintaining its core philosophy of providing
+                    a flexible framework for writing robot software.
+                </p>
+
+                <div class="info-box">
+                    <p>
+                        <strong>💡 Did you know?</strong> ROS 2 was created to support robots
+                        that need real-time control, improved security, and production-ready
+                        features that weren't available in ROS 1.
+                    </p>
+                </div>
+
+                <h2>Core Concepts</h2>
+                <p>
+                    Understanding ROS 2 requires familiarity with several key concepts that
+                    form the foundation of the system.
+                </p>
+
+                <h3>Nodes</h3>
+                <p>
+                    A node is an executable that uses ROS 2 to communicate with other nodes.
+                    Nodes can be thought of as the building blocks of a ROS 2 system. Each
+                    node is responsible for a specific function, such as reading sensor data,
+                    controlling motors, or performing computations.
+                </p>
+
+                <h3>Topics</h3>
+                <p>
+                    Topics are named buses over which nodes exchange messages. They use a
+                    publish-subscribe model where nodes can publish messages to a topic or
+                    subscribe to receive messages from a topic. This decouples the producer
+                    from the consumer of data.
+                </p>
+
+                <div class="warning-box">
+                    <p>
+                        <strong>⚠️ Important:</strong> Topics are anonymous and many-to-many.
+                        Multiple nodes can publish to the same topic, and multiple nodes can
+                        subscribe to the same topic.
+                    </p>
+                </div>
+
+                <h3>Services</h3>
+                <p>
+                    Services provide a request-response communication pattern. Unlike topics,
+                    services are synchronous - the client sends a request and waits for the
+                    server to respond. This is useful for operations that need to complete
+                    before continuing.
+                </p>
+
+                <h3>Actions</h3>
+                <p>
+                    Actions are designed for long-running tasks that can be preempted. They
+                    provide feedback during execution and can be cancelled if needed. This
+                    makes them ideal for tasks like navigation or manipulation.
+                </p>
+            </div>
+        </main>
+
+        <!-- Right Sidebar: Chat -->
+        <aside class="chat-sidebar">
+            <div class="chat-header">
+                <h3>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    AI Assistant
+                </h3>
+                <div class="level-selector">
+                    <label for="user-level">Level:</label>
+                    <select id="user-level" onchange="changeLevel()">
+                        <option value="Beginner">🌱 Beginner</option>
+                        <option value="Student">📚 Student</option>
+                        <option value="Engineer">⚙️ Engineer</option>
+                        <option value="Researcher">🔬 Researcher</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chat-messages">
+                <div class="message ai">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        Hi! I'm your textbook assistant. Select any text from the chapter
+                        and click "Ask AI" to get an explanation!
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <div class="chat-input-wrapper">
+                    <input type="text" 
+                           class="chat-input" 
+                           id="chat-input" 
+                           placeholder="Ask a question..."
+                           onkeydown="handleKeyPress(event)">
+                    <button class="chat-send-btn" onclick="sendMessage()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        let selectedText = "";
+        let currentLevel = "Beginner";
+
+        // Text selection handler
+        document.addEventListener('mouseup', function() {
+            setTimeout(function() {
+                selectedText = window.getSelection().toString().trim();
+                const popup = document.getElementById('selection-popup');
+
+                if (selectedText.length > 10) {
+                    const range = window.getSelection().getRangeAt(0);
+                    const rect = range.getBoundingClientRect();
+
+                    popup.style.display = 'block';
+                    popup.style.left = (rect.left + rect.width/2 - 80) + 'px';
+                    popup.style.top = (rect.top - 45 + window.scrollY) + 'px';
+                } else {
+                    popup.style.display = 'none';
+                }
+            }, 10);
+        });
+
+        // Ask AI about selected text
+        function askSelectedText() {
+            const popup = document.getElementById('selection-popup');
+            popup.style.display = 'none';
+
+            if (selectedText) {
+                addMessage(selectedText, 'user');
+                
+                // Simulate AI response
+                setTimeout(() => {
+                    const explanation = generateExplanation(selectedText);
+                    addAIMessage(explanation);
+                }, 500);
+            }
+        }
+
+        // Send message
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+
+            if (message) {
+                addMessage(message, 'user');
+                input.value = '';
+
+                // Simulate AI response
+                setTimeout(() => {
+                    const response = getAIResponse(message);
+                    addAIMessage(response);
+                }, 500);
+            }
+        }
+
+        // Handle Enter key
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Add user message
+        function addMessage(text, type) {
+            const messagesContainer = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${type === 'user' ? '👤' : '🤖'}</div>
+                <div class="message-content">${escapeHtml(text)}</div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Add AI message with explanation
+        function addAIMessage(explanation) {
+            const messagesContainer = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message ai';
+            
+            const messageId = 'ai-msg-' + Date.now();
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <div id="${messageId}-english">${explanation}</div>
+                    <div id="${messageId}-urdu" style="display: none;"></div>
+                    <button class="translate-btn" onclick="toggleTranslation('${messageId}')" style="
+                        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                        color: white;
+                        border: none;
+                        padding: 10px 18px;
+                        border-radius: 8px;
+                        font-size: 13px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        margin-top: 12px;
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        transition: all 0.2s;
+                    " onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 12px rgba(16, 185, 129, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                        Translate to Urdu
+                    </button>
+                </div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Toggle translation
+        window.toggleTranslation = function(messageId) {
+            const englishDiv = document.getElementById(`${messageId}-english`);
+            const urduDiv = document.getElementById(`${messageId}-urdu`);
+            const button = englishDiv.parentElement.querySelector('.translate-btn');
+            
+            if (urduDiv.style.display === 'none') {
+                // Show Urdu translation
+                urduDiv.innerHTML = getUrduTranslation(englishDiv.innerText);
+                urduDiv.style.display = 'block';
+                englishDiv.style.display = 'none';
+                button.innerHTML = `
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    Show English
+                `;
+            } else {
+                // Show English
+                urduDiv.style.display = 'none';
+                englishDiv.style.display = 'block';
+                button.innerHTML = `
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    Translate to Urdu
+                `;
+            }
+        };
+
+        // Get Urdu translation (simulated)
+        function getUrduTranslation(text) {
+            // Map of complete English phrases to Urdu
+            const phraseTranslations = {
+                // ROS 2 explanations
+                'ROS 2 (Robot Operating System 2) is a flexible framework for writing robot software. It provides tools and libraries to help you create robot applications, including hardware abstraction, device drivers, communication between processes, and package management. ROS 2 uses a publish-subscribe architecture that makes it easy to build complex robot systems from simpler components.':
+                    'ROS 2 (روبوٹ آپریٹنگ سسٹم 2) روبوٹ سافٹ ویئر لکھنے کے لیے ایک لچکدار فریم ورک ہے۔ یہ روبوٹ ایپلی کیشنز بنانے میں آپ کی مدد کرنے کے لیے ٹولز اور لائبریریاں فراہم کرتا ہے، بشمول ہارڈویئر ایبسٹریکشن، ڈیوائس ڈرائیورز، پروسیسز کے درمیان مواصلات، اور پیکج مینجمنٹ۔ ROS 2 پبلش سبسکرائب آرکیٹیکچر استعمال کرتا ہے جو پیچیدہ روبوٹ سسٹمز کو سادہ اجزاء سے بنانا آسان بناتا ہے۔',
+                
+                'DDS (Data Distribution Service) is the middleware that ROS 2 uses for communication. It implements a publish-subscribe pattern where nodes can send and receive data without knowing about each other. DDS provides features like reliability, durability, and real-time performance, making it perfect for robotics applications.':
+                    'DDS (ڈیٹا ڈسٹری بیوشن سروس) وہ مڈل ویئر ہے جو ROS 2 مواصلات کے لیے استعمال کرتا ہے۔ یہ ایک پبلش سبسکرائب پیٹرن کو لاگو کرتا ہے جہاں نوڈز ایک دوسرے کے بارے میں جانے بغیر ڈیٹا بھیج اور وصول سکتے ہیں۔ DDS وشوسنییتا، پائیداری، اور حقیقی وقت کی کارکردگی جیسی سہولیات فراہم کرتا ہے، جو اسے روبوٹکس ایپلی کیشنز کے لیے بہترین بناتا ہے۔',
+                
+                'A Node is the basic building block of ROS 2. Each node is a separate process that performs a specific task - like reading sensor data, controlling a motor, or running an algorithm. Nodes communicate with each other through topics, services, or actions. This modular design makes it easy to build, test, and maintain complex robot systems.':
+                    'نوڈ ROS 2 کی بنیادی بلڈنگ بلاک ہے۔ ہر نوڈ ایک الگ پروسیس ہے جو ایک خاص کام انجام دیتا ہے - جیسے سینسر ڈیٹا پڑھنا، موٹر کو کنٹرول کرنا، یا الگورتھم چلانا۔ نوڈز ایک دوسرے کے ساتھ ٹاپکس، سروسز، یا ایکشنز کے ذریعے مواصلات کرتے ہیں۔ یہ ماڈیولر ڈیزائن پیچیدہ روبوٹ سسٹمز کو بنانے، ٹیسٹ کرنے اور برقرار رکھنے کو آسان بناتا ہے۔',
+                
+                'Topics are how nodes communicate in ROS 2. A topic is like a named channel or bus. Nodes can publish messages to a topic (send data) or subscribe to a topic (receive data). The beauty is that publishers and subscribers don\'t need to know about each other - they just use the same topic name. This makes the system very flexible!':
+                    'ٹاپکس وہ طریقہ ہیں جن سے نوڈز ROS 2 میں مواصلات کرتے ہیں۔ ایک ٹاپک ایک نامزد چینل یا بس کی طرح ہے۔ نوڈز ایک ٹاپک پر پیغامات پبلش (ڈیٹا بھیجنا) کر سکتے ہیں یا ایک ٹاپک کو سبسکرائب (ڈیٹا وصول کرنا) کر سکتے ہیں۔ خوبصورتی یہ ہے کہ پبلشرز اور سبسکرائبرز کو ایک دوسرے کے بارے میں جاننے کی ضرورت نہیں - وہ صرف ایک ہی ٹاپک کا نام استعمال کرتے ہیں۔ یہ سسٹم کو بہت لچکدار بناتا ہے!',
+                
+                'Services in ROS 2 provide request-response communication. Unlike topics (which are one-way), services are two-way: a client node sends a request, and a server node sends back a response. This is useful for operations that need to complete before continuing, like "calculate the path from A to B" or "turn the gripper on".':
+                    'ROS 2 میں سروسز درخواست جواب مواصلات فراہم کرتی ہیں۔ ٹاپکس کے برعکس (جو ایک طرفہ ہیں)، سروسز دو طرفہ ہیں: ایک کلائنٹ نوڈ ایک درخواست بھیجتا ہے، اور ایک سرور نوڈ جواب واپس بھیجتا ہے۔ یہ ان آپریشنز کے لیے مفید ہے جنہیں جاری رکھنے سے پہلے مکمل ہونا ضروری ہے، جیسے "A سے B تک کا راستہ نکالنا" یا "گریپر کو آن کرنا"۔',
+                
+                'Actions are for long-running tasks in ROS 2. They\'re like services but with three key differences: (1) they can take a long time to complete, (2) they provide feedback during execution, and (3) they can be cancelled. Perfect for tasks like "navigate to this location" or "pick up that object" where you want to know the progress and might need to stop.':
+                    'ایکشنز ROS 2 میں طویل مدتی کاموں کے لیے ہیں۔ وہ سروسز کی طرح ہیں لیکن تین اہم فرق کے ساتھ: (1) انہیں مکمل ہونے میں زیادہ وقت لگ سکتا ہے، (2) وہ عمل درآمد کے دوران فیڈ بیک فراہم کرتے ہیں، اور (3) انہیں منسوخ کیا جا سکتا ہے۔ ایسے کاموں کے لیے بہترین جیسے "اس مقام پر نیویگیٹ کریں" یا "اس چیز کو اٹھائیں" جہاں آپ پیش رفت جاننا چاہتے ہیں اور روکنے کی ضرورت پڑ سکتی ہے۔',
+                
+                'Middleware is software that sits between different parts of a system and enables them to communicate. In ROS 2, DDS serves as the middleware. It handles all the complex networking stuff - finding other nodes, sending messages, handling errors - so you can focus on writing robot logic instead of network code.':
+                    'مڈل ویئر ایک سافٹ ویئر ہے جو ایک سسٹم کے مختلف حصوں کے درمیان بیٹھتا ہے اور انہیں مواصلات کرنے کے قابل بناتا ہے۔ ROS 2 میں، DDS مڈل ویئر کے طور پر کام کرتا ہے۔ یہ تمام پیچیدہ نیٹ ورکنگ کا کام سنبھالتا ہے - دوسرے نوڈز کو ڈھونڈنا، پیغامات بھیجنا، غلطیوں کو سنبھالنا - تاکہ آپ نیٹ ورک کوڈ کے بجائے روبوٹ لاجک لکھنے پر توجہ دے سکیں۔',
+                
+                'Robotics is the field of designing, building, and programming robots. Modern robotics combines mechanical engineering (the physical robot), electrical engineering (sensors and circuits), and computer science (AI and control algorithms). ROS 2 helps robot developers by providing standard tools and communication patterns.':
+                    'روبوٹکس روبوٹس کو ڈیزائن کرنے، بنانے، اور پروگرام کرنے کا شعبہ ہے۔ جدید روبوٹکس مکینیکل انجینئرنگ (طبیعی روبوٹ)، الیکٹریکل انجینئرنگ (سینسرز اور سرکٹس)، اور کمپیوٹر سائنس (AI اور کنٹرول الگورتھم) کو یکجا کرتا ہے۔ ROS 2 معیاری ٹولز اور مواصلاتی پیٹرن فراہم کرکے روبوٹ ڈیولپرز کی مدد کرتا ہے۔',
+                
+                'Communication in ROS 2 happens in three ways: (1) Topics for streaming data (one-way), (2) Services for request-response (two-way), (3) Actions for long tasks with feedback. Messages are the actual data packets sent between nodes - they can contain anything from sensor readings to motor commands.':
+                    'ROS 2 میں مواصلات تین طریقوں سے ہوتی ہے: (1) سٹریمنگ ڈیٹا کے لیے ٹاپکس (ایک طرفہ)، (2) درخواست جواب کے لیے سروسز (دو طرفہ)، (3) فیڈ بیک کے ساتھ طویل کاموں کے لیے ایکشنز۔ پیغامات اصل ڈیٹا پیکٹس ہیں جو نوڈز کے درمیان بھیجے جاتے ہیں - ان میں سینسر ریڈنگ سے لے کر موٹر کمانڈز تک کچھ بھی ہو سکتا ہے۔'
+            };
+
+            // Check if we have an exact match
+            const trimmedText = text.trim();
+            if (phraseTranslations[trimmedText]) {
+                return `
+                    <div style="
+                        background: #f0fdf4;
+                        border: 1px solid #bbf7d0;
+                        border-radius: 8px;
+                        padding: 16px;
+                        margin-top: 12px;
+                        direction: rtl;
+                        text-align: right;
+                        font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', Arial, sans-serif;
+                        line-height: 2.2;
+                        font-size: 15px;
+                        color: #166534;
+                    ">
+                        <strong style="color: #15803d; font-size: 14px;">اردو ترجمہ:</strong><br><br>
+                        ${phraseTranslations[trimmedText]}
+                    </div>
+                `;
+            }
+
+            // For other texts, do word-by-word translation
+            let translated = trimmedText;
+            
+            // Common translations
+            const wordTranslations = {
+                'AI Explanation': 'AI وضاحت',
+                'Great question': 'بہترین سوال',
+                'To give you the best answer': 'آپ کو بہترین جواب دینے کے لیے',
+                'try selecting specific text': 'خاص متن منتخب کرنے کی کوشش کریں',
+                'from the chapter above': 'اوپر دیے گئے باب سے',
+                'The highlighted sections contain detailed information': 'نشان زدہ حصوں میں تفصیلی معلومات ہیں',
+                'about ROS 2 concepts': 'ROS 2 کے تصورات کے بارے میں',
+                'like nodes, topics, DDS, and services': 'جیسے نوڈز، ٹاپکس، DDS، اور سروسز',
+                'Or try asking about': 'یا اس کے بارے میں پوچھنے کی کوشش کریں',
+                'What is ROS 2?': 'ROS 2 کیا ہے؟',
+                'How does DDS work?': 'DDS کیسے کام کرتا ہے؟',
+                'What is a node?': 'نوڈ کیا ہے؟',
+                'You\'ve selected': 'آپ نے منتخب کیا',
+                'This concept is important': 'یہ تصور اہم ہے',
+                'in ROS 2 and robotics': 'ROS 2 اور روبوٹکس میں',
+                'Would you like me to explain any specific aspect in more detail?': 'کیا آپ چاہیں گے کہ میں کسی خاص پہلو کی مزید تفصیل سے وضاحت کروں؟',
+                'This relates to the ROS 2 concepts': 'یہ ROS 2 کے تصورات سے متعلق ہے',
+                'we\'re covering in this chapter': 'ہم اس باب میں احاطہ کر رہے ہیں',
+                'Feel free to select specific text from the chapter for more detailed explanations': 'مزید تفصیلی وضاحت کے لیے باب سے خاص متن منتخب کرنے سے گھبرائیں نہیں',
+                'is a': 'ایک ہے',
+                'that allows': 'جو اجازت دیتا ہے',
+                'to communicate': 'مواصلات کرنے کے',
+                'in a distributed system': 'ایک تقسیم شدہ سسٹم میں',
+                'without a central coordinator': 'بغیر کسی مرکزی کوآرڈینیٹر کے',
+                'as its middleware protocol': 'اپنے مڈل ویئر پروٹوکول کے طور پر'
+            };
+
+            // Apply word translations
+            for (const [english, urdu] of Object.entries(wordTranslations)) {
+                const regex = new RegExp(english.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+                translated = translated.replace(regex, urdu);
+            }
+
+            // Keep technical terms in English but add Urdu context
+            translated = translated.replace(/ROS 2/g, 'ROS 2');
+            translated = translated.replace(/DDS/g, 'DDS');
+            
+            return `
+                <div style="
+                    background: #f0fdf4;
+                    border: 1px solid #bbf7d0;
+                    border-radius: 8px;
+                    padding: 16px;
+                    margin-top: 12px;
+                    direction: rtl;
+                    text-align: right;
+                    font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', Arial, sans-serif;
+                    line-height: 2.2;
+                    font-size: 15px;
+                    color: #166534;
+                ">
+                    <strong style="color: #15803d; font-size: 14px;">اردو ترجمہ:</strong><br><br>
+                    ${translated}
+                </div>
+            `;
+        }
+
+        // Generate explanation based on selected text
+        function generateExplanation(text) {
+            const textLower = text.toLowerCase();
+            
+            if (textLower.includes('dds') || textLower.includes('data distribution')) {
+                return `
+                    <div class="ai-explanation">
+                        <h4>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            AI Explanation
+                        </h4>
+                        <p>
+                            <strong>DDS (Data Distribution Service)</strong> is a middleware protocol
+                            that allows nodes in ROS 2 to communicate in a distributed system. It
+                            provides a publish-subscribe model where data producers (publishers) send
+                            information to data consumers (subscribers) without direct knowledge of
+                            each other. DDS handles the underlying network communication, making it
+                            easier for robot components to exchange data reliably.
+                        </p>
+                    </div>
+                `;
+            }
+            
+            if (textLower.includes('publish') || textLower.includes('subscribe')) {
+                return `
+                    <div class="ai-explanation">
+                        <h4>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            AI Explanation
+                        </h4>
+                        <p>
+                            The <strong>publish-subscribe pattern</strong> is a messaging pattern where
+                            senders (publishers) broadcast messages to receivers (subscribers) without
+                            knowing who they are. In ROS 2, this happens through "topics" - named channels
+                            that carry messages. This decouples the components of your robot system,
+                            making it more modular and easier to maintain.
+                        </p>
+                    </div>
+                `;
+            }
+
+            if (textLower.includes('node')) {
+                return `
+                    <div class="ai-explanation">
+                        <h4>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            AI Explanation
+                        </h4>
+                        <p>
+                            A <strong>Node</strong> in ROS 2 is an independent process that performs
+                            a specific function. Think of it as a building block - one node might
+                            read sensor data, another might control motors, and another might handle
+                            navigation. Nodes communicate with each other through topics, services,
+                            or actions, creating a distributed system where each component focuses
+                            on its specialized task.
+                        </p>
+                    </div>
+                `;
+            }
+            
+            // Default explanation
+            return `
+                <div class="ai-explanation">
+                    <h4>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        AI Explanation
+                    </h4>
+                    <p>
+                        You've selected: "${escapeHtml(text.substring(0, 50))}${text.length > 50 ? '...' : ''}".
+                        This concept is important in ROS 2 and robotics. Would you like me to explain
+                        any specific aspect in more detail?
+                    </p>
+                </div>
+            `;
+        }
+
+        // Get AI response for questions
+        function getAIResponse(question) {
+            const q = question.toLowerCase();
+            
+            // ROS 2 questions
+            if (q.includes('what is ros') || q.includes('ros 2')) {
+                return `
+                    <div class="ai-explanation">
+                        <h4>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            AI Explanation
+                        </h4>
+                        <p>
+                            <strong>ROS 2 (Robot Operating System 2)</strong> is a flexible framework
+                            for writing robot software. It provides tools and libraries to help you
+                            create robot applications, including hardware abstraction, device drivers,
+                            communication between processes, and package management. ROS 2 uses a
+                            publish-subscribe architecture that makes it easy to build complex robot
+                            systems from simpler components.
+                        </p>
+                    </div>
+                `;
+            }
+            
+            // DDS questions
+            if (q.includes('dds') || q.includes('data distribution')) {
+                return `
+                    <div class="ai-explanation">
+                        <h4>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            AI Explanation
+                        </h4>
+                        <p>
+                            <strong>DDS (Data Distribution Service)</strong> is the middleware that
+                            ROS 2 uses for communication. It implements a publish-subscribe pattern
+                            where nodes can send and receive data without knowing about each other.
+                            DDS provides features like reliability, durability, and real-time performance,
+                            making it perfect for robotics applications.
+                        </p>
+                    </div>
+                `;
+            }
+
+            // Node questions
+            if (q.includes('node') || q.includes('nodes')) {
+                return `
+                    <div class="ai-explanation">
+                        <h4>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            AI Explanation
+                        </h4>
+                        <p>
+                            A <strong>Node</strong> is the basic building block of ROS 2. Each node
+                            is a separate process that performs a specific task - like reading sensor
+                            data, controlling a motor, or running an algorithm. Nodes communicate with
+                            each other through topics, services, or actions. This modular design makes
+                            it easy to build, test, and maintain complex robot systems.
+                        </p>
+                    </div>
+                `;
+            }
+
+            // Topic questions
+            if (q.includes('topic') || q.includes('topics') || q.includes('publish') || q.includes('subscribe')) {
+                return `
+                    <div class="ai-explanation">
+                        <h4>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            AI Explanation
+                        </h4>
+                        <p>
+                            <strong>Topics</strong> are how nodes communicate in ROS 2. A topic is like
+                            a named channel or bus. Nodes can <strong>publish</strong> messages to a
+                            topic (send data) or <strong>subscribe</strong> to a topic (receive data).
+                            The beauty is that publishers and subscribers don't need to know about each
+                            other - they just use the same topic name. This makes the system very flexible!
+                        </p>
+                    </div>
+                `;
+            }
+
+            // Service questions
+            if (q.includes('service') || q.includes('services')) {
+                return `
+                    <div class="ai-explanation">
+                        <h4>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            AI Explanation
+                        </h4>
+                        <p>
+                            <strong>Services</strong> in ROS 2 provide request-response communication.
+                            Unlike topics (which are one-way), services are two-way: a client node
+                            sends a request, and a server node sends back a response. This is useful
+                            for operations that need to complete before continuing, like "calculate
+                            the path from A to B" or "turn the gripper on".
+                        </p>
+                    </div>
+                `;
+            }
+
+            // Action questions
+            if (q.includes('action') || q.includes('actions')) {
+                return `
+                    <div class="ai-explanation">
+                        <h4>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            AI Explanation
+                        </h4>
+                        <p>
+                            <strong>Actions</strong> are for long-running tasks in ROS 2. They're like
+                            services but with three key differences: (1) they can take a long time to
+                            complete, (2) they provide feedback during execution, and (3) they can be
+                            cancelled. Perfect for tasks like "navigate to this location" or "pick up
+                            that object" where you want to know the progress and might need to stop.
+                        </p>
+                    </div>
+                `;
+            }
+
+            // Middleware questions
+            if (q.includes('middleware')) {
+                return `
+                    <div class="ai-explanation">
+                        <h4>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            AI Explanation
+                        </h4>
+                        <p>
+                            <strong>Middleware</strong> is software that sits between different parts
+                            of a system and enables them to communicate. In ROS 2, DDS serves as the
+                            middleware. It handles all the complex networking stuff - finding other
+                            nodes, sending messages, handling errors - so you can focus on writing
+                            robot logic instead of network code.
+                        </p>
+                    </div>
+                `;
+            }
+
+            // Robot questions
+            if (q.includes('robot') || q.includes('robotics')) {
+                return `
+                    <div class="ai-explanation">
+                        <h4>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            AI Explanation
+                        </h4>
+                        <p>
+                            <strong>Robotics</strong> is the field of designing, building, and
+                            programming robots. Modern robotics combines mechanical engineering
+                            (the physical robot), electrical engineering (sensors and circuits),
+                            and computer science (AI and control algorithms). ROS 2 helps robot
+                            developers by providing standard tools and communication patterns.
+                        </p>
+                    </div>
+                `;
+            }
+
+            // Communication questions
+            if (q.includes('communicat') || q.includes('message')) {
+                return `
+                    <div class="ai-explanation">
+                        <h4>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            AI Explanation
+                        </h4>
+                        <p>
+                            <strong>Communication</strong> in ROS 2 happens in three ways:
+                            (1) <strong>Topics</strong> for streaming data (one-way),
+                            (2) <strong>Services</strong> for request-response (two-way),
+                            (3) <strong>Actions</strong> for long tasks with feedback.
+                            Messages are the actual data packets sent between nodes - they can
+                            contain anything from sensor readings to motor commands.
+                        </p>
+                    </div>
+                `;
+            }
+
+            // Default response - but more helpful
+            return `
+                <div class="ai-explanation">
+                    <h4>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        AI Explanation
+                    </h4>
+                    <p>
+                        Great question! To give you the best answer, try selecting specific text
+                        from the chapter above. The highlighted sections contain detailed information
+                        about ROS 2 concepts like nodes, topics, DDS, and services.
+                    </p>
+                    <p style="margin-top: 8px;">
+                        Or try asking about:
+                        <strong>"What is ROS 2?"</strong>, 
+                        <strong>"How does DDS work?"</strong>, or
+                        <strong>"What is a node?"</strong>
+                    </p>
+                </div>
+            `;
+        }
+
+        // Escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Change user level
+        function changeLevel() {
+            const select = document.getElementById('user-level');
+            currentLevel = select.value;
+            console.log('User level changed to:', currentLevel);
+        }
+
+        // Load chapter
+        function loadChapter(chapterNum, element) {
+            // Update active state
+            document.querySelectorAll('.chapter-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            element.classList.add('active');
+            
+            // Load chapter content
+            const contentDiv = document.getElementById('chapter-content');
+            contentDiv.innerHTML = getChapterContent(chapterNum);
+            
+            // Scroll to top
+            document.querySelector('.content-area').scrollTop = 0;
+            
+            // Add message to chat
+            setTimeout(() => {
+                addAIMessage(`Loaded <strong>Chapter ${chapterNum}</strong>. Select any text or ask a question about this chapter!`);
+            }, 300);
+        }
+
+        // Get chapter content
+        function getChapterContent(chapterNum) {
+            const chapters = {
+                1: `
+                    <h1>Introduction to ROS 2</h1>
+                    
+                    <p>
+                        ROS 2 (Robot Operating System 2) is a set of software libraries and tools
+                        for building robot applications. It uses a publish-subscribe model for
+                        communication between nodes. This decentralized architecture makes ROS 2
+                        highly scalable and suitable for complex robotic systems.
+                    </p>
+
+                    <div class="highlight-box">
+                        <h3>🎯 Key Concept</h3>
+                        <p>
+                            ROS 2 uses DDS (Data Distribution Service) as its middleware protocol
+                            that allows nodes to communicate in a distributed system without a
+                            central coordinator.
+                        </p>
+                    </div>
+
+                    <h2>What is ROS 2?</h2>
+                    <p>
+                        ROS 2 is the next generation of ROS, designed to address the limitations
+                        of the original system while maintaining its core philosophy of providing
+                        a flexible framework for writing robot software.
+                    </p>
+
+                    <div class="info-box">
+                        <p>
+                            <strong>💡 Did you know?</strong> ROS 2 was created to support robots
+                            that need real-time control, improved security, and production-ready
+                            features that weren't available in ROS 1.
+                        </p>
+                    </div>
+
+                    <h2>Core Concepts</h2>
+                    <p>
+                        Understanding ROS 2 requires familiarity with several key concepts that
+                        form the foundation of the system.
+                    </p>
+
+                    <h3>Nodes</h3>
+                    <p>
+                        A node is an executable that uses ROS 2 to communicate with other nodes.
+                        Nodes can be thought of as the building blocks of a ROS 2 system. Each
+                        node is responsible for a specific function, such as reading sensor data,
+                        controlling motors, or performing computations.
+                    </p>
+
+                    <h3>Topics</h3>
+                    <p>
+                        Topics are named buses over which nodes exchange messages. They use a
+                        publish-subscribe model where nodes can publish messages to a topic or
+                        subscribe to receive messages from a topic. This decouples the producer
+                        from the consumer of data.
+                    </p>
+
+                    <div class="warning-box">
+                        <p>
+                            <strong>⚠️ Important:</strong> Topics are anonymous and many-to-many.
+                            Multiple nodes can publish to the same topic, and multiple nodes can
+                            subscribe to the same topic.
+                        </p>
+                    </div>
+
+                    <h3>Services</h3>
+                    <p>
+                        Services provide a request-response communication pattern. Unlike topics,
+                        services are synchronous - the client sends a request and waits for the
+                        server to respond. This is useful for operations that need to complete
+                        before continuing.
+                    </p>
+
+                    <h3>Actions</h3>
+                    <p>
+                        Actions are designed for long-running tasks that can be preempted. They
+                        provide feedback during execution and can be cancelled if needed. This
+                        makes them ideal for tasks like navigation or manipulation.
+                    </p>
+                `,
+                2: `
+                    <h1>Physical AI Fundamentals</h1>
+                    
+                    <p>
+                        Physical AI refers to artificial intelligence systems that interact with
+                        the physical world through sensors and actuators. Unlike traditional AI
+                        that operates purely in digital domains, Physical AI must understand and
+                        manipulate real-world objects and environments.
+                    </p>
+
+                    <div class="highlight-box">
+                        <h3>🎯 Key Concept</h3>
+                        <p>
+                            Physical AI combines perception (sensing), cognition (thinking), and
+                            action (movement) to create intelligent systems that can operate in
+                            the real world.
+                        </p>
+                    </div>
+
+                    <h2>What is Physical AI?</h2>
+                    <p>
+                        Physical AI is the intersection of robotics and artificial intelligence.
+                        It involves creating systems that can perceive their environment through
+                        sensors, process that information using AI algorithms, and take physical
+                        actions through motors, actuators, or other mechanisms.
+                    </p>
+
+                    <div class="info-box">
+                        <p>
+                            <strong>💡 Did you know?</strong> Physical AI is what enables robots
+                            to perform tasks like picking up objects, navigating rooms, and
+                            interacting with humans safely.
+                        </p>
+                    </div>
+
+                    <h2>Key Components</h2>
+                    <p>
+                        Physical AI systems consist of three main components that work together
+                        to create intelligent behavior.
+                    </p>
+
+                    <h3>Perception</h3>
+                    <p>
+                        Perception involves gathering information about the environment using
+                        sensors like cameras, LiDAR, depth sensors, IMUs, and force/torque
+                        sensors. This data forms the basis for all subsequent decision-making.
+                    </p>
+
+                    <h3>Cognition</h3>
+                    <p>
+                        Cognition is the "brain" of the system - processing sensor data,
+                        understanding the environment, making decisions, and planning actions.
+                        This is where machine learning and AI algorithms come into play.
+                    </p>
+
+                    <h3>Action</h3>
+                    <p>
+                        Action involves executing physical movements through motors, actuators,
+                        grippers, and other mechanisms. The action component must translate
+                        high-level decisions into precise physical movements.
+                    </p>
+                `,
+                3: `
+                    <h1>Humanoid Robotics</h1>
+                    
+                    <p>
+                        Humanoid robots are robots that resemble the human body in shape and
+                        structure. They typically have a head, torso, two arms, and two legs,
+                        mimicking human anatomy to enable human-like movement and interaction.
+                    </p>
+
+                    <div class="highlight-box">
+                        <h3>🎯 Key Concept</h3>
+                        <p>
+                            Humanoid robots are designed to operate in human environments and
+                            use human tools, making them ideal for assistive tasks, manufacturing,
+                            and research.
+                        </p>
+                    </div>
+
+                    <h2>Why Humanoid Robots?</h2>
+                    <p>
+                        The humanoid form factor offers unique advantages. Our world is built
+                        for humans - with stairs, door handles, and tools designed for human
+                        hands. Humanoid robots can navigate these environments without requiring
+                        significant modifications to existing infrastructure.
+                    </p>
+
+                    <div class="info-box">
+                        <p>
+                            <strong>💡 Did you know?</strong> Modern humanoid robots like Boston
+                            Dynamics' Atlas and Tesla's Optimus can perform complex tasks like
+                            running, jumping, and manipulating objects with remarkable dexterity.
+                        </p>
+                    </div>
+
+                    <h2>Key Challenges</h2>
+                    <p>
+                        Building humanoid robots presents unique engineering challenges that
+                        researchers continue to solve.
+                    </p>
+
+                    <h3>Balance and Locomotion</h3>
+                    <p>
+                        Maintaining balance while walking on two legs is incredibly complex.
+                        Humanoid robots use advanced control algorithms, force sensors, and
+                        high-speed actuators to maintain stability in dynamic environments.
+                    </p>
+
+                    <h3>Manipulation</h3>
+                    <p>
+                        Human hands have 27 degrees of freedom. Replicating this dexterity in
+                        robotic hands while maintaining strength and precision is a major
+                        engineering challenge.
+                    </p>
+
+                    <h3>Perception</h3>
+                    <p>
+                        Humanoid robots need 360-degree awareness of their environment. This
+                        requires fusing data from multiple cameras, LiDAR, IMUs, and other
+                        sensors to create a complete understanding of the surroundings.
+                    </p>
+                `,
+                4: `
+                    <h1>Sensors and Perception</h1>
+                    
+                    <p>
+                        Sensors are the eyes, ears, and skin of robots. They provide the raw
+                        data that perception systems process to understand the environment.
+                        Without sensors, robots would be blind and unable to interact with
+                        the world.
+                    </p>
+
+                    <div class="highlight-box">
+                        <h3>🎯 Key Concept</h3>
+                        <p>
+                            Perception transforms raw sensor data into meaningful information
+                            about the environment, enabling robots to make informed decisions.
+                        </p>
+                    </div>
+
+                    <h2>Types of Sensors</h2>
+                    <p>
+                        Different sensors provide different types of information about the
+                        environment.
+                    </p>
+
+                    <div class="info-box">
+                        <p>
+                            <strong>💡 Did you know?</strong> A single robot might use 20+
+                            different sensors, each providing unique information about the
+                            environment.
+                        </p>
+                    </div>
+
+                    <h3>Cameras</h3>
+                    <p>
+                        Cameras capture visual information. RGB cameras provide color images,
+                        while depth cameras (like Intel RealSense) provide distance information
+                        for each pixel. Stereo cameras use two lenses to perceive depth, similar
+                        to human vision.
+                    </p>
+
+                    <h3>LiDAR</h3>
+                    <p>
+                        LiDAR (Light Detection and Ranging) uses laser pulses to measure
+                        distances. It creates precise 3D point clouds of the environment,
+                        making it essential for navigation and mapping.
+                    </p>
+
+                    <h3>IMU</h3>
+                    <p>
+                        Inertial Measurement Units (IMU) measure acceleration and angular
+                        velocity. They help robots understand their orientation and movement,
+                        crucial for balance and navigation.
+                    </p>
+
+                    <h3>Force/Torque Sensors</h3>
+                    <p>
+                        These sensors measure the forces and torques applied to robot joints
+                        or end-effectors. They're essential for delicate manipulation tasks
+                        and safe human-robot interaction.
+                    </p>
+                `,
+                5: `
+                    <h1>Motion Planning and Control</h1>
+                    
+                    <p>
+                        Motion planning is the process of finding a sequence of movements that
+                        takes a robot from its current state to a desired goal while avoiding
+                        obstacles and respecting physical constraints.
+                    </p>
+
+                    <div class="highlight-box">
+                        <h3>🎯 Key Concept</h3>
+                        <p>
+                            Motion planning answers "How do I get from point A to point B?"
+                            while control theory ensures "How do I execute that movement
+                            accurately?"
+                        </p>
+                    </div>
+
+                    <h2>The Planning Problem</h2>
+                    <p>
+                        Motion planning is computationally challenging. A humanoid robot might
+                        have 30+ joints (degrees of freedom), creating an enormous space of
+                        possible configurations to search through.
+                    </p>
+
+                    <div class="info-box">
+                        <p>
+                            <strong>💡 Did you know?</strong> State-of-the-art planners can
+                            find collision-free paths in milliseconds, enabling real-time
+                            obstacle avoidance.
+                        </p>
+                    </div>
+
+                    <h2>Planning Approaches</h2>
+                    <p>
+                        Different algorithms solve motion planning problems in different ways.
+                    </p>
+
+                    <h3>Sampling-Based Planning</h3>
+                    <p>
+                        Algorithms like RRT (Rapidly-exploring Random Trees) and PRM (Probabilistic
+                        Road Maps) randomly sample the configuration space to build a path.
+                        They're efficient for high-dimensional spaces.
+                    </p>
+
+                    <h3>Optimization-Based Planning</h3>
+                    <p>
+                        These methods formulate planning as an optimization problem, finding
+                        paths that minimize cost functions like energy, time, or jerk
+                        (rate of change of acceleration).
+                    </p>
+
+                    <h3>Control Methods</h3>
+                    <p>
+                        Once a path is planned, controllers execute it. PID controllers,
+                        model predictive control (MPC), and impedance control are common
+                        approaches that ensure accurate trajectory following.
+                    </p>
+                `,
+                6: `
+                    <h1>Machine Learning for Robotics</h1>
+                    
+                    <p>
+                        Machine learning enables robots to learn from experience rather than
+                        being explicitly programmed for every scenario. This is crucial for
+                        handling the complexity and variability of real-world environments.
+                    </p>
+
+                    <div class="highlight-box">
+                        <h3>🎯 Key Concept</h3>
+                        <p>
+                            ML allows robots to improve performance through experience, adapt
+                            to new situations, and handle tasks that are difficult to program
+                            explicitly.
+                        </p>
+                    </div>
+
+                    <h2>Learning Approaches</h2>
+                    <p>
+                        Different machine learning paradigms solve different robotics problems.
+                    </p>
+
+                    <div class="info-box">
+                        <p>
+                            <strong>💡 Did you know?</strong> Deep learning has revolutionized
+                            robot perception, enabling objects to be recognized with over 95%
+                            accuracy.
+                        </p>
+                    </div>
+
+                    <h3>Supervised Learning</h3>
+                    <p>
+                        Training on labeled data. Used for object recognition (this is a cup),
+                        semantic segmentation (this pixel is part of a table), and pose
+                        estimation (where is the elbow?).
+                    </p>
+
+                    <h3>Reinforcement Learning</h3>
+                    <p>
+                        Learning through trial and error with rewards. RL has enabled robots
+                        to learn complex behaviors like walking, grasping, and even playing
+                        soccer through millions of practice attempts.
+                    </p>
+
+                    <h3>Imitation Learning</h3>
+                    <p>
+                        Learning by watching humans demonstrate tasks. This is often faster
+                        than reinforcement learning and produces more natural behaviors.
+                    </p>
+
+                    <h3>Self-Supervised Learning</h3>
+                    <p>
+                        Learning from unlabeled data by creating supervisory signals from
+                        the data itself. This is crucial for scaling to large datasets.
+                    </p>
+                `,
+                7: `
+                    <h1>Vision-Language-Action Models</h1>
+                    
+                    <p>
+                        Vision-Language-Action (VLA) models represent the cutting edge of
+                        robotics AI. These models combine visual perception, language
+                        understanding, and action generation in a single unified system.
+                    </p>
+
+                    <div class="highlight-box">
+                        <h3>🎯 Key Concept</h3>
+                        <p>
+                            VLA models can understand instructions like "pick up the red cup"
+                            while processing camera images and generating appropriate motor
+                            commands.
+                        </p>
+                    </div>
+
+                    <h2>What are VLA Models?</h2>
+                    <p>
+                        VLA models are large neural networks trained on vast amounts of
+                        robot demonstration data. They take images and text as input and
+                        output robot actions.
+                    </p>
+
+                    <div class="info-box">
+                        <p>
+                            <strong>💡 Did you know?</strong> Google's RT-2 and DeepMind's
+                            GATO are examples of VLA models that can control real robots
+                            using natural language commands.
+                        </p>
+                    </div>
+
+                    <h2>Architecture</h2>
+                    <p>
+                        VLA models typically consist of several components working together.
+                    </p>
+
+                    <h3>Vision Encoder</h3>
+                    <p>
+                        Processes camera images using vision transformers (ViT) or CNNs to
+                        extract visual features about objects, their positions, and the
+                        environment.
+                    </p>
+
+                    <h3>Language Encoder</h3>
+                    <p>
+                        Processes natural language instructions using large language models
+                        to understand the task requirements.
+                    </p>
+
+                    <h3>Action Head</h3>
+                    <p>
+                        Generates robot actions (joint angles, end-effector poses, gripper
+                        commands) based on the fused visual and language information.
+                    </p>
+
+                    <h2>Training</h2>
+                    <p>
+                        VLA models are trained on massive datasets of robot demonstrations,
+                        often collected from multiple robots performing diverse tasks. This
+                        enables them to generalize to new situations.
+                    </p>
+                `,
+                8: `
+                    <h1>System Integration</h1>
+                    
+                    <p>
+                        System integration is the process of combining all robot components -
+                        sensors, actuators, computing, and software - into a cohesive system
+                        that works reliably in real-world conditions.
+                    </p>
+
+                    <div class="highlight-box">
+                        <h3>🎯 Key Concept</h3>
+                        <p>
+                            Integration is where theory meets reality. A well-integrated
+                            system is greater than the sum of its parts.
+                        </p>
+                    </div>
+
+                    <h2>Integration Challenges</h2>
+                    <p>
+                        Building a complete robot system involves solving numerous challenges
+                        that don't exist when components are tested in isolation.
+                    </p>
+
+                    <div class="info-box">
+                        <p>
+                            <strong>💡 Did you know?</strong> System integration can take 60-70%
+                            of the total development time for a complex robot project.
+                        </p>
+                    </div>
+
+                    <h3>Hardware Integration</h3>
+                    <p>
+                        Connecting sensors, computers, and actuators. Managing power distribution,
+                        cable routing, heat dissipation, and electromagnetic interference.
+                        Ensuring mechanical stability and serviceability.
+                    </p>
+
+                    <h3>Software Integration</h3>
+                    <p>
+                        Integrating perception, planning, and control software. Managing
+                        communication between processes, handling errors, and ensuring
+                        real-time performance.
+                    </p>
+
+                    <h3>Testing and Validation</h3>
+                    <p>
+                        Systematic testing at all levels - unit tests for individual components,
+                        integration tests for subsystems, and system tests for the complete
+                        robot. Validation ensures the robot meets requirements.
+                    </p>
+
+                    <h3>Deployment</h3>
+                    <p>
+                        Moving from lab to real-world deployment. Handling edge cases,
+                        ensuring safety, creating monitoring systems, and establishing
+                        maintenance procedures.
+                    </p>
+                `
+            };
+
+            return chapters[chapterNum] || chapters[1];
+        }
+    </script>
+</body>
+</html>

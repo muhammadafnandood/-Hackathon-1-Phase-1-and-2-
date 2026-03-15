@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <!-- Background Gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  
+  <!-- Decorative Circles -->
+  <circle cx="100" cy="100" r="200" fill="url(#accentGradient)" opacity="0.1"/>
+  <circle cx="1100" cy="530" r="300" fill="url(#accentGradient)" opacity="0.1"/>
+  
+  <!-- Robot Icon -->
+  <circle cx="200" cy="315" r="100" fill="none" stroke="url(#accentGradient)" stroke-width="6"/>
+  <circle cx="170" cy="285" r="15" fill="url(#accentGradient)"/>
+  <circle cx="230" cy="285" r="15" fill="url(#accentGradient)"/>
+  <rect x="155" y="335" width="90" height="15" rx="8" fill="url(#accentGradient)"/>
+  
+  <!-- Circuit Lines -->
+  <path d="M 350 315 L 450 315" stroke="url(#accentGradient)" stroke-width="3" opacity="0.5"/>
+  <path d="M 350 285 L 420 285" stroke="url(#accentGradient)" stroke-width="3" opacity="0.5"/>
+  <path d="M 350 345 L 420 345" stroke="url(#accentGradient)" stroke-width="3" opacity="0.5"/>
+  
+  <!-- Main Title -->
+  <text x="500" y="280" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="white">Physical AI</text>
+  
+  <!-- Subtitle -->
+  <text x="500" y="350" font-family="Arial, sans-serif" font-size="36" fill="#94a3b8">&amp; Humanoid Robotics</text>
+  
+  <!-- Tagline -->
+  <text x="500" y="420" font-family="Arial, sans-serif" font-size="24" fill="#64748b">Master the art of building intelligent humanoid robots</text>
+  
+  <!-- Module Badges -->
+  <rect x="500" y="470" width="180" height="50" rx="25" fill="url(#accentGradient)" opacity="0.2"/>
+  <text x="590" y="503" font-family="Arial, sans-serif" font-size="18" fill="url(#accentGradient)" text-anchor="middle">5 Modules</text>
+  
+  <rect x="700" y="470" width="180" height="50" rx="25" fill="url(#accentGradient)" opacity="0.2"/>
+  <text x="790" y="503" font-family="Arial, sans-serif" font-size="18" fill="url(#accentGradient)" text-anchor="middle">23 Chapters</text>
+  
+  <rect x="900" y="470" width="200" height="50" rx="25" fill="url(#accentGradient)" opacity="0.2"/>
+  <text x="1000" y="503" font-family="Arial, sans-serif" font-size="18" fill="url(#accentGradient)" text-anchor="middle">Hands-on Labs</text>
+</svg>

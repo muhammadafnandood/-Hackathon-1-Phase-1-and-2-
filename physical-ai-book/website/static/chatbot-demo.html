@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Demo - Physical AI Textbook</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        .demo-section {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 20px 0;
+        }
+
+        .demo-section h2 {
+            color: #1e293b;
+            font-size: 18px;
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+
+        .button-showcase {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        /* Custom Ask AI Button Styles */
+        .ask-ai-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ask-ai-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .ask-ai-button:active {
+            transform: translateY(0);
+        }
+
+        .ask-ai-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Alternative Button Styles */
+        .ask-ai-button.outline {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            box-shadow: none;
+        }
+
+        .ask-ai-button.outline:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .ask-ai-button.small {
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 8px;
+        }
+
+        .ask-ai-button.large {
+            padding: 18px 36px;
+            font-size: 18px;
+            border-radius: 16px;
+        }
+
+        .ask-ai-button.green {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .ask-ai-button.blue {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            margin: 16px 0;
+            overflow-x: auto;
+        }
+
+        .info-box {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .info-box h3 {
+            margin-top: 0;
+            color: #1e40af;
+        }
+
+        .info-box p {
+            color: #1e3a8a;
+            line-height: 1.6;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #667eea;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .feature-card h3 {
+            color: #1e293b;
+            font-size: 16px;
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        ul {
+            line-height: 1.8;
+            color: #475569;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .hackathon-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 RAG Chatbot - Hackathon Edition <span class="hackathon-badge">NEW FEATURES</span></h1>
+        <p class="subtitle">Physical AI Textbook - Advanced AI Assistant with Smart Features</p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Floating Chat Button</h3>
+                <p>Beautiful floating chat widget in bottom-right corner with smooth animations</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📝</div>
+                <h3>Text Selection Q&A</h3>
+                <p>Select any text on the page → Click "Ask AI about this" popup → Get instant explanations</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3>Chapter Citations</h3>
+                <p>Every answer shows source chapters and sections for verification and further reading</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Custom Buttons</h3>
+                <p>Add "Ask AI" buttons anywhere using simple onclick="openChat()" function</p>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h3>💡 How to Use</h3>
+            <p>
+                <strong>1. Floating Chat:</strong> Click the 💬 button in the bottom-right corner<br>
+                <strong>2. Text Selection:</strong> Select any paragraph on this page → Click the popup button<br>
+                <strong>3. Custom Buttons:</strong> Use the examples below or create your own
+            </p>
+        </div>
+
+        <div class="demo-section">
+            <h2>📌 Example 1: Basic "Ask AI" Button</h2>
+            <p>Simple button that opens the chat window:</p>
+            <button class="ask-ai-button" onclick="openChat()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+                Ask AI
+            </button>
+            <div class="code-block">
+&lt;button onclick="openChat()"&gt;
+    Ask AI
+&lt;/button&gt;
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>📌 Example 2: Styled Button Variants</h2>
+            <p>Different button styles using CSS classes:</p>
+            <div class="button-showcase">
+                <button class="ask-ai-button small" onclick="openChat()">
+                    Ask AI
+                </button>
+                <button class="ask-ai-button" onclick="openChat()">
+                    Ask AI
+                </button>
+                <button class="ask-ai-button large" onclick="openChat()">
+                    Ask AI
+                </button>
+            </div>
+            <div class="button-showcase">
+                <button class="ask-ai-button outline" onclick="openChat()">
+                    Ask AI
+                </button>
+                <button class="ask-ai-button green" onclick="openChat()">
+                    🌿 Ask AI
+                </button>
+                <button class="ask-ai-button blue" onclick="openChat()">
+                    💬 Ask AI
+                </button>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>📌 Example 3: Text Selection Feature (NEW!)</h2>
+            <p><strong>Try this:</strong> Select any text on this page (minimum 10 characters). A popup will appear asking "Ask AI about this". Click it to get an explanation!</p>
+            <div class="info-box" style="margin-top: 16px;">
+                <p>
+                    This feature uses smart text detection to show a contextual popup whenever you select text. 
+                    The chat window opens automatically with the selected text pre-filled as a question.
+                </p>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>📌 Example 4: Chapter Citations (NEW!)</h2>
+            <p>Every AI answer includes source citations at the bottom:</p>
+            <div class="code-block">
+Source: Chapter 1 – What is RAG?
+Source: Chapter 3 – Humanoid Robot Locomotion
+            </div>
+            <p>Click the sources panel below the answer to see all referenced chapters with relevance scores!</p>
+        </div>
+
+        <div class="demo-section">
+            <h2>🔧 API Integration</h2>
+            <p>The chatbot uses this API call format:</p>
+            <div class="code-block">
+fetch("http://localhost:8000/chat", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    question: userQuestion,
+    top_k: 5,
+    include_sources: true
+  })
+})
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>📖 Backend Status</h2>
+            <p><strong>API URL:</strong> <code id="api-url">http://localhost:8000</code></p>
+            <p><strong>Status:</strong> <span id="server-status">Checking...</span></p>
+            <p><strong>Vector Store:</strong> <span id="vector-status">-</span></p>
+            <p><strong>Total Chunks:</strong> <span id="chunk-count">-</span></p>
+            
+            <button class="ask-ai-button" style="margin-top: 16px;" onclick="checkStatus()">
+                🔄 Refresh Status
+            </button>
+        </div>
+
+        <div class="demo-section">
+            <h2>📚 Available Textbook Chapters</h2>
+            <ul class="feature-list">
+                <li>Chapter 1: Introduction to RAG Systems</li>
+                <li>Chapter 2: Vector Databases and Embeddings</li>
+                <li>Chapter 3: Introduction to Physical AI</li>
+                <li>Chapter 4: Humanoid Robotics Fundamentals</li>
+                <li>Chapter 5: ROS 2 for Robotics Development</li>
+                <li>Chapter 6: Sensors and Perception Systems</li>
+                <li>Chapter 7: Motion Planning and Control</li>
+                <li>Chapter 8: Machine Learning for Robotics</li>
+                <li>Chapter 9: Vision-Language-Action (VLA) Models</li>
+                <li>Chapter 10: Digital Twins and Simulation</li>
+                <li>Chapter 11: System Integration and Deployment</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Load the chat widget -->
+    <script src="/js/chat-widget.js"></script>
+    
+    <script>
+        // Check server status
+        async function checkStatus() {
+            const statusEl = document.getElementById('server-status');
+            const vectorEl = document.getElementById('vector-status');
+            const chunkCountEl = document.getElementById('chunk-count');
+            const apiUrlEl = document.getElementById('api-url');
+            
+            try {
+                const response = await fetch('http://localhost:8000/health');
+                const data = await response.json();
+
+                apiUrlEl.textContent = 'http://localhost:8000';
+                
+                statusEl.innerHTML = data.status === 'healthy'
+                    ? '<span style="background: #d1fae5; color: #065f46; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">✓ Online</span>'
+                    : '<span style="background: #fef3c7; color: #92400e; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">⚠ Degraded</span>';
+
+                vectorEl.innerHTML = data.vector_store_connected
+                    ? '<span style="background: #d1fae5; color: #065f46; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">✓ Connected</span>'
+                    : '<span style="background: #fee2e2; color: #991b1b; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">✗ Disconnected</span>';
+
+                chunkCountEl.textContent = data.vector_count || 0;
+            } catch (error) {
+                statusEl.innerHTML = '<span style="background: #fee2e2; color: #991b1b; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">✗ Offline</span>';
+                vectorEl.textContent = 'Unknown';
+                chunkCountEl.textContent = 'Unknown';
+            }
+        }
+
+        // Check status on load
+        checkStatus();
+    </script>
+</body>
+</html>

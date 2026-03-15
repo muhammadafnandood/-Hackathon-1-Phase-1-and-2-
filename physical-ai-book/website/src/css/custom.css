@@ -1,0 +1,200 @@
+/**
+ * Custom CSS for Physical AI Textbook
+ * Imports beige theme and adds Docusaurus-specific overrides
+ */
+
+/* Import Beige Theme */
+@import url('/docs/styles/beige-theme.css');
+
+/* Docusaurus-specific overrides */
+
+:root {
+  /* Use beige theme colors */
+  --ifm-color-primary: #8B7060;
+  --ifm-color-primary-dark: #6F5545;
+  --ifm-color-primary-darker: #5A4535;
+  --ifm-color-primary-darkest: #4A3525;
+  --ifm-color-primary-light: #A69080;
+  --ifm-color-primary-lighter: #C4B0A0;
+  --ifm-color-primary-lightest: #DCD0C0;
+  
+  /* Typography */
+  --ifm-font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --ifm-font-size-base: 16px;
+  --ifm-line-height-base: 1.6;
+  
+  /* Spacing */
+  --ifm-spacing-horizontal: 2rem;
+  
+  /* Code blocks */
+  --ifm-code-font-size: 0.9em;
+  --ifm-code-border-radius: 6px;
+}
+
+/* Hero section on homepage */
+.hero-section {
+  background: linear-gradient(135deg, #F5F1E8 0%, #EBE5D5 100%);
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.hero-section h1 {
+  color: #5A4535;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero-section p {
+  color: #6F5545;
+  font-size: 1.25rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Module cards */
+.module-card {
+  background: linear-gradient(180deg, #F9F7F2 0%, #F5F1E8 100%);
+  border: 1px solid #EBE5D5;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.module-card:hover {
+  box-shadow: 0 10px 15px rgba(74, 53, 37, 0.1);
+  transform: translateY(-2px);
+}
+
+.module-card h3 {
+  color: #5A4535;
+  margin-bottom: 0.5rem;
+}
+
+.module-card p {
+  color: #6F5545;
+}
+
+/* Sidebar customization */
+.menu__link--active {
+  color: #8B7060;
+  background: #F5F1E8;
+  border-left: 3px solid #8B7060;
+}
+
+.menu__link:hover {
+  background: #EBE5D5;
+}
+
+/* Table of contents */
+.table-of-contents__link--active {
+  color: #8B7060;
+  font-weight: 600;
+}
+
+/* Code blocks */
+.code-block {
+  border: 1px solid #EBE5D5;
+}
+
+/* Admonitions */
+.admonition {
+  border-left: 4px solid #A69080;
+}
+
+.admonition.admonition-info {
+  border-left-color: #8B7060;
+  background: #F9F7F2;
+}
+
+.admonition.admonition-warning {
+  border-left-color: #6F5545;
+  background: #F5F1E8;
+}
+
+.admonition.admonition-danger {
+  border-left-color: #4A3525;
+  background: #EBE5D5;
+}
+
+/* Buttons */
+.button {
+  border-radius: 6px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.button--primary {
+  background: #8B7060;
+  border-color: #8B7060;
+}
+
+.button--primary:hover {
+  background: #6F5545;
+  border-color: #6F5545;
+}
+
+.button--secondary {
+  background: #F5F1E8;
+  color: #5A4535;
+  border-color: #C4B0A0;
+}
+
+.button--secondary:hover {
+  background: #EBE5D5;
+}
+
+/* Footer */
+.footer {
+  background: #4A3525;
+  color: #DCD0C0;
+}
+
+.footer a {
+  color: #C4B0A0;
+}
+
+.footer a:hover {
+  color: #EBE5D5;
+}
+
+/* Urdu language support */
+[dir='rtl'] {
+  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+}
+
+[dir='rtl'] .hero-section h1,
+[dir='rtl'] .hero-section p {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 2rem 1rem;
+  }
+  
+  .hero-section h1 {
+    font-size: 2rem;
+  }
+  
+  .module-card {
+    padding: 1rem;
+  }
+}
+
+/* Print styles */
+@media print {
+  .navbar,
+  .menu,
+  .footer,
+  .table-of-contents {
+    display: none;
+  }
+  
+  :root {
+    --ifm-color-primary: #000000;
+    background: #ffffff;
+  }
+}

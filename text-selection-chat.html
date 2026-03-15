@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Selection Q&A</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f8fafc;
+        }
+        .content {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .content p {
+            color: #475569;
+            line-height: 1.8;
+        }
+        #ask-ai-popup {
+            position: fixed;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
+            display: none;
+            z-index: 10000;
+        }
+        #answer-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            display: none;
+            margin-top: 20px;
+        }
+        #answer-box.show { display: block; }
+        .citation {
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 13px;
+            color: #64748b;
+        }
+        .citation-item {
+            background: #f1f5f9;
+            padding: 6px 12px;
+            border-radius: 6px;
+            margin-right: 8px;
+            margin-top: 8px;
+            display: inline-block;
+        }
+        .citation-item a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .citation-item a:hover {
+            text-decoration: underline;
+        }
+        .confidence-badge {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .translate-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            transition: all 0.2s;
+        }
+
+        .translate-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .urdu-text {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-top: 12px;
+            font-size: 15px;
+            line-height: 1.8;
+            direction: rtl;
+            display: none;
+        }
+
+        .urdu-text.show {
+            display: block;
+        }
+
+        .toggle-lang-btn {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .toggle-lang-btn.show {
+            display: inline-block;
+        }
+
+        .toggle-lang-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .level-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .level-selector label {
+            font-weight: 600;
+            color: #475569;
+            font-size: 14px;
+        }
+
+        .level-selector select {
+            flex: 1;
+            padding: 8px 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .level-selector select:hover {
+            border-color: #667eea;
+        }
+
+        .level-selector select:focus {
+            border-color: #667eea;
+        }
+
+        /* Diagram Container */
+        .diagram-container {
+            background: #fafafa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 12px;
+            overflow-x: auto;
+        }
+
+        .diagram-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #1e293b;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .diagram {
+            display: flex;
+            justify-content: center;
+            padding: 16px 0;
+        }
+
+        .diagram-controls {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            justify-content: flex-end;
+        }
+
+        .diagram-btn {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+        .diagram-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .loading {
+            color: #667eea;
+            font-style: italic;
+        }
+
+        .error { color: #dc2626; background: #fee2e2; padding: 12px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div id="ask-ai-popup" onclick="askSelectedText()">💬 Ask AI about this</div>
+
+    <div class="level-selector" style="max-width: 800px; margin: 0 auto 20px;">
+        <label for="user-level">📊 Your Level:</label>
+        <select id="user-level">
+            <option value="Beginner">🌱 Beginner - Simple language</option>
+            <option value="Student">📚 Student - Educational explanation</option>
+            <option value="Engineer">⚙️ Engineer - Technical details</option>
+            <option value="Researcher">🔬 Researcher - In-depth analysis</option>
+        </select>
+    </div>
+
+    <div class="content">
+        <h2>📖 ROS 2 Introduction</h2>
+        <p>
+            ROS 2 (Robot Operating System 2) is a set of software libraries and tools 
+            for building robot applications. It uses a publish-subscribe model for 
+            communication between nodes. This decentralized architecture makes ROS 2 
+            highly scalable and suitable for complex robotic systems.
+        </p>
+        <p>
+            Key features include support for real-time systems, improved security 
+            through DDS (Data Distribution Service), and better support for multi-robot 
+            systems. It is widely used in research and industry for developing 
+            autonomous robots.
+        </p>
+    </div>
+
+    <div class="content">
+        <h2>🤖 Humanoid Robotics</h2>
+        <p>
+            Humanoid robots are robots that resemble the human body in shape and 
+            structure. They typically have a head, torso, two arms, and two legs. 
+            Modern humanoid robots use advanced sensors, actuators, and AI algorithms 
+            to perceive their environment and perform human-like tasks.
+        </p>
+    </div>
+
+    <div id="answer-box">
+        <h3>📝 AI Answer:</h3>
+        <div id="answer-content"></div>
+        <div id="citations" class="citation"></div>
+    </div>
+
+    <script>
+        let selectedText = "";
+
+        document.addEventListener('mouseup', function() {
+            setTimeout(function() {
+                selectedText = window.getSelection().toString().trim();
+                const popup = document.getElementById('ask-ai-popup');
+
+                if (selectedText.length > 10) {
+                    const range = window.getSelection().getRangeAt(0);
+                    const rect = range.getBoundingClientRect();
+
+                    popup.style.display = 'block';
+                    popup.style.left = (rect.left + rect.width/2 - 80) + 'px';
+                    popup.style.top = (rect.top - 45 + window.scrollY) + 'px';
+                } else {
+                    popup.style.display = 'none';
+                }
+            }, 10);
+        });
+
+        async function askSelectedText() {
+            const answerBox = document.getElementById('answer-box');
+            const answerContent = document.getElementById('answer-content');
+            const citationsDiv = document.getElementById('citations');
+            const levelSelect = document.getElementById('user-level');
+
+            document.getElementById('ask-ai-popup').style.display = 'none';
+            answerBox.classList.add('show');
+            answerContent.innerHTML = '<span class="loading">Thinking... 🤔</span>';
+            citationsDiv.innerHTML = '';
+
+            const userLevel = levelSelect.value;
+
+            try {
+                const res = await fetch("http://127.0.0.1:8000/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ 
+                        message: selectedText,
+                        level: userLevel
+                    })
+                });
+
+                const data = await res.json();
+
+                // Detect if we should show a diagram
+                const diagramInfo = detectDiagram(selectedText);
+
+                // Display answer with Urdu translation button and diagram (handle both 'answer' and 'response')
+                const answerText = data.answer || data.response || "Sorry, I couldn't generate a response.";
+                const answerId = 'answer-' + Date.now();
+                answerContent.innerHTML = `
+                    <div id="${answerId}-text">${escapeHtml(answerText)}</div>
+                    <button class="translate-btn" onclick="translateToUrdu('${answerId}', '${escapeHtml(answerText).replace(/'/g, "\\'")}')" style="margin-top: 12px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 8l6 6M11 8l-6 6M8 4v16M19 8l-6 6M13 8l6 6M16 4v16"/>
+                        </svg>
+                        Translate to Urdu
+                    </button>
+                    <div class="urdu-text" id="${answerId}-urdu"></div>
+                    <button class="toggle-lang-btn" id="${answerId}-toggle" onclick="toggleLanguage('${answerId}')">
+                        Show Urdu
+                    </button>
+                    ${diagramInfo ? `
+                        <div class="diagram-container">
+                            <div class="diagram-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                    <polyline points="2 17 12 22 22 17"></polyline>
+                                    <polyline points="2 12 12 17 22 12"></polyline>
+                                </svg>
+                                ${diagramInfo.title}
+                            </div>
+                            <div class="diagram" id="${answerId}-diagram"></div>
+                            <div class="diagram-controls">
+                                <button class="diagram-btn" onclick="zoomDiagram('${answerId}-diagram', 0.1)">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                        <line x1="11" y1="8" x2="11" y2="14"></line>
+                                        <line x1="8" y1="11" x2="14" y2="11"></line>
+                                    </svg>
+                                    Zoom In
+                                </button>
+                                <button class="diagram-btn" onclick="zoomDiagram('${answerId}-diagram', -0.1)">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                        <line x1="8" y1="11" x2="14" y2="11"></line>
+                                    </svg>
+                                    Zoom Out
+                                </button>
+                            </div>
+                        </div>
+                    ` : ''}
+                `;
+
+                // Render diagram if detected
+                if (diagramInfo) {
+                    renderDiagram(`${answerId}-diagram`, diagramInfo.mermaid);
+                }
+
+                if (data.sources && data.sources.length > 0) {
+                    const firstSource = data.sources[0];
+                    const chapter = firstSource.chapter || "Unknown";
+                    // Extract chapter number for URL
+                    const chapterNum = chapter.replace(/Chapter\s*/gi, '');
+                    const chapterUrl = `/docs/chapter${chapterNum}`;
+                    const confidenceScore = data.confidence ? Math.round(data.confidence) : null;
+
+                    citationsDiv.innerHTML = `
+                        <div class="citation-item">
+                            <a href="${chapterUrl}" target="_blank">Source: ${chapter}</a>
+                            ${confidenceScore !== null ? `<span class="confidence-badge">Confidence: ${confidenceScore}%</span>` : ''}
+                        </div>
+                    `;
+                }
+
+            } catch (err) {
+                answerContent.innerHTML = `<div class="error">❌ ${err.message}</div>`;
+            }
+        }
+
+        // Escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Translate to Urdu
+        async function translateToUrdu(answerId, text) {
+            const urduTextEl = document.getElementById(`${answerId}-urdu`);
+            const toggleBtn = document.getElementById(`${answerId}-toggle`);
+
+            if (!urduTextEl || !toggleBtn) return;
+
+            // Show loading
+            urduTextEl.textContent = 'ترجمہ ہو رہا ہے...';
+            urduTextEl.classList.add('show');
+            toggleBtn.classList.add('show');
+
+            try {
+                const response = await fetch("http://127.0.0.1:8000/api/translate/urdu", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        content: text,
+                        language: 'urdu'
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Translation failed');
+                }
+
+                const data = await response.json();
+
+                // Display Urdu translation
+                urduTextEl.textContent = data.translated;
+                toggleBtn.textContent = 'Show Urdu';
+
+            } catch (error) {
+                urduTextEl.textContent = '❌ Translation failed. Please try again.';
+                console.error('Translation error:', error);
+            }
+        }
+
+        // Toggle between English and Urdu
+        function toggleLanguage(answerId) {
+            const urduTextEl = document.getElementById(`${answerId}-urdu`);
+            const toggleBtn = document.getElementById(`${answerId}-toggle`);
+
+            if (!urduTextEl || !toggleBtn) return;
+
+            if (urduTextEl.style.display === 'none' || urduTextEl.style.display === '') {
+                urduTextEl.style.display = 'block';
+                toggleBtn.textContent = 'Show English';
+            } else {
+                urduTextEl.style.display = 'none';
+                toggleBtn.textContent = 'Show Urdu';
+            }
+        }
+
+        // Diagram templates
+        const DIAGRAM_TEMPLATES = {
+            ros2_pubsub: {
+                title: '🏗️ ROS 2 Publisher-Subscriber Architecture',
+                mermaid: `graph LR
+    subgraph ROS2_Network["ROS 2 Network"]
+        direction LR
+        subgraph Node1["Node 1"]
+            P1[Publisher]
+        end
+        subgraph Node2["Node 2"]
+            S1[Subscriber]
+        end
+        T[("Topic: /sensor_data")]
+    end
+    P1 -->|Publishes| T
+    T -->|Subscribes| S1
+    T -->|Subscribes| S2
+    style Node1 fill:#4CAF50,color:#fff
+    style Node2 fill:#2196F3,color:#fff
+    style T fill:#FF9800,color:#fff`
+            },
+            rag_pipeline: {
+                title: '🏗️ RAG Pipeline Architecture',
+                mermaid: `graph TD
+    User[("User Query")] --> Embed[Embedding Model]
+    subgraph Retrieval["Retrieval Phase"]
+        Embed --> Search[("Vector Search<br/>Qdrant")]
+        Search --> Rank[Rank Results]
+        Rank --> Retrieve[Retrieve Chunks]
+    end
+    subgraph Generation["Generation Phase"]
+        Retrieve --> Context[Build Context]
+        Context --> Prompt[Construct Prompt]
+        Prompt --> LLM[("LLM<br/>GPT")]
+        LLM --> Answer[Generate Answer]
+    end
+    Answer --> Output[("Response + Sources")]
+    style User fill:#E3F2FD
+    style Embed fill:#FFF3E0
+    style LLM fill:#FFEBEE
+    style Output fill:#E0F2F1`
+            }
+        };
+
+        const DIAGRAM_KEYWORDS = {
+            ros2_pubsub: ['ros 2 publisher', 'ros 2 subscriber', 'publish subscribe', 'ros 2 communication'],
+            rag_pipeline: ['rag pipeline', 'rag architecture', 'retrieval augmentation', 'vector search']
+        };
+
+        // Detect diagram
+        function detectDiagram(query) {
+            const queryLower = query.toLowerCase();
+            for (const [type, keywords] of Object.entries(DIAGRAM_KEYWORDS)) {
+                for (const keyword of keywords) {
+                    if (queryLower.includes(keyword)) {
+                        return DIAGRAM_TEMPLATES[type];
+                    }
+                }
+            }
+            if (queryLower.includes('architecture') || queryLower.includes('diagram')) {
+                if (queryLower.includes('ros')) return DIAGRAM_TEMPLATES.ros2_pubsub;
+                if (queryLower.includes('rag')) return DIAGRAM_TEMPLATES.rag_pipeline;
+            }
+            return null;
+        }
+
+        // Render diagram
+        function renderDiagram(containerId, mermaidCode) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            if (typeof mermaid === 'undefined') {
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js';
+                script.onload = () => {
+                    mermaid.initialize({ startOnLoad: false, theme: 'default' });
+                    renderMermaid(container, mermaidCode);
+                };
+                document.head.appendChild(script);
+            } else {
+                renderMermaid(container, mermaidCode);
+            }
+        }
+
+        function renderMermaid(element, mermaidCode) {
+            const diagramId = 'mermaid-' + Date.now();
+            element.innerHTML = `<div id="${diagramId}"></div>`;
+            mermaid.render(diagramId, mermaidCode).then(({ svg }) => {
+                element.innerHTML = svg;
+            }).catch(error => {
+                console.error('Mermaid error:', error);
+                element.innerHTML = '<p style="color: #dc2626;">❌ Diagram rendering failed</p>';
+            });
+        }
+
+        window.zoomDiagram = function(containerId, delta) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const svg = container.querySelector('svg');
+            if (!svg) return;
+            const scale = parseFloat(svg.getAttribute('data-scale') || 1);
+            const newScale = Math.max(0.5, Math.min(2, scale + delta));
+            svg.setAttribute('data-scale', newScale);
+            svg.style.transform = `scale(${newScale})`;
+        };
+    </script>
+</body>
+</html>

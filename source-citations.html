@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Source Citations - Physical AI Textbook</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            color: #1e293b;
+            margin-bottom: 16px;
+        }
+
+        .header p {
+            font-size: 18px;
+            color: #64748b;
+        }
+
+        .chat-container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin-bottom: 24px;
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 16px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .message {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 32px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .message.ai .message-avatar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .message.user .message-avatar {
+            background: #e2e8f0;
+        }
+
+        .message-content {
+            flex: 1;
+            max-width: 80%;
+        }
+
+        .message-text {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 16px;
+            font-size: 15px;
+            line-height: 1.8;
+            color: #334155;
+            margin-bottom: 16px;
+        }
+
+        .message.user .message-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        /* Source Citations */
+        .source-citations {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 16px;
+        }
+
+        .source-citations h4 {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .source-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .source-item {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 50px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: #1e293b;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .source-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+        }
+
+        .source-item svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .confidence-badge {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        /* Example Section */
+        .examples-section {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .examples-section h2 {
+            font-size: 24px;
+            color: #1e293b;
+            margin-bottom: 24px;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .example-card {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s;
+        }
+
+        .example-card:hover {
+            border-color: #667eea;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(102, 126, 234, 0.2);
+        }
+
+        .example-card h3 {
+            font-size: 18px;
+            color: #1e293b;
+            margin-bottom: 16px;
+        }
+
+        .example-card .message-text {
+            background: white;
+            margin-bottom: 16px;
+        }
+
+        .example-card .source-citations {
+            background: white;
+            border-color: #bbf7d0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Source Citations</h1>
+            <p>Every answer shows source chapters with clickable links</p>
+        </div>
+
+        <div class="chat-container">
+            <div class="chat-input-area">
+                <input type="text" class="chat-input" id="chatInput" 
+                       placeholder="Ask a question..." 
+                       value="What is ROS 2?">
+                <button class="send-btn" onclick="sendMessage()">
+                    📤 Send
+                </button>
+            </div>
+
+            <div id="messagesContainer">
+                <!-- Messages will appear here -->
+            </div>
+        </div>
+
+        <div class="examples-section">
+            <h2>📋 Example Citations</h2>
+            <div class="example-grid">
+                <!-- Example 1 -->
+                <div class="example-card">
+                    <h3>Example 1: Technical Question</h3>
+                    <div class="message-text">
+                        ROS 2 is a middleware framework for robotics that provides communication between processes using a publish-subscribe architecture.
+                    </div>
+                    <div class="source-citations">
+                        <h4>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                            </svg>
+                            Sources:
+                        </h4>
+                        <div class="source-list">
+                            <a href="/docs/chapter1" target="_blank" class="source-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                Chapter 1 – Introduction
+                            </a>
+                            <a href="/docs/chapter5" target="_blank" class="source-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                Chapter 5 – ROS 2 Basics
+                            </a>
+                        </div>
+                        <div class="confidence-badge">Confidence: 92%</div>
+                    </div>
+                </div>
+
+                <!-- Example 2 -->
+                <div class="example-card">
+                    <h3>Example 2: Concept Question</h3>
+                    <div class="message-text">
+                        SLAM allows a robot to build a map of an unknown environment while simultaneously tracking its location within that map.
+                    </div>
+                    <div class="source-citations">
+                        <h4>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                            </svg>
+                            Sources:
+                        </h4>
+                        <div class="source-list">
+                            <a href="/docs/chapter4" target="_blank" class="source-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                Chapter 4 – Sensors & Perception
+                            </a>
+                            <a href="/docs/chapter7" target="_blank" class="source-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                Chapter 7 – Navigation
+                            </a>
+                        </div>
+                        <div class="confidence-badge">Confidence: 87%</div>
+                    </div>
+                </div>
+
+                <!-- Example 3 -->
+                <div class="example-card">
+                    <h3>Example 3: Advanced Question</h3>
+                    <div class="message-text">
+                        VLA models combine vision encoders, language models, and action heads to enable robots to follow natural language instructions.
+                    </div>
+                    <div class="source-citations">
+                        <h4>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                            </svg>
+                            Sources:
+                        </h4>
+                        <div class="source-list">
+                            <a href="/docs/chapter9" target="_blank" class="source-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                Chapter 9 – Vision-Language Models
+                            </a>
+                            <a href="/docs/chapter10" target="_blank" class="source-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                Chapter 10 – Action Generation
+                            </a>
+                            <a href="/docs/chapter3" target="_blank" class="source-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                Chapter 3 – Deep Learning
+                            </a>
+                        </div>
+                        <div class="confidence-badge">Confidence: 95%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample answers with sources
+        const sampleAnswers = {
+            'ros': {
+                answer: "ROS 2 (Robot Operating System 2) is a flexible framework for writing robot software. It provides tools and libraries to help you create robot applications, including hardware abstraction, device drivers, communication between processes, and package management. ROS 2 uses a publish-subscribe architecture that makes it easy to build complex robot systems from simpler components.",
+                sources: [
+                    { chapter: "Chapter 1", title: "Introduction", url: "/docs/chapter1" },
+                    { chapter: "Chapter 5", title: "ROS 2 Basics", url: "/docs/chapter5" },
+                    { chapter: "Chapter 6", title: "Communication Patterns", url: "/docs/chapter6" }
+                ],
+                confidence: 92
+            },
+            'slam': {
+                answer: "SLAM (Simultaneous Localization and Mapping) is a computational method where a robot constructs a map of an unknown environment while simultaneously estimating its own pose within that map. It uses sensors like LiDAR, cameras, or IMU to detect features and match them over time to build a consistent map while tracking the robot's location.",
+                sources: [
+                    { chapter: "Chapter 4", title: "Sensors & Perception", url: "/docs/chapter4" },
+                    { chapter: "Chapter 7", title: "Navigation", url: "/docs/chapter7" },
+                    { chapter: "Chapter 8", title: "State Estimation", url: "/docs/chapter8" }
+                ],
+                confidence: 87
+            },
+            'vla': {
+                answer: "VLA (Vision-Language-Action) models are large neural networks that combine visual perception, language understanding, and action generation. They take camera images and text instructions as input, process them through multimodal transformers, and output robot actions. This enables robots to follow natural language commands like 'pick up the red cup'.",
+                sources: [
+                    { chapter: "Chapter 9", title: "Vision-Language Models", url: "/docs/chapter9" },
+                    { chapter: "Chapter 10", title: "Action Generation", url: "/docs/chapter10" },
+                    { chapter: "Chapter 3", title: "Deep Learning", url: "/docs/chapter3" }
+                ],
+                confidence: 95
+            },
+            'default': {
+                answer: "That's a great question about robotics and AI! The textbook covers this topic in detail across multiple chapters. Each chapter builds on concepts from previous chapters, so I recommend starting from the beginning if you're new to the subject.",
+                sources: [
+                    { chapter: "Chapter 1", title: "Introduction", url: "/docs/chapter1" },
+                    { chapter: "Chapter 2", title: "Physical AI Fundamentals", url: "/docs/chapter2" }
+                ],
+                confidence: 75
+            }
+        };
+
+        // Send message
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const question = input.value.trim();
+            
+            if (!question) {
+                alert('Please enter a question!');
+                return;
+            }
+
+            // Add user message
+            addMessage(question, 'user');
+            input.value = '';
+
+            // Determine which answer to show
+            const q = question.toLowerCase();
+            let selectedAnswer = sampleAnswers.default;
+            
+            if (q.includes('ros') || q.includes('ros 2')) {
+                selectedAnswer = sampleAnswers.ros;
+            } else if (q.includes('slam')) {
+                selectedAnswer = sampleAnswers.slam;
+            } else if (q.includes('vla') || q.includes('vision language')) {
+                selectedAnswer = sampleAnswers.vla;
+            }
+
+            // Simulate AI response delay
+            setTimeout(() => {
+                addMessage(selectedAnswer.answer, 'ai', selectedAnswer.sources, selectedAnswer.confidence);
+            }, 500);
+        }
+
+        // Add message
+        function addMessage(text, type, sources = null, confidence = null) {
+            const container = document.getElementById('messagesContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            
+            const avatar = type === 'user' ? '👤' : '🤖';
+            
+            let sourcesHTML = '';
+            if (sources && sources.length > 0) {
+                sourcesHTML = `
+                    <div class="source-citations">
+                        <h4>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                            </svg>
+                            Sources:
+                        </h4>
+                        <div class="source-list">
+                            ${sources.map(source => `
+                                <a href="${source.url}" target="_blank" class="source-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                        <polyline points="15 3 21 3 21 9"></polyline>
+                                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                                    </svg>
+                                    ${source.chapter} – ${source.title}
+                                </a>
+                            `).join('')}
+                        </div>
+                        ${confidence ? `<div class="confidence-badge">Confidence: ${confidence}%</div>` : ''}
+                    </div>
+                `;
+            }
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${avatar}</div>
+                <div class="message-content">
+                    <div class="message-text">${text}</div>
+                    ${sourcesHTML}
+                </div>
+            `;
+            
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Handle Enter key
+        document.getElementById('chatInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Add welcome message
+        window.addEventListener('load', function() {
+            addMessage("Hi! I'm your textbook assistant. Ask me anything about ROS 2, SLAM, VLA models, or related topics. I'll show you the source chapters for each answer!", 'ai');
+        });
+    </script>
+</body>
+</html>

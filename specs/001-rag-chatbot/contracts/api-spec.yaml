@@ -1,0 +1,549 @@
+# API Specification: RAG Chatbot
+
+**Feature**: 001-rag-chatbot  
+**Date**: 2026-03-14  
+**Format**: OpenAPI 3.0.3  
+**Base URL**: `/api`
+
+---
+
+## OpenAPI Specification
+
+```yaml
+openapi: 3.0.3
+info:
+  title: RAG Chatbot API
+  description: |
+    API for the Physical AI & Humanoid Robotics textbook RAG chatbot.
+    
+    This API provides endpoints for:
+    - Asking questions about textbook content
+    - Searching for relevant chunks
+    - Ingesting new content into the knowledge base
+  version: 1.0.0
+  contact:
+    name: RAG Chatbot Team
+
+servers:
+  - url: https://api-rag-chatbot.example.com/api
+    description: Production server
+  - url: http://localhost:8000/api
+    description: Local development server
+
+tags:
+  - name: Chat
+    description: Question-answer interactions
+  - name: Search
+    description: Search textbook content
+  - name: Ingestion
+    description: Knowledge base management
+  - name: Health
+    description: Health check endpoints
+
+paths:
+  /chat:
+    post:
+      tags:
+        - Chat
+      summary: Ask a question
+      description: |
+        Submit a question about the textbook content and receive an answer
+        with citations to the source chapters.
+      operationId: askQuestion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatRequest'
+      responses:
+        '200':
+          description: Successful response with answer and citations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatResponse'
+        '400':
+          description: Invalid request (empty query, malformed JSON)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error (LLM API error, Qdrant unavailable)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-rate-limit:
+        requests: 60
+        period: 1 minute
+
+  /search:
+    get:
+      tags:
+        - Search
+      summary: Search chunks
+      description: |
+        Search for relevant content chunks by query string.
+        Returns chunks ranked by relevance with chapter citations.
+      operationId: searchChunks
+      parameters:
+        - name: q
+          in: query
+          required: true
+          description: Search query string
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 500
+        - name: chapter
+          in: query
+          required: false
+          description: Filter by chapter ID (optional)
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          description: Maximum number of results (default: 10)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 10
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+        '400':
+          description: Invalid query parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /ingest:
+    post:
+      tags:
+        - Ingestion
+      summary: Ingest content
+      description: |
+        Trigger ingestion of textbook chapters into the knowledge base.
+        Requires authentication (API key or admin token).
+      operationId: ingestContent
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IngestRequest'
+      responses:
+        '200':
+          description: Ingestion completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IngestResponse'
+        '401':
+          description: Unauthorized (missing or invalid API key)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Ingestion failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /health:
+    get:
+      tags:
+        - Health
+      summary: Health check
+      description: Check if the API is healthy and all dependencies are connected.
+      operationId: healthCheck
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+        '503':
+          description: Service unavailable (dependency failure)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key for ingestion endpoint
+
+  schemas:
+    ChatRequest:
+      type: object
+      required:
+        - query
+      properties:
+        query:
+          type: string
+          description: User's question
+          minLength: 1
+          maxLength: 1000
+          example: "What are the key components of physical AI?"
+        session_id:
+          type: string
+          description: Session identifier for conversation history
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        selected_text:
+          type: string
+          description: Text selected by user for context (optional)
+          maxLength: 2000
+          example: "Physical AI refers to..."
+        chapter_filter:
+          type: string
+          description: Limit search to specific chapter (optional)
+          example: "module1-ros2-basics"
+
+    ChatResponse:
+      type: object
+      required:
+        - answer
+        - citations
+      properties:
+        answer:
+          type: string
+          description: Generated answer from LLM
+          example: "Physical AI consists of perception, planning, and action components..."
+        citations:
+          type: array
+          description: List of cited sources
+          items:
+            $ref: '#/components/schemas/Citation'
+        session_id:
+          type: string
+          description: Session ID for conversation continuity
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        message_id:
+          type: string
+          description: ID of this message for reference
+          example: "660e8400-e29b-41d4-a716-446655440001"
+
+    Citation:
+      type: object
+      required:
+        - chapter_id
+        - chapter_title
+        - section
+        - content
+        - relevance_score
+      properties:
+        chapter_id:
+          type: string
+          description: Chapter identifier
+          example: "module1-ros2-basics"
+        chapter_title:
+          type: string
+          description: Full chapter title
+          example: "Module 1: ROS 2 Basics"
+        section:
+          type: string
+          description: Section heading within chapter
+          example: "1.2 Nodes and Topics"
+        content:
+          type: string
+          description: Relevant chunk text (truncated if long)
+          maxLength: 500
+          example: "ROS 2 nodes are the basic unit of computation..."
+        relevance_score:
+          type: number
+          format: float
+          description: Similarity score (0-1)
+          minimum: 0
+          maximum: 1
+          example: 0.87
+
+    SearchResponse:
+      type: object
+      required:
+        - results
+        - total
+      properties:
+        results:
+          type: array
+          description: List of matching chunks
+          items:
+            $ref: '#/components/schemas/SearchResult'
+        total:
+          type: integer
+          description: Total number of matches
+          example: 15
+
+    SearchResult:
+      type: object
+      required:
+        - chunk_id
+        - chapter_id
+        - chapter_title
+        - section
+        - content
+        - score
+      properties:
+        chunk_id:
+          type: string
+          example: "module1-ros2-basics-section-1-chunk-1"
+        chapter_id:
+          type: string
+          example: "module1-ros2-basics"
+        chapter_title:
+          type: string
+          example: "Module 1: ROS 2 Basics"
+        section:
+          type: string
+          example: "1.1 What is ROS 2?"
+        content:
+          type: string
+          description: Chunk content (truncated)
+          maxLength: 300
+          example: "ROS 2 is a middleware for robotics systems..."
+        score:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          example: 0.92
+
+    IngestRequest:
+      type: object
+      required:
+        - mode
+      properties:
+        mode:
+          type: string
+          enum:
+            - full
+            - incremental
+            - chapter
+          description: Ingestion mode
+          example: "full"
+        chapter_path:
+          type: string
+          description: Required when mode is "chapter"
+          example: "docs/module1/ros2-basics.md"
+
+    IngestResponse:
+      type: object
+      required:
+        - status
+        - chapters_processed
+        - chunks_created
+      properties:
+        status:
+          type: string
+          enum:
+            - success
+            - partial
+            - failed
+          example: "success"
+        chapters_processed:
+          type: integer
+          description: Number of chapters processed
+          example: 25
+        chunks_created:
+          type: integer
+          description: Number of chunks created/updated
+          example: 342
+        errors:
+          type: array
+          description: List of errors encountered (if any)
+          items:
+            type: string
+          example: []
+
+    HealthResponse:
+      type: object
+      required:
+        - status
+        - timestamp
+      properties:
+        status:
+          type: string
+          enum:
+            - healthy
+            - degraded
+            - unhealthy
+          description: Overall health status
+          example: "healthy"
+        timestamp:
+          type: string
+          format: date-time
+          example: "2026-03-14T10:30:00Z"
+        components:
+          type: object
+          description: Status of individual components
+          properties:
+            api:
+              type: string
+              enum: [up, down]
+              example: "up"
+            qdrant:
+              type: string
+              enum: [up, down]
+              example: "up"
+            postgres:
+              type: string
+              enum: [up, down]
+              example: "up"
+            llm_api:
+              type: string
+              enum: [up, down]
+              example: "up"
+
+    Error:
+      type: object
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+          description: Error code
+          example: "INVALID_REQUEST"
+        message:
+          type: string
+          description: Human-readable error message
+          example: "The 'query' field is required and must not be empty."
+        details:
+          type: object
+          description: Additional error details (optional)
+          additionalProperties: true
+```
+
+---
+
+## Endpoint Details
+
+### POST /chat
+
+**Purpose**: Submit a question and receive an answer with citations.
+
+**Request Flow**:
+1. Validate request (query not empty)
+2. Generate embedding for query (+ selected_text if provided)
+3. Search Qdrant for top-k chunks (apply chapter_filter if present)
+4. Pass chunks to OpenAI Agents SDK as context
+5. Generate response with citations
+6. Store message in database
+7. Return response
+
+**Response Codes**:
+| Code | Meaning | Action |
+|------|---------|--------|
+| 200 | Success | Display answer with citations |
+| 400 | Bad request | Show validation error to user |
+| 500 | Server error | Show generic error, log for debugging |
+
+---
+
+### GET /search
+
+**Purpose**: Search for relevant content chunks (used for browsing/exploration).
+
+**Query Parameters**:
+- `q` (required): Search query
+- `chapter` (optional): Filter by chapter ID
+- `limit` (optional): Max results (default: 10, max: 50)
+
+**Response**: Ranked list of chunks with relevance scores.
+
+---
+
+### POST /ingest
+
+**Purpose**: Trigger content ingestion into the knowledge base.
+
+**Authentication**: Requires `X-API-Key` header.
+
+**Modes**:
+- `full`: Re-ingest all chapters (slow, comprehensive)
+- `incremental`: Only ingest changed files (fast, differential)
+- `chapter`: Ingest specific chapter (targeted)
+
+**Security**: API key should be stored as environment variable, not committed to Git.
+
+---
+
+### GET /health
+
+**Purpose**: Monitor service health for deployment dashboards.
+
+**Status Values**:
+- `healthy`: All components operational
+- `degraded`: Some components failing (e.g., LLM API down, but Qdrant up)
+- `unhealthy`: Critical component failure (API cannot function)
+
+---
+
+## Error Handling
+
+### Error Response Format
+
+```json
+{
+  "error": "ERROR_CODE",
+  "message": "Human-readable description",
+  "details": {
+    "field": "additional context"
+  }
+}
+```
+
+### Error Codes
+
+| Code | HTTP Status | Description |
+|------|-------------|-------------|
+| INVALID_REQUEST | 400 | Request validation failed |
+| NOT_FOUND | 404 | Resource not found |
+| UNAUTHORIZED | 401 | Missing or invalid API key |
+| RATE_LIMITED | 429 | Too many requests |
+| INTERNAL_ERROR | 500 | Unexpected server error |
+| SERVICE_UNAVAILABLE | 503 | Dependency unavailable |
+
+---
+
+## Rate Limiting
+
+**Default Limits**:
+- `/chat`: 60 requests per minute per IP
+- `/search`: 100 requests per minute per IP
+- `/ingest`: 10 requests per hour (admin only)
+
+**Headers**:
+```
+X-RateLimit-Limit: 60
+X-RateLimit-Remaining: 45
+X-RateLimit-Reset: 1647283200
+```
+
+---
+
+## Versioning
+
+**Strategy**: URL versioning (if needed in future)
+
+**Current**: v1 (implicit)
+
+**Future**: `/api/v2/chat` for breaking changes

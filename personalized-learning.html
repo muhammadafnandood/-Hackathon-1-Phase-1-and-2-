@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Learning - Physical AI Textbook</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        /* Level Selection Screen */
+        .level-screen {
+            background: white;
+            border-radius: 24px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .level-screen h1 {
+            font-size: 36px;
+            color: #1e293b;
+            margin-bottom: 16px;
+        }
+
+        .level-screen p {
+            font-size: 18px;
+            color: #64748b;
+            margin-bottom: 40px;
+        }
+
+        .level-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .level-card {
+            background: #f8fafc;
+            border: 3px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 32px 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .level-card:hover {
+            transform: translateY(-8px);
+            border-color: #667eea;
+            box-shadow: 0 12px 24px rgba(102, 126, 234, 0.2);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .level-card:hover .level-icon,
+        .level-card:hover .level-title,
+        .level-card:hover .level-desc {
+            color: white;
+        }
+
+        .level-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .level-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 12px;
+        }
+
+        .level-desc {
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        /* Learning Screen */
+        .learning-screen {
+            display: none;
+        }
+
+        .learning-header {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .learning-header h1 {
+            font-size: 32px;
+            color: #1e293b;
+            margin-bottom: 16px;
+        }
+
+        .level-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .change-level-btn {
+            background: #f1f5f9;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-left: 12px;
+            transition: all 0.2s;
+        }
+
+        .change-level-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .question-section {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .question-section h2 {
+            font-size: 24px;
+            color: #1e293b;
+            margin-bottom: 24px;
+        }
+
+        .question-input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            margin-bottom: 16px;
+            transition: border-color 0.2s;
+        }
+
+        .question-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .ask-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .ask-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .answer-section {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .answer-section h2 {
+            font-size: 24px;
+            color: #1e293b;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .answer-content {
+            background: #f0fdf4;
+            border: 2px solid #bbf7d0;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+
+        .answer-content h3 {
+            font-size: 18px;
+            color: #166534;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .answer-content p {
+            font-size: 16px;
+            color: #166534;
+            line-height: 1.8;
+        }
+
+        .level-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .comparison-card {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 24px;
+            border-left: 4px solid #667eea;
+        }
+
+        .comparison-card h4 {
+            font-size: 16px;
+            color: #1e293b;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .comparison-card p {
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .example-box {
+            background: #fffbeb;
+            border: 2px solid #fcd34d;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 24px;
+        }
+
+        .example-box h3 {
+            font-size: 16px;
+            color: #92400e;
+            margin-bottom: 12px;
+        }
+
+        .example-box pre {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #1e293b;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Level Selection Screen -->
+        <div class="level-screen" id="levelScreen">
+            <h1>🎓 Select Your Learning Level</h1>
+            <p>Choose your expertise level to get personalized explanations</p>
+
+            <div class="level-grid">
+                <div class="level-card" onclick="selectLevel('Beginner')">
+                    <div class="level-icon">🌱</div>
+                    <div class="level-title">Beginner</div>
+                    <div class="level-desc">
+                        Simple language with analogies and basic concepts. Perfect if you're new to robotics.
+                    </div>
+                </div>
+
+                <div class="level-card" onclick="selectLevel('Student')">
+                    <div class="level-icon">📚</div>
+                    <div class="level-title">Student</div>
+                    <div class="level-desc">
+                        Educational explanations with technical details. Great for university students.
+                    </div>
+                </div>
+
+                <div class="level-card" onclick="selectLevel('Engineer')">
+                    <div class="level-icon">⚙️</div>
+                    <div class="level-title">Engineer</div>
+                    <div class="level-desc">
+                        Technical depth with implementation details. For practicing engineers.
+                    </div>
+                </div>
+
+                <div class="level-card" onclick="selectLevel('Researcher')">
+                    <div class="level-icon">🔬</div>
+                    <div class="level-title">Researcher</div>
+                    <div class="level-desc">
+                        In-depth analysis with cutting-edge concepts. For researchers and experts.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Screen -->
+        <div class="learning-screen" id="learningScreen">
+            <div class="learning-header">
+                <div class="level-badge" id="currentLevelBadge">
+                    <span id="currentLevelIcon">🌱</span>
+                    <span id="currentLevelText">Beginner</span>
+                    <button class="change-level-btn" onclick="changeLevel()">Change Level</button>
+                </div>
+                <h1>Personalized Learning</h1>
+                <p style="color: #64748b; font-size: 16px;">
+                    Explanations adapted to your expertise level
+                </p>
+            </div>
+
+            <div class="question-section">
+                <h2>❓ Ask a Question</h2>
+                <input type="text" class="question-input" id="questionInput" 
+                       placeholder="What is SLAM?">
+                <button class="ask-btn" onclick="askQuestion()">Get Explanation</button>
+            </div>
+
+            <div class="answer-section" id="answerSection" style="display: none;">
+                <h2>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    AI Explanation
+                </h2>
+                <div class="answer-content" id="answerContent"></div>
+
+                <div class="example-box">
+                    <h3>💡 See How Explanations Change by Level</h3>
+                    <div class="level-comparison">
+                        <div class="comparison-card">
+                            <h4>🌱 Beginner</h4>
+                            <p>SLAM means a robot can build a map and know its location at the same time.</p>
+                        </div>
+                        <div class="comparison-card">
+                            <h4>📚 Student</h4>
+                            <p>SLAM is a technique where a robot creates a map of an unknown place while tracking where it is in that map.</p>
+                        </div>
+                        <div class="comparison-card">
+                            <h4>⚙️ Engineer</h4>
+                            <p>SLAM is a computational method where a robot constructs a map of an unknown environment while simultaneously estimating its own pose within that map.</p>
+                        </div>
+                        <div class="comparison-card">
+                            <h4>🔬 Researcher</h4>
+                            <p>SLAM is a probabilistic state estimation problem involving concurrent map building and localization in unstructured environments, typically solved using Extended Kalman Filters, Particle Filters, or graph-based optimization.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentLevel = 'Beginner';
+
+        // Select level
+        function selectLevel(level) {
+            currentLevel = level;
+            
+            // Update badge
+            const icons = {
+                'Beginner': '🌱',
+                'Student': '📚',
+                'Engineer': '⚙️',
+                'Researcher': '🔬'
+            };
+
+            document.getElementById('currentLevelIcon').textContent = icons[level];
+            document.getElementById('currentLevelText').textContent = level;
+
+            // Show learning screen
+            document.getElementById('levelScreen').style.display = 'none';
+            document.getElementById('learningScreen').style.display = 'block';
+
+            // Auto-ask example question
+            setTimeout(() => {
+                document.getElementById('questionInput').value = 'What is SLAM?';
+                askQuestion();
+            }, 500);
+        }
+
+        // Change level
+        function changeLevel() {
+            document.getElementById('learningScreen').style.display = 'none';
+            document.getElementById('levelScreen').style.display = 'block';
+        }
+
+        // Ask question
+        function askQuestion() {
+            const question = document.getElementById('questionInput').value.trim();
+            
+            if (!question) {
+                alert('Please enter a question!');
+                return;
+            }
+
+            // Get answer based on level
+            const answer = getPersonalizedAnswer(question, currentLevel);
+
+            // Display answer
+            document.getElementById('answerContent').innerHTML = answer;
+            document.getElementById('answerSection').style.display = 'block';
+
+            // Scroll to answer
+            document.getElementById('answerSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Get personalized answer
+        function getPersonalizedAnswer(question, level) {
+            const q = question.toLowerCase();
+
+            // SLAM explanations
+            if (q.includes('slam')) {
+                if (level === 'Beginner') {
+                    return `
+                        <h3>🌱 Beginner Explanation</h3>
+                        <p>
+                            <strong>SLAM</strong> means a robot can build a map and know its location at the same time.
+                        </p>
+                        <p style="margin-top: 12px;">
+                            Think of it like this: Imagine you're in a dark room with a flashlight. As you walk around, 
+                            you use the light to see where walls and furniture are. At the same time, you remember where 
+                            you started and how you moved. SLAM is how robots do the same thing!
+                        </p>
+                        <p style="margin-top: 12px;">
+                            <strong>Simple analogy:</strong> It's like drawing a map of your house while walking through 
+                            it blindfolded, but also keeping track of where you are on that map as you go.
+                        </p>
+                    `;
+                } else if (level === 'Student') {
+                    return `
+                        <h3>📚 Student Explanation</h3>
+                        <p>
+                            <strong>SLAM (Simultaneous Localization and Mapping)</strong> is a technique where a robot 
+                            creates a map of an unknown place while tracking where it is in that map.
+                        </p>
+                        <p style="margin-top: 12px;">
+                            The robot uses sensors like cameras, LiDAR, or sonar to detect features in the environment. 
+                            It then uses this information to do two things at once:
+                        </p>
+                        <ul style="margin-top: 12px; margin-left: 20px;">
+                            <li><strong>Build a map</strong> of the surroundings</li>
+                            <li><strong>Estimate its own position</strong> within that map</li>
+                        </ul>
+                        <p style="margin-top: 12px;">
+                            <strong>Key challenge:</strong> The robot needs to know where it is to build the map, but it 
+                            needs the map to know where it is! SLAM algorithms solve this "chicken and egg" problem using 
+                            mathematical techniques like Kalman Filters or Particle Filters.
+                        </p>
+                    `;
+                } else if (level === 'Engineer') {
+                    return `
+                        <h3>⚙️ Engineer Explanation</h3>
+                        <p>
+                            <strong>SLAM (Simultaneous Localization and Mapping)</strong> is a computational method where 
+                            a robot constructs a map of an unknown environment while simultaneously estimating its own 
+                            pose within that map.
+                        </p>
+                        <p style="margin-top: 12px;">
+                            <strong>Technical Implementation:</strong>
+                        </p>
+                        <ul style="margin-top: 12px; margin-left: 20px;">
+                            <li><strong>Sensor Input:</strong> LiDAR point clouds, RGB-D camera data, or stereo vision</li>
+                            <li><strong>Feature Extraction:</strong> SIFT, ORB, or learned features for visual SLAM</li>
+                            <li><strong>Data Association:</strong> Matching current observations with map landmarks</li>
+                            <li><strong>State Estimation:</strong> EKF-SLAM, FastSLAM, or graph-based optimization</li>
+                            <li><strong>Loop Closure:</strong> Detecting previously visited locations to correct drift</li>
+                        </ul>
+                        <p style="margin-top: 12px;">
+                            <strong>Common Algorithms:</strong>
+                        </p>
+                        <ul style="margin-top: 12px; margin-left: 20px;">
+                            <li><strong>EKF-SLAM:</strong> Extended Kalman Filter for state estimation</li>
+                            <li><strong>Graph-SLAM:</strong> Pose graph optimization with g2o or GTSAM</li>
+                            <li><strong>Visual SLAM:</strong> ORB-SLAM, DSO, or VINS-Mono for camera-based systems</li>
+                        </ul>
+                    `;
+                } else if (level === 'Researcher') {
+                    return `
+                        <h3>🔬 Researcher Explanation</h3>
+                        <p>
+                            <strong>SLAM</strong> is a probabilistic state estimation problem involving concurrent map 
+                            building and localization in unstructured environments, typically formulated as a maximum 
+                            a posteriori (MAP) estimation problem.
+                        </p>
+                        <p style="margin-top: 12px;">
+                            <strong>Mathematical Formulation:</strong>
+                        </p>
+                        <pre style="margin-top: 12px; background: white; padding: 16px; border-radius: 8px; font-family: monospace;">
+p(x₁:t, m | z₁:t, u₁:t) ∝ p(x₀) ∏ p(zᵢ|xᵢ, m) ∏ p(xᵢ|xᵢ₋₁, uᵢ)
+
+where:
+  x₁:t = robot trajectory
+  m = map
+  z₁:t = observations
+  u₁:t = control inputs</pre>
+                        <p style="margin-top: 12px;">
+                            <strong>State-of-the-Art Approaches:</strong>
+                        </p>
+                        <ul style="margin-top: 12px; margin-left: 20px;">
+                            <li><strong>Factor Graph Optimization:</strong> iSAM2, GTSAM with incremental smoothing</li>
+                            <li><strong>Direct Methods:</strong> DSO, SVO - photometric error minimization</li>
+                            <li><strong>Learning-Based:</strong> DeepVO, Neural SLAM with neural representations</li>
+                            <li><strong>Semantic SLAM:</strong> Incorporating object-level constraints</li>
+                            <li><strong>Multi-Agent SLAM:</strong> Collaborative mapping with robot teams</li>
+                        </ul>
+                        <p style="margin-top: 12px;">
+                            <strong>Current Research Challenges:</strong> Long-term autonomy, dynamic environments, 
+                            semantic understanding, and neural implicit representations (NeRF-SLAM).
+                        </p>
+                    `;
+                }
+            }
+
+            // ROS 2 explanations
+            if (q.includes('ros') || q.includes('ros 2')) {
+                if (level === 'Beginner') {
+                    return `
+                        <h3>🌱 Beginner Explanation</h3>
+                        <p>
+                            <strong>ROS 2</strong> is like a messaging app for robots. It helps different parts of a 
+                            robot talk to each other.
+                        </p>
+                        <p style="margin-top: 12px;">
+                            Imagine a robot has a camera for eyes, wheels for moving, and a brain for thinking. 
+                            ROS 2 is like WhatsApp that lets the camera send pictures to the brain, and the brain 
+                            send commands to the wheels!
+                        </p>
+                    `;
+                } else if (level === 'Student') {
+                    return `
+                        <h3>📚 Student Explanation</h3>
+                        <p>
+                            <strong>ROS 2 (Robot Operating System 2)</strong> is a middleware framework for robotics 
+                            that provides communication between processes using a publish-subscribe architecture.
+                        </p>
+                        <p style="margin-top: 12px;">
+                            <strong>Key Concepts:</strong>
+                        </p>
+                        <ul style="margin-top: 12px; margin-left: 20px;">
+                            <li><strong>Nodes:</strong> Independent programs that perform specific tasks</li>
+                            <li><strong>Topics:</strong> Channels for message passing (like radio stations)</li>
+                            <li><strong>Publishers:</strong> Nodes that send messages</li>
+                            <li><strong>Subscribers:</strong> Nodes that receive messages</li>
+                        </ul>
+                        <p style="margin-top: 12px;">
+                            ROS 2 uses DDS (Data Distribution Service) as its underlying communication layer, 
+                            providing real-time performance and reliability.
+                        </p>
+                    `;
+                } else if (level === 'Engineer') {
+                    return `
+                        <h3>⚙️ Engineer Explanation</h3>
+                        <p>
+                            <strong>ROS 2</strong> is a distributed middleware framework implementing a 
+                            publish-subscribe pattern over DDS (Data Distribution Service) for robotics applications.
+                        </p>
+                        <p style="margin-top: 12px;">
+                            <strong>Architecture Components:</strong>
+                        </p>
+                        <ul style="margin-top: 12px; margin-left: 20px;">
+                            <li><strong>rclcpp/rclpy:</strong> Client libraries for C++ and Python</li>
+                            <li><strong>rmw:</strong> ROS Middleware Interface - abstraction layer over DDS</li>
+                            <li><strong>DDS Implementations:</strong> FastDDS, CycloneDDS, OpenDDS</li>
+                            <li><strong>QoS Policies:</strong> Reliability, durability, history, and liveliness settings</li>
+                        </ul>
+                        <p style="margin-top: 12px;">
+                            <strong>Communication Patterns:</strong>
+                        </p>
+                        <ul style="margin-top: 12px; margin-left: 20px;">
+                            <li><strong>Topics:</strong> Async publish-subscribe for streaming data</li>
+                            <li><strong>Services:</strong> Sync request-response for RPC-style calls</li>
+                            <li><strong>Actions:</strong> Long-running tasks with feedback and cancellation</li>
+                            <li><strong>Parameters:</strong> Runtime configuration</li>
+                        </ul>
+                    `;
+                } else if (level === 'Researcher') {
+                    return `
+                        <h3>🔬 Researcher Explanation</h3>
+                        <p>
+                            <strong>ROS 2</strong> implements a data-centric publish-subscribe middleware architecture 
+                            leveraging OMG DDS specification, providing deterministic communication with configurable 
+                            QoS policies for heterogeneous robotic systems.
+                        </p>
+                        <p style="margin-top: 12px;">
+                            <strong>Research Extensions:</strong>
+                        </p>
+                        <ul style="margin-top: 12px; margin-left: 20px;">
+                            <li><strong>ROS 2-ROS 1 Bridge:</strong> Interoperability with legacy systems</li>
+                            <li><strong>Security (SROS 2):</strong> DDS-Security integration for authentication and encryption</li>
+                            <li><strong>Real-time Extensions:</strong> PREEMPT_RT kernel patches with lock-free data structures</li>
+                            <li><strong>Multi-Robot Systems:</strong> ROS 2 multi-agent coordination frameworks</li>
+                            <li><strong>Edge-Cloud Integration:</strong> ROS 2 with cloud robotics and fog computing</li>
+                        </ul>
+                        <p style="margin-top: 12px;">
+                            <strong>Current Research:</strong> Integration with 5G networks, time-sensitive networking (TSN), 
+                            and semantic communication for autonomous systems.
+                        </p>
+                    `;
+                }
+            }
+
+            // Default response
+            return `
+                <h3>${getLevelIcon(level)} ${level} Explanation</h3>
+                <p>
+                    Great question about "${escapeHtml(question)}"! The explanation varies based on your level:
+                </p>
+                <ul style="margin-top: 12px; margin-left: 20px;">
+                    <li><strong>Beginner:</strong> Simple analogies and basic concepts</li>
+                    <li><strong>Student:</strong> Educational details with examples</li>
+                    <li><strong>Engineer:</strong> Technical implementation and trade-offs</li>
+                    <li><strong>Researcher:</strong> Advanced concepts and state-of-the-art</li>
+                </ul>
+                <p style="margin-top: 12px;">
+                    Try asking about <strong>"SLAM"</strong> or <strong>"ROS 2"</strong> to see level-specific explanations!
+                </p>
+            `;
+        }
+
+        // Get level icon
+        function getLevelIcon(level) {
+            const icons = {
+                'Beginner': '🌱',
+                'Student': '📚',
+                'Engineer': '⚙️',
+                'Researcher': '🔬'
+            };
+            return icons[level] || '📖';
+        }
+
+        // Escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Handle Enter key
+        document.getElementById('questionInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                askQuestion();
+            }
+        });
+    </script>
+</body>
+</html>

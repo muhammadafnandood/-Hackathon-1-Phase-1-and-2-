@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Chat Widget</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+        }
+        .test-box {
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>💬 Chat Widget Test</h1>
+    
+    <div class="test-box">
+        <h2>Test 1: Floating Chat Button</h2>
+        <p>The purple chat button should appear in bottom-right corner.</p>
+        <p><strong>Click it to open chat!</strong></p>
+    </div>
+
+    <div class="test-box">
+        <h2>Test 2: Text Selection</h2>
+        <p>Select this text: "ROS 2 is a robotics middleware for building robot applications"</p>
+        <p>A popup should appear saying "💬 Ask AI about this"</p>
+    </div>
+
+    <div class="test-box">
+        <h2>Test 3: Backend Connection</h2>
+        <p id="status">Checking backend...</p>
+    </div>
+
+    <script>
+        // Check backend
+        fetch('http://localhost:8000/health')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('status').innerHTML = 
+                    `<strong style="color: green;">✅ Backend is ${data.status}</strong>`;
+            })
+            .catch(err => {
+                document.getElementById('status').innerHTML = 
+                    `<strong style="color: red;">❌ Backend not reachable</strong>`;
+            });
+    </script>
+
+    <!-- Load chat widget -->
+    <script src="rag-chatbot/chat-widget.js"></script>
+</body>
+</html>

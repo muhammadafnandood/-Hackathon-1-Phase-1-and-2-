@@ -1,0 +1,176 @@
+---
+sidebar_label: 'Test Components'
+---
+
+# MDX Component Test Page
+
+This page tests all the custom MDX components created for Module 4.
+
+## 🎯 Learning Objectives
+
+<ObjectiveList>
+- Test TabGroup and TabItem components
+- Test CollapsibleSection and CodeCollapsible
+- Test all Admonition types
+- Test LabBox component
+- Test MermaidDiagram component
+</ObjectiveList>
+
+---
+
+## Tabs Component Test
+
+<TabGroup groupId="test-tabs" persist>
+  <TabItem value="concept" label="Concept" icon="📚">
+    This is the **Concept** tab content.
+    
+    Tabs should:
+    - Switch smoothly between content
+    - Persist state in localStorage
+    - Support keyboard navigation
+  </TabItem>
+  
+  <TabItem value="example" label="Example" icon="💻">
+    This is the **Example** tab content.
+    
+    ```python
+    def hello_world():
+        print("Hello from TabItem!")
+    ```
+  </TabItem>
+  
+  <TabItem value="lab" label="Hands-on Lab" icon="🔬">
+    This is the **Lab** tab content.
+    
+    Try building your own tab group!
+  </TabItem>
+</TabGroup>
+
+---
+
+## Collapsible Components Test
+
+<CollapsibleSection title="Click to Expand: Advanced Topics" icon="🧮">
+  This content is hidden until you click the header!
+  
+  ### Subsection
+  
+  Collapsible sections are great for:
+  - Hiding advanced content
+  - Reducing cognitive load
+  - Progressive disclosure
+  
+  <CodeCollapsible title="Show Hidden Code Example" language="python">
+{`def advanced_function():
+    """This code is hidden by default."""
+    print("You found the hidden code!")
+    return True`}
+  </CodeCollapsible>
+</CollapsibleSection>
+
+---
+
+## Admonitions Test
+
+<TipAdmonition title="Pro Tip: Component Usage">
+  This is a **TipAdmonition**. Use it to highlight pro tips and best practices.
+  
+  Components should be imported automatically!
+</TipAdmonition>
+
+<WarningAdmonition title="Warning: Test Content">
+  This is a **WarningAdmonition**. Use it for warnings and cautions.
+  
+  Always test your components before deployment!
+</WarningAdmonition>
+
+<NoteAdmonition title="Note: Additional Information">
+  This is a **NoteAdmonition**. Use it for additional context.
+  
+  Remember to check browser compatibility.
+</NoteAdmonition>
+
+<SafetyAdmonition title="Safety Critical: Hardware Testing">
+  This is a **SafetyAdmonition**. Use it for safety-critical warnings.
+  
+  **ALWAYS** implement emergency stop before testing on physical hardware!
+</SafetyAdmonition>
+
+---
+
+## Lab Box Test
+
+<LabBox 
+  duration="30 min" 
+  difficulty="intermediate"
+  simulationAvailable={true}
+  hardwareRequired={["ROS2 installed", "Python 3.10+", "OpenAI API key"]}
+>
+
+### Task: Build Your First Component
+
+1. Create a new React component
+2. Add TypeScript props
+3. Style with CSS modules
+4. Test in isolation
+
+### Steps
+
+```bash
+# Create component file
+mkdir src/components/MyComponent
+touch src/components/MyComponent/index.tsx
+```
+
+</LabBox>
+
+---
+
+## Diagram Test
+
+<MermaidDiagram>
+{`graph TD
+    A[User Input] --> B{LLM Processing}
+    B --> C[Action Parser]
+    C --> D[ROS2 Executor]
+    D --> E[Robot Action]
+    B --> F[RAG Context]
+    F --> B
+`}
+</MermaidDiagram>
+
+<ArchitectureDiagram title="System Architecture" caption="This diagram shows the complete LLM-robotics pipeline">
+
+<MermaidDiagram>
+{`graph LR
+    subgraph Frontend
+        A[Docusaurus]
+        B[MDX Components]
+    end
+    
+    subgraph Backend
+        C[FastAPI]
+        D[Qdrant]
+        E[OpenAI API]
+    end
+    
+    A --> C
+    B --> C
+    C --> D
+    C --> E
+`}
+</MermaidDiagram>
+
+</ArchitectureDiagram>
+
+---
+
+## Summary
+
+✅ All components tested successfully!
+
+- Tabs: Working with persistence
+- Collapsibles: Smooth animations
+- Admonitions: All 4 types rendered
+- LabBox: Full functionality
+- Diagrams: Mermaid rendering
