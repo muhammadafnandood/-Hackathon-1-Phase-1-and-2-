@@ -1,0 +1,26 @@
+{
+  "id": "module2/chapter4-unity-visualization",
+  "title": "Chapter 4: Unity Robot Visualization",
+  "description": "Learning Objectives",
+  "source": "@site/docs/module2/chapter4-unity-visualization.md",
+  "sourceDirName": "module2",
+  "slug": "/module2/chapter4-unity-visualization",
+  "permalink": "/docs/module2/chapter4-unity-visualization",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/module2/chapter4-unity-visualization.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "sidebar_label": "4. Unity Robot Visualization"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "3. Physics and Sensors",
+    "permalink": "/docs/module2/chapter3-physics-and-sensors"
+  },
+  "next": {
+    "title": "5. Building the Digital Twin",
+    "permalink": "/docs/module2/chapter5-building-digital-twin"
+  }
+}

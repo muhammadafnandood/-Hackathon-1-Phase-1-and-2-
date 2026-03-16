@@ -1,0 +1,15 @@
+{
+  "id": "module3/code/README",
+  "title": "Module 3 Code Examples",
+  "description": "This directory contains executable code examples for all chapters in Module 3: AI Robot Brain (NVIDIA Isaac).",
+  "source": "@site/docs/module3/code/README.md",
+  "sourceDirName": "module3/code",
+  "slug": "/module3/code/",
+  "permalink": "/docs/module3/code/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/module3/code/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

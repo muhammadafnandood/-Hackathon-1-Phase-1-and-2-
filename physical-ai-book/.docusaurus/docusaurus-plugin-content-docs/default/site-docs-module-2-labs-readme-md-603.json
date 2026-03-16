@@ -1,0 +1,15 @@
+{
+  "id": "module2/labs/README",
+  "title": "Module 2 Labs",
+  "description": "This directory contains hands-on lab exercises for Module 2: The Digital Twin (Gazebo & Unity).",
+  "source": "@site/docs/module2/labs/README.md",
+  "sourceDirName": "module2/labs",
+  "slug": "/module2/labs/",
+  "permalink": "/docs/module2/labs/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/module2/labs/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

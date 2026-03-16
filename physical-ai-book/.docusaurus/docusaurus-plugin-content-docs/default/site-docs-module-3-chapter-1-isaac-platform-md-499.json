@@ -1,0 +1,26 @@
+{
+  "id": "module3/chapter1-isaac-platform",
+  "title": "Chapter 1: NVIDIA Isaac Platform",
+  "description": "Learning Objectives",
+  "source": "@site/docs/module3/chapter1-isaac-platform.md",
+  "sourceDirName": "module3",
+  "slug": "/module3/chapter1-isaac-platform",
+  "permalink": "/docs/module3/chapter1-isaac-platform",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/module3/chapter1-isaac-platform.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "sidebar_label": "1. NVIDIA Isaac Platform"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "5. Building the Digital Twin",
+    "permalink": "/docs/module2/chapter5-building-digital-twin"
+  },
+  "next": {
+    "title": "2. Synthetic Data & Simulation",
+    "permalink": "/docs/module3/chapter2-synthetic-data"
+  }
+}

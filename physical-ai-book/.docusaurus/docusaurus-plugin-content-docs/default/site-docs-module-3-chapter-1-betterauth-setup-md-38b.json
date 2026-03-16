@@ -1,0 +1,17 @@
+{
+  "id": "module3/chapter1-betterauth-setup",
+  "title": "Chapter 1: BetterAuth for RAG System",
+  "description": "Authentication Architecture",
+  "source": "@site/docs/module3/chapter1-betterauth-setup.md",
+  "sourceDirName": "module3",
+  "slug": "/module3/chapter1-betterauth-setup",
+  "permalink": "/docs/module3/chapter1-betterauth-setup",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/module3/chapter1-betterauth-setup.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "sidebar_label": "1. BetterAuth Setup"
+  }
+}

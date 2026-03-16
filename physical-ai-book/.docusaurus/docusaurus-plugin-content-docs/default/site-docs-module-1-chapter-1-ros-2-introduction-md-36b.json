@@ -1,0 +1,22 @@
+{
+  "id": "module1/chapter1-ros2-introduction",
+  "title": "Chapter 1: ROS2 Introduction",
+  "description": "Installation",
+  "source": "@site/docs/module1/chapter1-ros2-introduction.md",
+  "sourceDirName": "module1",
+  "slug": "/module1/chapter1-ros2-introduction",
+  "permalink": "/docs/module1/chapter1-ros2-introduction",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/module1/chapter1-ros2-introduction.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "sidebar_label": "1. ROS2 Introduction"
+  },
+  "sidebar": "tutorialSidebar",
+  "next": {
+    "title": "2. ROS2 Communication",
+    "permalink": "/docs/module1/chapter2-ros2-communication"
+  }
+}

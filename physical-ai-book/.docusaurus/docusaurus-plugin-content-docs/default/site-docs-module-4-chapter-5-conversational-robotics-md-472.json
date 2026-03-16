@@ -1,0 +1,22 @@
+{
+  "id": "module4/chapter5-conversational-robotics",
+  "title": "Chapter 5: Conversational Robotics Systems",
+  "description": "Learning Objectives",
+  "source": "@site/docs/module4/chapter5-conversational-robotics.md",
+  "sourceDirName": "module4",
+  "slug": "/module4/chapter5-conversational-robotics",
+  "permalink": "/docs/module4/chapter5-conversational-robotics",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/module4/chapter5-conversational-robotics.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "sidebar_label": "5. Conversational Robotics"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "4. Multimodal Interaction",
+    "permalink": "/docs/module4/chapter4-multimodal-interaction"
+  }
+}

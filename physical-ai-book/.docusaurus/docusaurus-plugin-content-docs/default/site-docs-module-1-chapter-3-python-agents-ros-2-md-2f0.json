@@ -1,0 +1,26 @@
+{
+  "id": "module1/chapter3-python-agents-ros2",
+  "title": "Chapter 3: Python Agents with ROS2",
+  "description": "Integrating AI Agents with ROS2",
+  "source": "@site/docs/module1/chapter3-python-agents-ros2.md",
+  "sourceDirName": "module1",
+  "slug": "/module1/chapter3-python-agents-ros2",
+  "permalink": "/docs/module1/chapter3-python-agents-ros2",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/module1/chapter3-python-agents-ros2.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "sidebar_label": "3. Python Agents with ROS2"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "2. ROS2 Communication",
+    "permalink": "/docs/module1/chapter2-ros2-communication"
+  },
+  "next": {
+    "title": "4. URDF Humanoid",
+    "permalink": "/docs/module1/chapter4-urdf-humanoid"
+  }
+}

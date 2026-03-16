@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Physical AI Textbook</title>
+    <title>Login / Sign Up - Physical AI Textbook</title>
     <style>
         * {
             margin: 0;
@@ -23,36 +23,50 @@
 
         .auth-container {
             background: white;
-            border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
             width: 100%;
-            max-width: 420px;
-            padding: 40px;
+            max-width: 480px;
+            overflow: hidden;
         }
 
-        .logo {
+        .auth-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 30px;
             text-align: center;
-            margin-bottom: 30px;
         }
 
-        .logo-icon {
-            font-size: 48px;
-            margin-bottom: 10px;
+        .auth-icon {
+            font-size: 56px;
+            margin-bottom: 12px;
         }
 
-        .logo h1 {
-            color: #1e293b;
-            font-size: 24px;
-            margin-bottom: 5px;
+        .auth-title {
+            color: white;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
         }
 
-        .logo p {
-            color: #64748b;
+        .auth-subtitle {
+            color: rgba(255, 255, 255, 0.9);
             font-size: 14px;
         }
 
+        .auth-body {
+            padding: 35px 30px;
+        }
+
+        .form-container {
+            display: none;
+        }
+
+        .form-container.active {
+            display: block;
+        }
+
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         .form-group label {
@@ -65,9 +79,9 @@
 
         .form-group input {
             width: 100%;
-            padding: 14px 16px;
+            padding: 14px 18px;
             border: 2px solid #e2e8f0;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 15px;
             transition: all 0.3s ease;
         }
@@ -75,16 +89,22 @@
         .form-group input:focus {
             outline: none;
             border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
         }
 
         .btn-primary {
             width: 100%;
-            padding: 14px;
+            padding: 15px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
@@ -131,12 +151,14 @@
             text-align: center;
             color: #64748b;
             font-size: 14px;
+            margin-top: 20px;
         }
 
         .auth-link a {
             color: #667eea;
             text-decoration: none;
             font-weight: 600;
+            cursor: pointer;
         }
 
         .auth-link a:hover {
@@ -146,35 +168,52 @@
         .error-message {
             background: #fee2e2;
             color: #dc2626;
-            padding: 12px 16px;
-            border-radius: 8px;
+            padding: 14px 18px;
+            border-radius: 10px;
             margin-bottom: 20px;
             font-size: 14px;
             display: none;
+            border: 1px solid #fecaca;
         }
 
         .success-message {
             background: #d1fae5;
             color: #059669;
-            padding: 12px 16px;
-            border-radius: 8px;
+            padding: 14px 18px;
+            border-radius: 10px;
             margin-bottom: 20px;
             font-size: 14px;
             display: none;
+            border: 1px solid #a7f3d0;
         }
 
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: #667eea;
-            text-decoration: none;
+        .password-strength {
+            margin-top: 8px;
+            font-size: 12px;
+        }
+
+        .password-strength.weak { color: #dc2626; }
+        .password-strength.medium { color: #f59e0b; }
+        .password-strength.strong { color: #059669; }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #e2e8f0;
+            color: #64748b;
+            padding: 12px 20px;
+            border-radius: 12px;
             font-size: 14px;
-            margin-bottom: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 15px;
         }
 
-        .back-link:hover {
-            text-decoration: underline;
+        .btn-secondary:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            color: #334155;
         }
 
         .hackathon-badge {
@@ -187,70 +226,165 @@
             font-weight: 700;
             margin-left: 8px;
         }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            background: #f1f5f9;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #64748b;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .tab:hover:not(.active) {
+            background: #e2e8f0;
+        }
     </style>
 </head>
 <body>
     <div class="auth-container">
-        <a href="index.html" class="back-link">
-            ← Back to Home
-        </a>
-
-        <div class="logo">
-            <div class="logo-icon">🤖</div>
-            <h1>Physical AI Textbook <span class="hackathon-badge">Hackathon</span></h1>
-            <p>Sign in to continue learning</p>
+        <div class="auth-header">
+            <div class="auth-icon">🤖</div>
+            <h1 class="auth-title" id="auth-title">Welcome Back <span class="hackathon-badge">Hackathon</span></h1>
+            <p class="auth-subtitle" id="auth-subtitle">Sign in to continue learning</p>
         </div>
 
-        <div id="error-message" class="error-message"></div>
-        <div id="success-message" class="success-message"></div>
+        <div class="auth-body">
+            <div id="error-message" class="error-message"></div>
+            <div id="success-message" class="success-message"></div>
 
-        <form id="login-form">
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input 
-                    type="email" 
-                    id="email" 
-                    name="email" 
-                    required 
-                    placeholder="you@example.com"
-                    autocomplete="email"
-                >
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tab active" id="login-tab" onclick="showLoginForm()">
+                    🔑 Login
+                </div>
+                <div class="tab" id="signup-tab" onclick="showSignupForm()">
+                    📝 Sign Up
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input 
-                    type="password" 
-                    id="password" 
-                    name="password" 
-                    required 
-                    placeholder="Enter your password"
-                    autocomplete="current-password"
-                >
+            <!-- Login Form -->
+            <div id="login-form-container" class="form-container active">
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" required placeholder="you@example.com" autocomplete="email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required placeholder="Enter your password" autocomplete="current-password">
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="login-btn">Sign In</button>
+                </form>
+
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+
+                <button type="button" class="btn-secondary" onclick="showSignupForm()">
+                    📝 Create New Account
+                </button>
+
+                <div class="auth-link">
+                    Don't have an account? <a onclick="showSignupForm()">Sign Up</a>
+                </div>
             </div>
 
-            <button type="submit" class="btn-primary" id="login-btn">
-                Sign In
-            </button>
-        </form>
+            <!-- Signup Form -->
+            <div id="signup-form-container" class="form-container">
+                <form id="signup-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="signup-firstname">First Name</label>
+                            <input type="text" id="signup-firstname" required placeholder="John" autocomplete="given-name">
+                        </div>
 
-        <div class="divider">
-            <span>OR</span>
-        </div>
+                        <div class="form-group">
+                            <label for="signup-lastname">Last Name</label>
+                            <input type="text" id="signup-lastname" required placeholder="Doe" autocomplete="family-name">
+                        </div>
+                    </div>
 
-        <div class="auth-link">
-            Don't have an account? <a href="signup.html">Sign Up</a>
+                    <div class="form-group">
+                        <label for="signup-email">Email Address</label>
+                        <input type="email" id="signup-email" required placeholder="you@example.com" autocomplete="email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" required placeholder="Create a strong password" autocomplete="new-password" minlength="6">
+                        <div id="password-strength" class="password-strength"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-confirm-password">Confirm Password</label>
+                        <input type="password" id="signup-confirm-password" required placeholder="Confirm your password" autocomplete="new-password">
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="signup-btn">Create Account</button>
+                </form>
+
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+
+                <button type="button" class="btn-secondary" onclick="showLoginForm()">
+                    🔑 Already have an account? Sign In
+                </button>
+
+                <div class="auth-link">
+                    Already have an account? <a onclick="showLoginForm()">Sign In</a>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        const API_URL = 'http://localhost:8000';
+        const API_URL = 'http://127.0.0.1:8000';
 
-        // Hide messages after 5 seconds
-        function hideMessage(element) {
-            setTimeout(() => {
-                element.style.display = 'none';
-            }, 5000);
+        // Show login form
+        function showLoginForm() {
+            document.getElementById('login-form-container').classList.add('active');
+            document.getElementById('signup-form-container').classList.remove('active');
+            document.getElementById('login-tab').classList.add('active');
+            document.getElementById('signup-tab').classList.remove('active');
+            document.getElementById('auth-title').innerHTML = 'Welcome Back <span class="hackathon-badge">Hackathon</span>';
+            document.getElementById('auth-subtitle').textContent = 'Sign in to continue learning';
+            hideMessages();
+        }
+
+        // Show signup form
+        function showSignupForm() {
+            document.getElementById('login-form-container').classList.remove('active');
+            document.getElementById('signup-form-container').classList.add('active');
+            document.getElementById('login-tab').classList.remove('active');
+            document.getElementById('signup-tab').classList.add('active');
+            document.getElementById('auth-title').innerHTML = 'Create Account <span class="hackathon-badge">Hackathon</span>';
+            document.getElementById('auth-subtitle').textContent = 'Join Physical AI Textbook';
+            hideMessages();
+        }
+
+        // Hide messages
+        function hideMessages() {
+            document.getElementById('error-message').style.display = 'none';
+            document.getElementById('success-message').style.display = 'none';
         }
 
         // Show error message
@@ -258,7 +392,9 @@
             const errorEl = document.getElementById('error-message');
             errorEl.textContent = message;
             errorEl.style.display = 'block';
-            hideMessage(errorEl);
+            setTimeout(() => {
+                errorEl.style.display = 'none';
+            }, 6000);
         }
 
         // Show success message
@@ -266,18 +402,59 @@
             const successEl = document.getElementById('success-message');
             successEl.textContent = message;
             successEl.style.display = 'block';
-            hideMessage(successEl);
+            setTimeout(() => {
+                successEl.style.display = 'none';
+            }, 3000);
         }
+
+        // Password strength checker
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            const strengthEl = document.getElementById('password-strength');
+
+            if (password.length >= 6) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/\d/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+
+            strengthEl.className = 'password-strength';
+
+            if (strength <= 1) {
+                strengthEl.textContent = 'Weak password';
+                strengthEl.classList.add('weak');
+            } else if (strength <= 3) {
+                strengthEl.textContent = 'Medium password';
+                strengthEl.classList.add('medium');
+            } else {
+                strengthEl.textContent = 'Strong password';
+                strengthEl.classList.add('strong');
+            }
+        }
+
+        // Password strength indicator
+        document.getElementById('signup-password').addEventListener('input', (e) => {
+            checkPasswordStrength(e.target.value);
+        });
 
         // Handle login form submission
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
             const loginBtn = document.getElementById('login-btn');
 
-            // Disable button during request
+            // Validate inputs
+            if (!email || !password) {
+                showError('Please enter both email and password');
+                return;
+            }
+
+            if (password.length < 6) {
+                showError('Password must be at least 6 characters');
+                return;
+            }
+
             loginBtn.disabled = true;
             loginBtn.textContent = 'Signing in...';
 
@@ -292,16 +469,19 @@
 
                 const data = await response.json();
 
-                if (response.ok) {
-                    // Store token
-                    localStorage.setItem('auth_token', data.access_token);
-                    localStorage.setItem('user', JSON.stringify(data.user));
+                if (response.ok && data.status === 'success') {
+                    // Store auth data
+                    if (data.access_token) {
+                        localStorage.setItem('auth_token', data.access_token);
+                    }
+                    if (data.user) {
+                        localStorage.setItem('user_data', JSON.stringify(data.user));
+                    }
 
-                    showSuccess('Login successful! Redirecting...');
+                    showSuccess('Login successful! Welcome back. Redirecting...');
 
-                    // Redirect to home page
                     setTimeout(() => {
-                        window.location.href = 'index.html';
+                        window.location.href = 'interactive-textbook.html';
                     }, 1000);
                 } else {
                     showError(data.detail || 'Login failed. Please check your credentials.');
@@ -310,18 +490,128 @@
                 }
             } catch (error) {
                 console.error('Login error:', error);
-                showError('Network error. Please make sure the backend is running.');
+                showError('Unable to connect to server. Please make sure backend is running on port 8000.');
                 loginBtn.disabled = false;
                 loginBtn.textContent = 'Sign In';
+            }
+        });
+
+        // Handle signup form submission
+        document.getElementById('signup-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const firstName = document.getElementById('signup-firstname').value.trim();
+            const lastName = document.getElementById('signup-lastname').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm-password').value;
+            const signupBtn = document.getElementById('signup-btn');
+
+            // Validate all fields
+            if (!firstName || !lastName || !email || !password) {
+                showError('Please fill in all fields');
+                return;
+            }
+
+            // Validate email format
+            if (!email.includes('@') || !email.includes('.')) {
+                showError('Please enter a valid email address');
+                return;
+            }
+
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                showError('Passwords do not match!');
+                return;
+            }
+
+            // Validate password length
+            if (password.length < 6) {
+                showError('Password must be at least 6 characters long.');
+                return;
+            }
+
+            signupBtn.disabled = true;
+            signupBtn.textContent = 'Creating account...';
+
+            try {
+                const response = await fetch(`${API_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        first_name: firstName,
+                        last_name: lastName,
+                        email: email,
+                        password: password,
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.status === 'success') {
+                    showSuccess('Account created successfully! Auto-login...');
+
+                    // Auto-login after successful registration
+                    setTimeout(async () => {
+                        try {
+                            const loginResponse = await fetch(`${API_URL}/auth/login`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ email, password }),
+                            });
+
+                            const loginData = await loginResponse.json();
+
+                            if (loginData.status === 'success') {
+                                if (loginData.access_token) {
+                                    localStorage.setItem('auth_token', loginData.access_token);
+                                }
+                                if (loginData.user) {
+                                    localStorage.setItem('user_data', JSON.stringify(loginData.user));
+                                }
+
+                                showSuccess('Login successful! Redirecting to textbook...');
+
+                                setTimeout(() => {
+                                    window.location.href = 'interactive-textbook.html';
+                                }, 1000);
+                            }
+                        } catch (loginError) {
+                            console.error('Auto-login error:', loginError);
+                            // If auto-login fails, show login form
+                            showLoginForm();
+                            document.getElementById('login-email').value = email;
+                            showError('Account created! Please login with your credentials.');
+                        }
+                    }, 1500);
+                } else {
+                    showError(data.detail || 'Registration failed. This email may already be registered.');
+                    signupBtn.disabled = false;
+                    signupBtn.textContent = 'Create Account';
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                showError('Unable to connect to server. Please make sure backend is running on port 8000.');
+                signupBtn.disabled = false;
+                signupBtn.textContent = 'Create Account';
             }
         });
 
         // Check if already logged in
         window.addEventListener('DOMContentLoaded', () => {
             const token = localStorage.getItem('auth_token');
-            if (token) {
-                // Already logged in, redirect to home
-                window.location.href = 'index.html';
+            const user = localStorage.getItem('user_data');
+            if (token && user) {
+                window.location.href = 'interactive-textbook.html';
+            }
+            
+            // Check URL hash for signup
+            if (window.location.hash === '#signup') {
+                showSignupForm();
             }
         });
     </script>

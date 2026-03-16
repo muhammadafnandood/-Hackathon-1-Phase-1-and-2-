@@ -1,0 +1,15 @@
+{
+  "id": "module2/code/README",
+  "title": "Module 2 Code Examples",
+  "description": "This directory contains executable code examples for all chapters in Module 2: The Digital Twin (Gazebo & Unity).",
+  "source": "@site/docs/module2/code/README.md",
+  "sourceDirName": "module2/code",
+  "slug": "/module2/code/",
+  "permalink": "/docs/module2/code/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/module2/code/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

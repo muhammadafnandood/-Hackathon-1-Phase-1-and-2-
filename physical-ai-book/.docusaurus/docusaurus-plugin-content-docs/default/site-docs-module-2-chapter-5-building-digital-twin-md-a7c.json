@@ -1,0 +1,26 @@
+{
+  "id": "module2/chapter5-building-digital-twin",
+  "title": "Chapter 5: Building the Digital Twin",
+  "description": "Learning Objectives",
+  "source": "@site/docs/module2/chapter5-building-digital-twin.md",
+  "sourceDirName": "module2",
+  "slug": "/module2/chapter5-building-digital-twin",
+  "permalink": "/docs/module2/chapter5-building-digital-twin",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/module2/chapter5-building-digital-twin.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "sidebar_label": "5. Building the Digital Twin"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "4. Unity Robot Visualization",
+    "permalink": "/docs/module2/chapter4-unity-visualization"
+  },
+  "next": {
+    "title": "1. NVIDIA Isaac Platform",
+    "permalink": "/docs/module3/chapter1-isaac-platform"
+  }
+}

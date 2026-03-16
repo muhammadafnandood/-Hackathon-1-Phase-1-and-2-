@@ -1,0 +1,26 @@
+{
+  "id": "module3/chapter2-synthetic-data",
+  "title": "Chapter 2: Synthetic Data and Simulation",
+  "description": "Learning Objectives",
+  "source": "@site/docs/module3/chapter2-synthetic-data.md",
+  "sourceDirName": "module3",
+  "slug": "/module3/chapter2-synthetic-data",
+  "permalink": "/docs/module3/chapter2-synthetic-data",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/module3/chapter2-synthetic-data.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "sidebar_label": "2. Synthetic Data & Simulation"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "1. NVIDIA Isaac Platform",
+    "permalink": "/docs/module3/chapter1-isaac-platform"
+  },
+  "next": {
+    "title": "3. Visual SLAM",
+    "permalink": "/docs/module3/chapter3-visual-slam"
+  }
+}

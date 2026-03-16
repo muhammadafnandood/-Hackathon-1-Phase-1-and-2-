@@ -1,0 +1,15 @@
+{
+  "id": "module2/code/chapter1/install_unity",
+  "title": "Unity Installation Guide for Robotics Visualization",
+  "description": "This guide walks you through installing Unity 2021+ with HDRP for robotics visualization.",
+  "source": "@site/docs/module2/code/chapter1/install_unity.md",
+  "sourceDirName": "module2/code/chapter1",
+  "slug": "/module2/code/chapter1/install_unity",
+  "permalink": "/docs/module2/code/chapter1/install_unity",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/module2/code/chapter1/install_unity.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

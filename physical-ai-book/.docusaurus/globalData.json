@@ -1,0 +1,208 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "path": "/docs",
+      "versions": [
+        {
+          "name": "current",
+          "label": "Next",
+          "isLast": true,
+          "path": "/docs",
+          "mainDocId": "module1/chapter1-ros2-introduction",
+          "docs": [
+            {
+              "id": "intro",
+              "path": "/docs/intro"
+            },
+            {
+              "id": "module1/chapter1-ros2-introduction",
+              "path": "/docs/module1/chapter1-ros2-introduction",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module1/chapter2-ros2-communication",
+              "path": "/docs/module1/chapter2-ros2-communication",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module1/chapter3-python-agents-ros2",
+              "path": "/docs/module1/chapter3-python-agents-ros2",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module1/chapter4-urdf-humanoid",
+              "path": "/docs/module1/chapter4-urdf-humanoid",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module1/chapter5-robot-nervous-system",
+              "path": "/docs/module1/chapter5-robot-nervous-system",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module2/chapter1-betterauth-setup",
+              "path": "/docs/module2/chapter1-betterauth-setup"
+            },
+            {
+              "id": "module2/chapter1-intro-simulation",
+              "path": "/docs/module2/chapter1-intro-simulation",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module2/chapter2-gazebo-environment",
+              "path": "/docs/module2/chapter2-gazebo-environment",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module2/chapter2-user-personalization",
+              "path": "/docs/module2/chapter2-user-personalization"
+            },
+            {
+              "id": "module2/chapter3-physics-and-sensors",
+              "path": "/docs/module2/chapter3-physics-and-sensors",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module2/chapter3-urdu-chatbot",
+              "path": "/docs/module2/chapter3-urdu-chatbot"
+            },
+            {
+              "id": "module2/chapter4-unity-visualization",
+              "path": "/docs/module2/chapter4-unity-visualization",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module2/chapter5-building-digital-twin",
+              "path": "/docs/module2/chapter5-building-digital-twin",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module2/code/chapter1/install_unity",
+              "path": "/docs/module2/code/chapter1/install_unity"
+            },
+            {
+              "id": "module2/code/README",
+              "path": "/docs/module2/code/"
+            },
+            {
+              "id": "module2/labs/README",
+              "path": "/docs/module2/labs/"
+            },
+            {
+              "id": "module3/chapter1-betterauth-setup",
+              "path": "/docs/module3/chapter1-betterauth-setup"
+            },
+            {
+              "id": "module3/chapter1-isaac-platform",
+              "path": "/docs/module3/chapter1-isaac-platform",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module3/chapter2-synthetic-data",
+              "path": "/docs/module3/chapter2-synthetic-data",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module3/chapter2-user-personalization",
+              "path": "/docs/module3/chapter2-user-personalization"
+            },
+            {
+              "id": "module3/chapter3-urdu-chatbot",
+              "path": "/docs/module3/chapter3-urdu-chatbot"
+            },
+            {
+              "id": "module3/chapter3-visual-slam",
+              "path": "/docs/module3/chapter3-visual-slam",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module3/chapter4-nav2-navigation",
+              "path": "/docs/module3/chapter4-nav2-navigation",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module3/chapter5-robot-reinforcement-learning",
+              "path": "/docs/module3/chapter5-robot-reinforcement-learning",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module3/code/README",
+              "path": "/docs/module3/code/"
+            },
+            {
+              "id": "module3/labs/README",
+              "path": "/docs/module3/labs/"
+            },
+            {
+              "id": "module4/chapter1-llm-robotics",
+              "path": "/docs/module4/chapter1-llm-robotics",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module4/chapter2-voice-to-action",
+              "path": "/docs/module4/chapter2-voice-to-action",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module4/chapter3-cognitive-planning",
+              "path": "/docs/module4/chapter3-cognitive-planning",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module4/chapter4-multimodal-interaction",
+              "path": "/docs/module4/chapter4-multimodal-interaction",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "module4/chapter5-conversational-robotics",
+              "path": "/docs/module4/chapter5-conversational-robotics",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "tutorial-basics/congratulations",
+              "path": "/docs/tutorial-basics/congratulations"
+            },
+            {
+              "id": "tutorial-basics/create-a-blog-post",
+              "path": "/docs/tutorial-basics/create-a-blog-post"
+            },
+            {
+              "id": "tutorial-basics/create-a-document",
+              "path": "/docs/tutorial-basics/create-a-document"
+            },
+            {
+              "id": "tutorial-basics/create-a-page",
+              "path": "/docs/tutorial-basics/create-a-page"
+            },
+            {
+              "id": "tutorial-basics/deploy-your-site",
+              "path": "/docs/tutorial-basics/deploy-your-site"
+            },
+            {
+              "id": "tutorial-basics/markdown-features",
+              "path": "/docs/tutorial-basics/markdown-features"
+            },
+            {
+              "id": "tutorial-extras/manage-docs-versions",
+              "path": "/docs/tutorial-extras/manage-docs-versions"
+            },
+            {
+              "id": "tutorial-extras/translate-your-site",
+              "path": "/docs/tutorial-extras/translate-your-site"
+            }
+          ],
+          "draftIds": [],
+          "sidebars": {
+            "tutorialSidebar": {
+              "link": {
+                "path": "/docs/module1/chapter1-ros2-introduction",
+                "label": "module1/chapter1-ros2-introduction"
+              }
+            }
+          }
+        }
+      ],
+      "breadcrumbs": true
+    }
+  }
+}

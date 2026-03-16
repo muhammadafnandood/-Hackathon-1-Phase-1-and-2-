@@ -1,0 +1,26 @@
+{
+  "id": "module4/chapter1-llm-robotics",
+  "title": "Chapter 1: Large Language Models in Robotics",
+  "description": "Learning Objectives",
+  "source": "@site/docs/module4/chapter1-llm-robotics.md",
+  "sourceDirName": "module4",
+  "slug": "/module4/chapter1-llm-robotics",
+  "permalink": "/docs/module4/chapter1-llm-robotics",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/module4/chapter1-llm-robotics.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "sidebar_label": "1. LLMs in Robotics"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "5. Reinforcement Learning",
+    "permalink": "/docs/module3/chapter5-robot-reinforcement-learning"
+  },
+  "next": {
+    "title": "2. Voice-to-Action",
+    "permalink": "/docs/module4/chapter2-voice-to-action"
+  }
+}

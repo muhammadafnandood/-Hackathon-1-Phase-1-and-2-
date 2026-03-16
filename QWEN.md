@@ -208,3 +208,6 @@ Wait for consent; never auto-create ADRs. Group related decisions (stacks, authe
 
 ## Code Standards
 See `.specify/memory/constitution.md` for code quality, testing, performance, security, and architecture principles.
+
+## Qwen Added Memories
+- Frontend ke liye hamesha interactive-textbook.html ki link deni hai - yeh main textbook page hai jisme chapters, AI chatbot, Urdu translation, aur saare features hain.

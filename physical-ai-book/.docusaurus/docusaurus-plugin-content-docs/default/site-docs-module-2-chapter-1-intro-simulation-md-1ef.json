@@ -1,0 +1,26 @@
+{
+  "id": "module2/chapter1-intro-simulation",
+  "title": "Chapter 1: Introduction to Robot Simulation",
+  "description": "Learning Objectives",
+  "source": "@site/docs/module2/chapter1-intro-simulation.md",
+  "sourceDirName": "module2",
+  "slug": "/module2/chapter1-intro-simulation",
+  "permalink": "/docs/module2/chapter1-intro-simulation",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/module2/chapter1-intro-simulation.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "sidebar_label": "1. Introduction to Robot Simulation"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "5. Robot Nervous System",
+    "permalink": "/docs/module1/chapter5-robot-nervous-system"
+  },
+  "next": {
+    "title": "2. Gazebo Simulation Environment",
+    "permalink": "/docs/module2/chapter2-gazebo-environment"
+  }
+}

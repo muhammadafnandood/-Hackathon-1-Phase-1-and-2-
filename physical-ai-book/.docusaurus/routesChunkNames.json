@@ -1,0 +1,432 @@
+{
+  "/__docusaurus/debug-5ff": {
+    "__comp": "__comp---theme-debug-config-23-a-2ff",
+    "__context": {
+      "plugin": "plugin---docusaurus-debugb-38-ad3"
+    }
+  },
+  "/__docusaurus/debug/config-5ba": {
+    "__comp": "__comp---theme-debug-config-23-a-2ff",
+    "__context": {
+      "plugin": "plugin---docusaurus-debugb-38-ad3"
+    }
+  },
+  "/__docusaurus/debug/content-a2b": {
+    "__comp": "__comp---theme-debug-contentba-8-ce7",
+    "__context": {
+      "plugin": "plugin---docusaurus-debugb-38-ad3"
+    },
+    "__props": "__props---docusaurus-debug-content-3-c-0-be2"
+  },
+  "/__docusaurus/debug/globalData-c3c": {
+    "__comp": "__comp---theme-debug-global-dataede-0fa",
+    "__context": {
+      "plugin": "plugin---docusaurus-debugb-38-ad3"
+    }
+  },
+  "/__docusaurus/debug/metadata-156": {
+    "__comp": "__comp---theme-debug-site-metadata-68-e-3d4",
+    "__context": {
+      "plugin": "plugin---docusaurus-debugb-38-ad3"
+    }
+  },
+  "/__docusaurus/debug/registry-88c": {
+    "__comp": "__comp---theme-debug-registry-679-501",
+    "__context": {
+      "plugin": "plugin---docusaurus-debugb-38-ad3"
+    }
+  },
+  "/__docusaurus/debug/routes-000": {
+    "__comp": "__comp---theme-debug-routes-946-699",
+    "__context": {
+      "plugin": "plugin---docusaurus-debugb-38-ad3"
+    }
+  },
+  "/blog-b2f": {
+    "__comp": "__comp---theme-blog-list-pagea-6-a-7ba",
+    "__context": {
+      "plugin": "plugin---blog-369-22e"
+    },
+    "sidebar": "sidebar---blog-814-8ac",
+    "items": [
+      {
+        "content": "content---blog-766-e3c"
+      },
+      {
+        "content": "content---blogf-4-f-cd7"
+      },
+      {
+        "content": "content---blog-871-381"
+      },
+      {
+        "content": "content---blog-925-e00"
+      }
+    ],
+    "__props": "__props---blogc-15-573"
+  },
+  "/blog/archive-182": {
+    "__comp": "__comp---theme-blog-archive-page-9-e-4-1d8",
+    "__context": {
+      "plugin": "plugin---blog-369-22e"
+    },
+    "__props": "__props---blog-archivef-81-229"
+  },
+  "/blog/authors-0b7": {
+    "__comp": "__comp---theme-blog-pages-blog-authors-list-page-621-70c",
+    "__context": {
+      "data": {
+        "blogMetadata": "blogMetadata---blog-authorsace-e7d"
+      },
+      "plugin": "plugin---blog-369-22e"
+    },
+    "sidebar": "sidebar---blog-814-8ac",
+    "__props": "__props---blog-authorsef-8-44f"
+  },
+  "/blog/authors/all-sebastien-lorber-articles-4a1": {
+    "__comp": "__comp---theme-blog-pages-blog-authors-posts-page-33-f-bd5",
+    "__context": {
+      "data": {
+        "blogMetadata": "blogMetadata---blog-authorsace-e7d"
+      },
+      "plugin": "plugin---blog-369-22e"
+    },
+    "items": [
+      {
+        "content": "content---blog-766-e3c"
+      },
+      {
+        "content": "content---blogf-4-f-cd7"
+      },
+      {
+        "content": "content---blog-925-e00"
+      }
+    ],
+    "sidebar": "sidebar---blog-814-8ac",
+    "__props": "__props---blog-authors-all-sebastien-lorber-articlesc-9-c-639"
+  },
+  "/blog/authors/yangshun-a68": {
+    "__comp": "__comp---theme-blog-pages-blog-authors-posts-page-33-f-bd5",
+    "__context": {
+      "data": {
+        "blogMetadata": "blogMetadata---blog-authorsace-e7d"
+      },
+      "plugin": "plugin---blog-369-22e"
+    },
+    "items": [
+      {
+        "content": "content---blog-766-e3c"
+      },
+      {
+        "content": "content---blog-871-381"
+      },
+      {
+        "content": "content---blog-925-e00"
+      }
+    ],
+    "sidebar": "sidebar---blog-814-8ac",
+    "__props": "__props---blog-authors-yangshun-1-de-d0c"
+  },
+  "/blog/first-blog-post-89a": {
+    "__comp": "__comp---theme-blog-post-pageccc-cab",
+    "__context": {
+      "data": {
+        "blogMetadata": "blogMetadata---blog-authorsace-e7d"
+      },
+      "plugin": "plugin---blog-369-22e"
+    },
+    "sidebar": "sidebar---blog-814-8ac",
+    "content": "content---blog-first-blog-poste-27-4a1"
+  },
+  "/blog/long-blog-post-9ad": {
+    "__comp": "__comp---theme-blog-post-pageccc-cab",
+    "__context": {
+      "data": {
+        "blogMetadata": "blogMetadata---blog-authorsace-e7d"
+      },
+      "plugin": "plugin---blog-369-22e"
+    },
+    "sidebar": "sidebar---blog-814-8ac",
+    "content": "content---blog-long-blog-post-736-bc7"
+  },
+  "/blog/mdx-blog-post-e9f": {
+    "__comp": "__comp---theme-blog-post-pageccc-cab",
+    "__context": {
+      "data": {
+        "blogMetadata": "blogMetadata---blog-authorsace-e7d"
+      },
+      "plugin": "plugin---blog-369-22e"
+    },
+    "sidebar": "sidebar---blog-814-8ac",
+    "content": "content---blog-mdx-blog-post-593-37b"
+  },
+  "/blog/tags-287": {
+    "__comp": "__comp---theme-blog-tags-list-page-01-a-d0b",
+    "__context": {
+      "plugin": "plugin---blog-369-22e"
+    },
+    "sidebar": "sidebar---blog-814-8ac",
+    "__props": "__props---blog-tags-3-a-2-fa2"
+  },
+  "/blog/tags/docusaurus-704": {
+    "__comp": "__comp---theme-blog-tags-posts-page-687-b6c",
+    "__context": {
+      "plugin": "plugin---blog-369-22e"
+    },
+    "sidebar": "sidebar---blog-814-8ac",
+    "items": [
+      {
+        "content": "content---blog-766-e3c"
+      },
+      {
+        "content": "content---blogf-4-f-cd7"
+      },
+      {
+        "content": "content---blog-871-381"
+      },
+      {
+        "content": "content---blog-925-e00"
+      }
+    ],
+    "__props": "__props---blog-tags-docusaurus-321-832"
+  },
+  "/blog/tags/facebook-858": {
+    "__comp": "__comp---theme-blog-tags-posts-page-687-b6c",
+    "__context": {
+      "plugin": "plugin---blog-369-22e"
+    },
+    "sidebar": "sidebar---blog-814-8ac",
+    "items": [
+      {
+        "content": "content---blog-766-e3c"
+      }
+    ],
+    "__props": "__props---blog-tags-facebooke-5-a-514"
+  },
+  "/blog/tags/hello-299": {
+    "__comp": "__comp---theme-blog-tags-posts-page-687-b6c",
+    "__context": {
+      "plugin": "plugin---blog-369-22e"
+    },
+    "sidebar": "sidebar---blog-814-8ac",
+    "items": [
+      {
+        "content": "content---blog-766-e3c"
+      },
+      {
+        "content": "content---blog-871-381"
+      }
+    ],
+    "__props": "__props---blog-tags-hellof-82-2fd"
+  },
+  "/blog/tags/hola-00d": {
+    "__comp": "__comp---theme-blog-tags-posts-page-687-b6c",
+    "__context": {
+      "plugin": "plugin---blog-369-22e"
+    },
+    "sidebar": "sidebar---blog-814-8ac",
+    "items": [
+      {
+        "content": "content---blog-925-e00"
+      }
+    ],
+    "__props": "__props---blog-tags-hola-5-e-9-9a3"
+  },
+  "/blog/welcome-d2b": {
+    "__comp": "__comp---theme-blog-post-pageccc-cab",
+    "__context": {
+      "data": {
+        "blogMetadata": "blogMetadata---blog-authorsace-e7d"
+      },
+      "plugin": "plugin---blog-369-22e"
+    },
+    "sidebar": "sidebar---blog-814-8ac",
+    "content": "content---blog-welcomed-9-f-ffb"
+  },
+  "/markdown-page-3d7": {
+    "__comp": "__comp---theme-mdx-page-1-f-3-b90",
+    "__context": {
+      "plugin": "plugin---markdown-pagea-74-7b5"
+    },
+    "content": "content---markdown-page-393-028"
+  },
+  "/docs-067": {
+    "__comp": "__comp---theme-docs-root-5-e-9-0b6",
+    "__context": {
+      "plugin": "plugin---docsaba-d7c"
+    }
+  },
+  "/docs-a8a": {
+    "__comp": "__comp---theme-doc-version-roota-7-b-5de",
+    "__props": "__props---docs-005-788"
+  },
+  "/docs-ccf": {
+    "__comp": "__comp---theme-doc-roota-94-67a"
+  },
+  "/docs/intro-853": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-intro-0-e-3-be1"
+  },
+  "/docs/module1/chapter1-ros2-introduction-6e4": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-1-chapter-1-ros-2-introduction-36-b-b6c"
+  },
+  "/docs/module1/chapter2-ros2-communication-45d": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-1-chapter-2-ros-2-communicationb-27-b34"
+  },
+  "/docs/module1/chapter3-python-agents-ros2-b63": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-1-chapter-3-python-agents-ros-22-f-0-b46"
+  },
+  "/docs/module1/chapter4-urdf-humanoid-f02": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-1-chapter-4-urdf-humanoida-06-ce8"
+  },
+  "/docs/module1/chapter5-robot-nervous-system-5ae": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-1-chapter-5-robot-nervous-systemaa-5-0a6"
+  },
+  "/docs/module2/chapter1-betterauth-setup-116": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-2-chapter-1-betterauth-setup-09-b-811"
+  },
+  "/docs/module2/chapter1-intro-simulation-8c6": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-2-chapter-1-intro-simulation-1-ef-601"
+  },
+  "/docs/module2/chapter2-gazebo-environment-3b4": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-2-chapter-2-gazebo-environment-0-e-4-f6a"
+  },
+  "/docs/module2/chapter2-user-personalization-9b4": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-2-chapter-2-user-personalizationa-4-f-bc9"
+  },
+  "/docs/module2/chapter3-physics-and-sensors-015": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-2-chapter-3-physics-and-sensors-44-d-1c9"
+  },
+  "/docs/module2/chapter3-urdu-chatbot-ec0": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-2-chapter-3-urdu-chatbot-10-a-4ce"
+  },
+  "/docs/module2/chapter4-unity-visualization-748": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-2-chapter-4-unity-visualizationcfc-deb"
+  },
+  "/docs/module2/chapter5-building-digital-twin-808": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-2-chapter-5-building-digital-twina-7-c-7c1"
+  },
+  "/docs/module2/code/-0e1": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-2-code-022-b12"
+  },
+  "/docs/module2/code/chapter1/install_unity-bb0": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-2-code-chapter-1-install-unity-537-882"
+  },
+  "/docs/module2/labs/-790": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-2-labs-603-84d"
+  },
+  "/docs/module3/chapter1-betterauth-setup-637": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-3-chapter-1-betterauth-setup-38-b-0f7"
+  },
+  "/docs/module3/chapter1-isaac-platform-4fc": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-3-chapter-1-isaac-platform-499-ce0"
+  },
+  "/docs/module3/chapter2-synthetic-data-bd5": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-3-chapter-2-synthetic-datafb-0-93d"
+  },
+  "/docs/module3/chapter2-user-personalization-7c0": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-3-chapter-2-user-personalization-791-d2a"
+  },
+  "/docs/module3/chapter3-urdu-chatbot-eca": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-3-chapter-3-urdu-chatbot-566-bf4"
+  },
+  "/docs/module3/chapter3-visual-slam-617": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-3-chapter-3-visual-slam-980-c00"
+  },
+  "/docs/module3/chapter4-nav2-navigation-5ad": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-3-chapter-4-nav-2-navigation-4-d-1-d4a"
+  },
+  "/docs/module3/chapter5-robot-reinforcement-learning-c13": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-3-chapter-5-robot-reinforcement-learning-358-86e"
+  },
+  "/docs/module3/code/-6e3": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-3-code-21-e-93f"
+  },
+  "/docs/module3/labs/-f19": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-3-labs-f-6-e-51e"
+  },
+  "/docs/module4/chapter1-llm-robotics-492": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-4-chapter-1-llm-robotics-720-6e7"
+  },
+  "/docs/module4/chapter2-voice-to-action-63f": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-4-chapter-2-voice-to-action-46-c-296"
+  },
+  "/docs/module4/chapter3-cognitive-planning-088": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-4-chapter-3-cognitive-planningeb-2-ac8"
+  },
+  "/docs/module4/chapter4-multimodal-interaction-9cd": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-4-chapter-4-multimodal-interaction-5-ca-fe1"
+  },
+  "/docs/module4/chapter5-conversational-robotics-05a": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-module-4-chapter-5-conversational-robotics-472-f57"
+  },
+  "/docs/tutorial-basics/congratulations-70e": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-tutorial-basics-congratulations-822-958"
+  },
+  "/docs/tutorial-basics/create-a-blog-post-315": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-tutorial-basics-create-a-blog-post-533-e85"
+  },
+  "/docs/tutorial-basics/create-a-document-f86": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-tutorial-basics-create-a-document-1-e-4-078"
+  },
+  "/docs/tutorial-basics/create-a-page-9f6": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-tutorial-basics-create-a-page-5-c-8-e19"
+  },
+  "/docs/tutorial-basics/deploy-your-site-b91": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-tutorial-basics-deploy-your-sitef-55-a3f"
+  },
+  "/docs/tutorial-basics/markdown-features-272": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-tutorial-basics-markdown-features-18-c-a79"
+  },
+  "/docs/tutorial-extras/manage-docs-versions-a34": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-tutorial-extras-manage-docs-versionsdff-6d4"
+  },
+  "/docs/tutorial-extras/translate-your-site-739": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---docs-tutorial-extras-translate-your-sitee-44-ddf"
+  },
+  "/-e5f": {
+    "__comp": "__comp---site-src-pages-index-tsx-1-df-d3e",
+    "__context": {
+      "plugin": "plugin---markdown-pagea-74-7b5"
+    },
+    "config": "config---5-e-9-4f3"
+  }
+}

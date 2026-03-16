@@ -1,0 +1,26 @@
+{
+  "id": "module4/chapter4-multimodal-interaction",
+  "title": "Chapter 4: Multimodal Robot Interaction",
+  "description": "Learning Objectives",
+  "source": "@site/docs/module4/chapter4-multimodal-interaction.md",
+  "sourceDirName": "module4",
+  "slug": "/module4/chapter4-multimodal-interaction",
+  "permalink": "/docs/module4/chapter4-multimodal-interaction",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/module4/chapter4-multimodal-interaction.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "sidebar_label": "4. Multimodal Interaction"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "3. Cognitive Planning",
+    "permalink": "/docs/module4/chapter3-cognitive-planning"
+  },
+  "next": {
+    "title": "5. Conversational Robotics",
+    "permalink": "/docs/module4/chapter5-conversational-robotics"
+  }
+}

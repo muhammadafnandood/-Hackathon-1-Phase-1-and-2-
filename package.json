@@ -1,0 +1,32 @@
+{
+  "name": "ai-tutor-robotics",
+  "version": "1.0.0",
+  "description": "AI-powered interactive textbook for Physical AI & Humanoid Robotics",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 3000",
+    "dev": "python -m http.server 3000",
+    "build": "echo 'No build step required - Static site'",
+    "test": "echo 'No tests configured'"
+  },
+  "keywords": [
+    "robotics",
+    "ai",
+    "education",
+    "textbook",
+    "ros2",
+    "physical-ai",
+    "humanoid",
+    "hackathon"
+  ],
+  "author": "Muhammad Afnan",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/muhammadafnandood/-Hackathon-1-Phase-1-and-2-.git"
+  },
+  "bugs": {
+    "url": "https://github.com/muhammadafnandood/-Hackathon-1-Phase-1-and-2-/issues"
+  },
+  "homepage": "https://github.com/muhammadafnandood/-Hackathon-1-Phase-1-and-2-#readme"
+}

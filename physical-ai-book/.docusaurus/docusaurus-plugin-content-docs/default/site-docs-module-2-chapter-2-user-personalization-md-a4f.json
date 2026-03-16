@@ -1,0 +1,17 @@
+{
+  "id": "module2/chapter2-user-personalization",
+  "title": "Chapter 2: User Personalization & AI Adaptation",
+  "description": "System Overview",
+  "source": "@site/docs/module2/chapter2-user-personalization.md",
+  "sourceDirName": "module2",
+  "slug": "/module2/chapter2-user-personalization",
+  "permalink": "/docs/module2/chapter2-user-personalization",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/module2/chapter2-user-personalization.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "sidebar_label": "2. User Personalization"
+  }
+}

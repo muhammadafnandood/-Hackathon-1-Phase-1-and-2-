@@ -412,7 +412,217 @@
                 border-top: 1px solid #e2e8f0;
             }
         }
+
+        /* Auth Modal Styles */
+        .auth-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100000;
+            backdrop-filter: blur(4px);
+        }
+
+        .auth-modal-overlay.active {
+            display: flex;
+        }
+
+        .auth-modal {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 450px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+            animation: modalSlideIn 0.3s ease-out;
+            position: relative;
+            margin: 20px;
+        }
+
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(-30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .auth-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        .auth-modal-close:hover {
+            background: #e2e8f0;
+            transform: rotate(90deg);
+        }
+
+        .auth-modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 30px;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .auth-modal-icon { font-size: 56px; margin-bottom: 12px; }
+        .auth-modal-title { color: white; font-size: 26px; font-weight: 700; margin-bottom: 8px; }
+        .auth-modal-subtitle { color: rgba(255, 255, 255, 0.9); font-size: 14px; }
+
+        .auth-modal-body { padding: 35px 30px; }
+
+        .auth-form-group { margin-bottom: 22px; }
+        .auth-form-group label { display: block; color: #334155; font-weight: 600; margin-bottom: 8px; font-size: 14px; }
+        .auth-form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+        .auth-form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .auth-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        .auth-btn-primary {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        .auth-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        .auth-btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        .auth-divider { text-align: center; margin: 24px 0; position: relative; }
+        .auth-divider::before { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background: #e2e8f0; }
+        .auth-divider span { background: white; padding: 0 16px; color: #64748b; font-size: 14px; position: relative; }
+
+        .auth-switch-text { text-align: center; color: #64748b; font-size: 14px; margin-top: 20px; }
+        .auth-switch-text a { color: #667eea; text-decoration: none; font-weight: 600; cursor: pointer; }
+        .auth-switch-text a:hover { text-decoration: underline; }
+
+        .auth-error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            border: 1px solid #fecaca;
+        }
+        .auth-success-message {
+            background: #d1fae5;
+            color: #059669;
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            border: 1px solid #a7f3d0;
+        }
+
+        .password-strength { margin-top: 8px; font-size: 12px; color: #64748b; }
+        .password-strength.weak { color: #dc2626; }
+        .password-strength.medium { color: #f59e0b; }
+        .password-strength.strong { color: #059669; }
+
+        /* User Profile Button */
+        .user-profile-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            z-index: 1000;
+        }
+        .user-profile-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .auth-btn-secondary {
+            background: transparent;
+            border: 2px solid #e2e8f0;
+            color: #64748b;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            width: 100%;
+        }
+        .auth-btn-secondary:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            color: #334155;
+        }
+
+        .auth-form-container { display: none; }
+        .auth-form-container.active { display: block; }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
+    <!-- Mermaid.js for diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'default' });
+    </script>
 </head>
 <body>
     <!-- Text Selection Popup -->
@@ -420,7 +630,95 @@
         💬 Ask AI about this
     </div>
 
-    <div class="textbook-container">
+    <!-- User Profile Button -->
+    <button id="user-profile-btn" class="user-profile-btn" onclick="showProfileMenu()">
+        <div class="user-avatar">👤</div>
+        <span id="user-name-display">User</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+    </button>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal-overlay" class="auth-modal-overlay">
+        <div class="auth-modal">
+            <div class="auth-modal-header">
+                <div class="auth-modal-icon">🤖</div>
+                <h2 class="auth-modal-title" id="auth-modal-title">Welcome Back</h2>
+                <p class="auth-modal-subtitle" id="auth-modal-subtitle">Sign in to continue learning</p>
+            </div>
+
+            <div class="auth-modal-body">
+                <div id="auth-error-message" class="auth-error-message"></div>
+                <div id="auth-success-message" class="auth-success-message"></div>
+
+                <!-- Login Form -->
+                <div id="login-form-container" class="auth-form-container active">
+                    <form id="login-form">
+                        <div class="auth-form-group">
+                            <label for="login-email">Email Address</label>
+                            <input type="email" id="login-email" required placeholder="you@example.com" autocomplete="email">
+                        </div>
+                        <div class="auth-form-group">
+                            <label for="login-password">Password</label>
+                            <input type="password" id="login-password" required placeholder="Enter your password" autocomplete="current-password">
+                        </div>
+                        <button type="submit" class="auth-btn-primary" id="login-btn">Sign In</button>
+                    </form>
+                    <div class="auth-divider">
+                        <span>OR</span>
+                    </div>
+                    <button class="auth-btn-secondary" onclick="showSignupForm()">
+                        📝 Create New Account
+                    </button>
+                    <div class="auth-switch-text">
+                        Don't have an account? <a onclick="showSignupForm()">Sign Up</a>
+                    </div>
+                </div>
+
+                <!-- Signup Form -->
+                <div id="signup-form-container" class="auth-form-container">
+                    <form id="signup-form">
+                        <div class="auth-form-row">
+                            <div class="auth-form-group">
+                                <label for="signup-firstname">First Name</label>
+                                <input type="text" id="signup-firstname" required placeholder="John" autocomplete="given-name">
+                            </div>
+                            <div class="auth-form-group">
+                                <label for="signup-lastname">Last Name</label>
+                                <input type="text" id="signup-lastname" required placeholder="Doe" autocomplete="family-name">
+                            </div>
+                        </div>
+                        <div class="auth-form-group">
+                            <label for="signup-email">Email Address</label>
+                            <input type="email" id="signup-email" required placeholder="you@example.com" autocomplete="email">
+                        </div>
+                        <div class="auth-form-group">
+                            <label for="signup-password">Password</label>
+                            <input type="password" id="signup-password" required placeholder="Create a strong password" autocomplete="new-password" minlength="8">
+                            <div id="password-strength" class="password-strength"></div>
+                        </div>
+                        <div class="auth-form-group">
+                            <label for="signup-confirm-password">Confirm Password</label>
+                            <input type="password" id="signup-confirm-password" required placeholder="Confirm your password" autocomplete="new-password">
+                        </div>
+                        <button type="submit" class="auth-btn-primary" id="signup-btn">Create Account</button>
+                    </form>
+                    <div class="auth-divider">
+                        <span>OR</span>
+                    </div>
+                    <button class="auth-btn-secondary" onclick="showLoginForm()">
+                        🔑 Already have an account? Sign In
+                    </button>
+                    <div class="auth-switch-text">
+                        Already have an account? <a onclick="showLoginForm()">Sign In</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="textbook-container" id="textbook-container" style="display: none;">
         <!-- Left Sidebar: Chapters -->
         <aside class="chapters-sidebar">
             <div class="chapters-header">
@@ -623,23 +921,57 @@
         });
 
         // Ask AI about selected text
-        function askSelectedText() {
+        async function askSelectedText() {
             const popup = document.getElementById('selection-popup');
             popup.style.display = 'none';
 
             if (selectedText) {
                 addMessage(selectedText, 'user');
-                
-                // Simulate AI response
-                setTimeout(() => {
+
+                // Show loading indicator
+                const loadingId = showLoading();
+
+                try {
+                    // Get user level
+                    const levelSelect = document.getElementById('user-level');
+                    const userLevel = levelSelect ? levelSelect.value : 'Beginner';
+
+                    // Call backend API with selected text
+                    const response = await fetch(`${API_URL}/api/chat`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            message: `Explain this: ${selectedText}`,
+                            level: userLevel,
+                            top_k: 5
+                        }),
+                    });
+
+                    // Remove loading
+                    removeLoading(loadingId);
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        displayAIResponse(data);
+                    } else {
+                        // Fallback to local AI
+                        const explanation = generateExplanation(selectedText);
+                        addAIMessage(explanation);
+                    }
+                } catch (error) {
+                    console.error('Chat error:', error);
+                    removeLoading(loadingId);
+                    // Fallback to local AI
                     const explanation = generateExplanation(selectedText);
                     addAIMessage(explanation);
-                }, 500);
+                }
             }
         }
 
         // Send message
-        function sendMessage() {
+        async function sendMessage() {
             const input = document.getElementById('chat-input');
             const message = input.value.trim();
 
@@ -647,12 +979,184 @@
                 addMessage(message, 'user');
                 input.value = '';
 
-                // Simulate AI response
-                setTimeout(() => {
-                    const response = getAIResponse(message);
-                    addAIMessage(response);
-                }, 500);
+                // Show loading indicator
+                const loadingId = showLoading();
+
+                try {
+                    // Get user level
+                    const levelSelect = document.getElementById('user-level');
+                    const userLevel = levelSelect ? levelSelect.value : 'Beginner';
+
+                    // Call backend API
+                    const response = await fetch(`${API_URL}/api/chat`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            message: message,
+                            level: userLevel,
+                            top_k: 5
+                        }),
+                    });
+
+                    // Remove loading
+                    removeLoading(loadingId);
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        displayAIResponse(data);
+                    } else {
+                        // Fallback to local AI
+                        const localResponse = getAIResponse(message);
+                        addAIMessage(localResponse);
+                    }
+                } catch (error) {
+                    console.error('Chat error:', error);
+                    removeLoading(loadingId);
+                    // Fallback to local AI
+                    const localResponse = getAIResponse(message);
+                    addAIMessage(localResponse);
+                }
             }
+        }
+
+        // Show loading indicator
+        function showLoading() {
+            const loadingId = 'loading-' + Date.now();
+            const messagesContainer = document.getElementById('chat-messages');
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'message ai';
+            loadingDiv.id = loadingId;
+            loadingDiv.innerHTML = `
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <div style="width:20px;height:20px;border:3px solid #e2e8f0;border-top-color:#667eea;border-radius:50%;animation:spin 1s linear infinite;"></div>
+                        <span style="color:#64748b;">Thinking...</span>
+                    </div>
+                </div>
+            `;
+            messagesContainer.appendChild(loadingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            return loadingId;
+        }
+
+        // Remove loading indicator
+        function removeLoading(loadingId) {
+            const loadingEl = document.getElementById(loadingId);
+            if (loadingEl) {
+                loadingEl.remove();
+            }
+        }
+
+        // Display AI response with sources and diagrams
+        function displayAIResponse(data) {
+            const messagesContainer = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message ai';
+
+            const messageId = 'ai-msg-' + Date.now();
+
+            // Build response HTML
+            let responseHTML = `
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <div id="${messageId}-english">${formatResponse(data.message)}</div>
+            `;
+
+            // Add sources if available
+            if (data.sources && data.sources.length > 0) {
+                responseHTML += `
+                    <div style="margin-top:16px;padding:12px;background:#dbeafe;border-radius:8px;">
+                        <strong style="color:#1e40af;font-size:13px;">📚 Sources from Textbook:</strong>
+                        <ul style="margin:8px 0 0 0;padding-left:20px;color:#1e40af;font-size:13px;">
+                            ${data.sources.map(source => `
+                                <li>Chapter ${source.chapter}: ${source.title} ${source.relevance === 'high' ? '⭐' : ''}</li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            // Add diagram if available
+            if (data.diagram) {
+                responseHTML += `
+                    <div style="margin-top:16px;">
+                        <strong style="color:#1e293b;font-size:13px;">${data.diagram.title}</strong>
+                        <div id="diagram-${messageId}" style="margin-top:8px;background:#f8fafc;padding:16px;border-radius:8px;overflow:auto;">
+                            <div class="mermaid">${data.diagram.mermaid}</div>
+                        </div>
+                        <p style="font-size:12px;color:#64748b;margin-top:8px;">💡 Diagram rendered with Mermaid.js</p>
+                    </div>
+                `;
+            }
+
+            // Add product images if available
+            if (data.images && data.images.length > 0) {
+                responseHTML += `
+                    <div style="margin-top:16px;">
+                        <strong style="color:#1e293b;font-size:13px;">📸 Product Images:</strong>
+                        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));gap:12px;margin-top:8px;">
+                            ${data.images.map(img => `
+                                <div style="border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+                                    <img src="${img.url}" alt="${img.alt}" style="width:100%;height:150px;object-fit:cover;" loading="lazy">
+                                    <p style="font-size:11px;color:#64748b;padding:8px;text-align:center;margin:0;">${img.caption}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Add Urdu translation button
+            responseHTML += `
+                <button class="translate-btn" onclick="toggleTranslation('${messageId}')" style="
+                    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                    color: white;
+                    border: none;
+                    padding: 10px 18px;
+                    border-radius: 8px;
+                    font-size: 13px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    margin-top: 12px;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    transition: all 0.2s;
+                " onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 12px rgba(16, 185, 129, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    Translate to Urdu
+                </button>
+                    <div id="${messageId}-urdu" style="display: none;"></div>
+                </div>
+            `;
+
+            messageDiv.innerHTML = responseHTML;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            // Render diagram with Mermaid
+            if (data.diagram && typeof mermaid !== 'undefined') {
+                mermaid.init(undefined, `#diagram-${messageId} .mermaid`);
+            }
+        }
+
+        // Format response text
+        function formatResponse(text) {
+            // Convert markdown-style formatting to HTML
+            let formatted = text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n\n/g, '<br><br>')
+                .replace(/\n/g, '<br>')
+                .replace(/(\d+)\./g, '$1.')
+                .replace(/^- /gm, '• ');
+            return formatted;
         }
 
         // Handle Enter key
@@ -720,16 +1224,29 @@
         }
 
         // Toggle translation
-        window.toggleTranslation = function(messageId) {
+        window.toggleTranslation = async function(messageId) {
             const englishDiv = document.getElementById(`${messageId}-english`);
             const urduDiv = document.getElementById(`${messageId}-urdu`);
             const button = englishDiv.parentElement.querySelector('.translate-btn');
-            
+
             if (urduDiv.style.display === 'none') {
                 // Show Urdu translation
-                urduDiv.innerHTML = getUrduTranslation(englishDiv.innerText);
+                urduDiv.innerHTML = '<div style="text-align:center;padding:20px;color:#64748b;">🔄 Translating...</div>';
                 urduDiv.style.display = 'block';
                 englishDiv.style.display = 'none';
+
+                // Get the full message content (not just innerText)
+                const fullContent = englishDiv.innerHTML;
+
+                // Extract main message and translate
+                try {
+                    // Use local translation for better results
+                    urduDiv.innerHTML = formatUrduText(englishDiv.innerText);
+                } catch (error) {
+                    console.warn('Translation error:', error);
+                    urduDiv.innerHTML = formatUrduText(englishDiv.innerText);
+                }
+
                 button.innerHTML = `
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="12" cy="12" r="10"></circle>
@@ -752,6 +1269,200 @@
                 `;
             }
         };
+
+        // Format Urdu text with proper RTL styling
+        function formatUrduText(text) {
+            // Complete Urdu translations for common AI/Robotics content
+            const translations = {
+                // Greetings & Basic
+                'Welcome back': 'خوش آمدید',
+                'How can I help you today': 'میں آج آپ کی کیسے مدد کر سکتا ہوں؟',
+                'AI Explanation': 'مصنوعی ذہانت کی وضاحت',
+                'Great question': 'بہترین سوال',
+                'To give you the best answer': 'آپ کو بہترین جواب دینے کے لیے',
+                'try selecting specific text': 'خاص متن منتخب کرنے کی کوشش کریں',
+                'from the chapter above': 'اوپر دیے گئے باب سے',
+                'The highlighted sections contain detailed information': 'نشان زدہ حصوں میں تفصیلی معلومات موجود ہیں',
+                'about ROS 2 concepts': 'ROS 2 کے تصورات کے بارے میں',
+                'like nodes, topics, DDS, and services': 'جیسے نوڈز، ٹاپکس، DDS، اور سروسز',
+                'Or try asking about': 'یا اس کے بارے میں پوچھنے کی کوشش کریں',
+                'What is ROS 2?': 'ROS 2 کیا ہے؟',
+                'How does DDS work?': 'DDS کیسے کام کرتا ہے؟',
+                'What is a node?': 'نوڈ کیا ہے؟',
+                'You\'ve selected': 'آپ نے منتخب کیا',
+                'This concept is important': 'یہ تصور اہم ہے',
+                'in ROS 2 and robotics': 'ROS 2 اور روبوٹکس میں',
+                'Would you like me to explain any specific aspect in more detail?': 'کیا آپ چاہیں گے کہ میں کسی خاص پہلو کی مزید تفصیل سے وضاحت کروں؟',
+                'This relates to the ROS 2 concepts': 'یہ ROS 2 کے تصورات سے متعلق ہے',
+                'we\'re covering in this chapter': 'ہم اس باب میں احاطہ کر رہے ہیں',
+                'Feel free to select specific text from the chapter for more detailed explanations': 'مزید تفصیلی وضاحت کے لیے باب سے خاص متن منتخب کرنے سے گھبرائیں نہیں',
+                
+                // Sources Section
+                'Sources from Textbook': 'نصابی کتاب سے ماخذ',
+                'Chapter': 'باب',
+                'Introduction to ROS 2': 'ROS 2 کا تعارف',
+                'Physical AI Fundamentals': 'فزیکل AI کے بنیادی اصول',
+                'Humanoid Robotics': 'ہیومینائڈ روبوٹکس',
+                'Sensors and Perception': 'سینسرز اور ایڈراک',
+                'Motion Planning and Control': 'موشن پلاننگ اور کنٹرول',
+                'Machine Learning for Robotics': 'روبوٹکس کے لیے مشین لرننگ',
+                'Vision-Language-Action Models': 'ویژن لینگویج ایکشن ماڈلز',
+                'System Integration': 'سسٹم انٹیگریشن',
+                
+                // Additional AI Knowledge Section
+                'Additional AI Knowledge': 'اضافی مصنوعی ذہانت کی معلومات',
+                'Based on the textbook content, here\'s what you should know about': 'نصابی کتاب کے مواد کی بنیاد پر، آپ کو اس کے بارے میں یہ جاننا چاہیے',
+                'This concept is fundamental in robotics and AI': 'یہ تصور روبوٹکس اور AI میں بنیادی ہے',
+                'The book provides the core foundation, but in practice': 'کتاب بنیادی بنیاد فراہم کرتی ہے، لیکن عمل میں',
+                'Real-world Applications': 'حقیقی دنیا کی ایپلی کیشنز',
+                'These concepts are used in autonomous vehicles, manufacturing robots, and service robots': 'یہ تصورات خود مختار گاڑیوں، مینوفیکچرنگ روبوٹس، اور سروس روبوٹس میں استعمال ہوتے ہیں',
+                'Industry Standards': 'صنعتی معیارات',
+                'ROS 2 has become the de facto standard in robotics development': 'ROS 2 روبوٹکس ڈیولپمنٹ میں ڈی فیکٹو معیار بن گیا ہے',
+                'Best Practices': 'بہترین طریقے',
+                'Always start with simulation before deploying to physical hardware': 'طبیعی ہارڈویئر پر تعینات کرنے سے پہلے ہمیشہ سیمولیشن کے ساتھ شروع کریں',
+                'Common Challenges': 'عام چیلنجز',
+                'Latency in communication': 'مواصلات میں تاخیر',
+                'Synchronization issues': 'ہم آہنگی کے مسائل',
+                'Error handling and recovery': 'غلطی کو سنبھالنا اور بحالی',
+                
+                // ROS 2 Complete Phrases
+                'ROS 2 (Robot Operating System 2) is a set of software libraries and tools for building robot applications':
+                    'ROS 2 (روبوٹ آپریٹنگ سسٹم 2) روبوٹ ایپلی کیشنز بنانے کے لیے سافٹ ویئر لائبریریوں اور ٹولز کا ایک سیٹ ہے',
+                'It uses a publish-subscribe model for communication between nodes':
+                    'یہ نوڈز کے درمیان مواصلات کے لیے پبلش سبسکرائب ماڈل استعمال کرتا ہے',
+                'This decentralized architecture makes ROS 2 highly scalable and suitable for complex robotic systems':
+                    'یہ غیر مرکزی آرکیٹیکچر ROS 2 کو انتہائی اسکیل ایبل بناتا ہے اور پیچیدہ روبوٹکس سسٹمز کے لیے موزوں بناتا ہے',
+                
+                'Nodes: Independent processes that perform specific tasks':
+                    'نوڈز: آزاد پروسیسز جو مخصوص کام انجام دیتے ہیں',
+                'Topics: Named channels for message exchange':
+                    'ٹاپکس: پیغامات کے تبادلے کے لیے نامزد چینلز',
+                'Services: Request-response communication':
+                    'سروسز: درخواست جواب مواصلات',
+                'Actions: Long-running tasks with feedback':
+                    'ایکشنز: فیڈ بیک کے ساتھ طویل مدتی کام',
+                'DDS: Middleware protocol for distributed systems':
+                    'DDS: تقسیم شدہ سسٹمز کے لیے مڈل ویئر پروٹوکول',
+                
+                // Physical AI
+                'Physical AI refers to artificial intelligence systems that interact with the physical world through sensors and actuators':
+                    'فزیکل AI سے مراد مصنوعی ذہانت کے نظام ہیں جو سینسرز اور ایکچوایٹرز کے ذریعے طبیعی دنیا کے ساتھ تعامل کرتے ہیں',
+                'Unlike traditional AI that operates purely in digital domains, Physical AI must understand and manipulate real-world objects and environments':
+                    'روایتی AI کے برعکس جو خالصتاً ڈیجیٹل ڈومین میں کام کرتا ہے، فزیکل AI کو حقیقی دنیا کی اشیاء اور ماحول کو سمجھنا اور ان میں ردوبدل کرنا ضروری ہے',
+                
+                'Perception: Gathering information through sensors':
+                    'ادراک: سینسرز کے ذریعے معلومات کا حصول',
+                'Cognition: Processing data and making decisions':
+                    'شناخت: ڈیٹا پروسیسنگ اور فیصلے کرنا',
+                'Action: Executing physical movements':
+                    'عمل: طبیعی حرکات کا نفاذ',
+                
+                // Humanoid
+                'Humanoid robots are robots that resemble the human body in shape and structure':
+                    'ہیومینائڈ روبوٹس وہ روبوٹس ہیں جو شکل اور ساخت میں انسانی جسم سے ملتے جلتے ہیں',
+                'They typically have a head, torso, two arms, and two legs, mimicking human anatomy to enable human-like movement and interaction':
+                    'ان میں عام طور پر سر، دھڑ، دو بازو، اور دو ٹانگیں ہوتی ہیں، جو انسانی حرکات اور تعامل کو ممکن بنانے کے لیے انسانی تشریح کی نقل کرتی ہیں',
+                
+                // Common Technical Terms
+                'artificial intelligence': 'مصنوعی ذہانت',
+                'machine learning': 'مشین لرننگ',
+                'robot operating system': 'روبوٹ آپریٹنگ سسٹم',
+                'software libraries': 'سافٹ ویئر لائبریریاں',
+                'communication': 'مواصلات',
+                'distributed system': 'تقسیم شدہ سسٹم',
+                'middleware': 'مڈل ویئر',
+                'protocol': 'پروٹوکول',
+                'architecture': 'آرکیٹیکچر',
+                'scalable': 'اسکیل ایبل',
+                'complex': 'پیچیدہ',
+                'robotic systems': 'روبوٹک سسٹمز',
+                'independent processes': 'آزاد پروسیسز',
+                'specific tasks': 'مخصوص کام',
+                'message exchange': 'پیغامات کا تبادلہ',
+                'request-response': 'درخواست جواب',
+                'feedback': 'فیڈ بیک',
+                'long-running tasks': 'طویل مدتی کام',
+                
+                // Verbs
+                'is': 'ہے',
+                'are': 'ہیں',
+                'uses': 'استعمال کرتا ہے',
+                'makes': 'بناتا ہے',
+                'perform': 'انجام دیتے ہیں',
+                'enables': 'قابل بناتا ہے',
+                'provides': 'فراہم کرتا ہے',
+                'allows': 'اجازت دیتا ہے',
+                'helps': 'مدد کرتا ہے',
+                'understand': 'سمجھنا',
+                'manipulate': 'ہیر پھیر کرنا',
+                'gathering': 'جمع کرنا',
+                'processing': 'پروسیسنگ',
+                'executing': 'نفاذ',
+                
+                // Connectors
+                'and': 'اور',
+                'for': 'کے لیے',
+                'between': 'کے درمیان',
+                'through': 'کے ذریعے',
+                'that': 'جو',
+                'which': 'جس',
+                'with': 'کے ساتھ',
+                'from': 'سے',
+                'to': 'کو',
+                'in': 'میں',
+                'of': 'کا',
+                'the': ''
+            };
+            
+            let urduText = text.trim();
+            
+            // Clean up whitespace first
+            urduText = urduText.replace(/\s+/g, ' ').trim();
+            
+            // Apply translations in order of length (longest first to avoid partial replacements)
+            const sortedTranslations = Object.entries(translations).sort((a, b) => b[0].length - a[0].length);
+            
+            for (const [english, urdu] of sortedTranslations) {
+                const regex = new RegExp(english.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+                urduText = urduText.replace(regex, urdu);
+            }
+            
+            // Remove markdown formatting symbols for cleaner Urdu
+            urduText = urduText
+                .replace(/\*\*/g, '')
+                .replace(/__/g, '')
+                .replace(/```/g, '')
+                .replace(/###/g, '')
+                .replace(/##/g, '')
+                .replace(/#/g, '')
+                .replace(/\*/g, '')
+                .replace(/_/g, '');
+            
+            // Clean up extra whitespace again
+            urduText = urduText.replace(/\s+/g, ' ').trim();
+            
+            // Default: Return formatted Urdu text with proper RTL styling
+            return `
+                <div style="
+                    background: #f0fdf4;
+                    border: 1px solid #bbf7d0;
+                    border-radius: 8px;
+                    padding: 16px;
+                    margin-top: 12px;
+                    direction: rtl;
+                    text-align: right;
+                    font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', Arial, sans-serif;
+                    line-height: 2.2;
+                    font-size: 15px;
+                    color: #166534;
+                ">
+                    <strong style="color: #15803d; font-size: 14px; display: block; margin-bottom: 10px; border-bottom: 2px solid #bbf7d0; padding-bottom: 6px;">
+                        📖 اردو ترجمہ:
+                    </strong>
+                    <div style="white-space: pre-wrap; line-height: 2.4;">${urduText}</div>
+                </div>
+            `;
+        }
 
         // Get Urdu translation (simulated)
         function getUrduTranslation(text) {
@@ -1745,6 +2456,326 @@
 
             return chapters[chapterNum] || chapters[1];
         }
+
+        // ==================== AUTHENTICATION SYSTEM ====================
+
+        const API_URL = 'http://127.0.0.1:8000';
+        let currentUser = null;
+        let backendAvailable = true;
+
+        // Check auth on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            // Force show login modal immediately
+            setTimeout(() => {
+                openAuthModal();
+            }, 100);
+            checkAuthStatus();
+            checkBackendHealth();
+        });
+
+        // Check backend health
+        async function checkBackendHealth() {
+            try {
+                const response = await fetch(`${API_URL}/health`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                });
+                if (response.ok) {
+                    backendAvailable = true;
+                    console.log('✅ Backend connected');
+                }
+            } catch (error) {
+                backendAvailable = false;
+                console.warn('⚠️ Backend not available - Demo mode enabled');
+            }
+        }
+
+        // Check if user is logged in
+        function checkAuthStatus() {
+            const token = localStorage.getItem('auth_token');
+            const user = localStorage.getItem('user_data');
+
+            if (token && user) {
+                try {
+                    currentUser = JSON.parse(user);
+                    showUserProfile();
+                    // Hide modal if logged in
+                    document.getElementById('auth-modal-overlay').classList.remove('active');
+                } catch (e) {
+                    localStorage.removeItem('user_data');
+                    localStorage.removeItem('auth_token');
+                    openAuthModal();
+                }
+            } else {
+                // Show login modal
+                openAuthModal();
+            }
+        }
+
+        // Show user profile button
+        function showUserProfile() {
+            const profileBtn = document.getElementById('user-profile-btn');
+            const nameDisplay = document.getElementById('user-name-display');
+            const textbookContainer = document.getElementById('textbook-container');
+
+            if (currentUser) {
+                nameDisplay.textContent = currentUser.first_name || 'User';
+                profileBtn.style.display = 'flex';
+                // Show textbook content after login
+                textbookContainer.style.display = 'grid';
+            }
+        }
+
+        // Open auth modal
+        function openAuthModal() {
+            const overlay = document.getElementById('auth-modal-overlay');
+            overlay.classList.add('active');
+            showLoginForm();
+        }
+
+        // Close auth modal
+        function closeAuthModal() {
+            const overlay = document.getElementById('auth-modal-overlay');
+            overlay.classList.remove('active');
+            hideAuthMessages();
+        }
+
+        // Show login form
+        function showLoginForm() {
+            document.getElementById('login-form-container').classList.add('active');
+            document.getElementById('signup-form-container').classList.remove('active');
+            document.getElementById('auth-modal-title').textContent = 'Welcome Back';
+            document.getElementById('auth-modal-subtitle').textContent = 'Sign in to continue learning';
+            hideAuthMessages();
+        }
+
+        // Show signup form
+        function showSignupForm() {
+            document.getElementById('login-form-container').classList.remove('active');
+            document.getElementById('signup-form-container').classList.add('active');
+            document.getElementById('auth-modal-title').textContent = 'Create Account';
+            document.getElementById('auth-modal-subtitle').textContent = 'Join Physical AI Textbook';
+            hideAuthMessages();
+        }
+
+        // Hide auth messages
+        function hideAuthMessages() {
+            document.getElementById('auth-error-message').style.display = 'none';
+            document.getElementById('auth-success-message').style.display = 'none';
+        }
+
+        // Show error message
+        function showAuthError(message) {
+            const errorEl = document.getElementById('auth-error-message');
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
+            setTimeout(() => {
+                errorEl.style.display = 'none';
+            }, 6000);
+        }
+
+        // Show success message
+        function showAuthSuccess(message) {
+            const successEl = document.getElementById('auth-success-message');
+            successEl.textContent = message;
+            successEl.style.display = 'block';
+            setTimeout(() => {
+                successEl.style.display = 'none';
+            }, 3000);
+        }
+
+        // Password strength checker
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            const strengthEl = document.getElementById('password-strength');
+
+            if (password.length >= 8) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/\d/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+
+            strengthEl.className = 'password-strength';
+
+            if (strength <= 1) {
+                strengthEl.textContent = 'Weak password';
+                strengthEl.classList.add('weak');
+            } else if (strength <= 3) {
+                strengthEl.textContent = 'Medium password';
+                strengthEl.classList.add('medium');
+            } else {
+                strengthEl.textContent = 'Strong password';
+                strengthEl.classList.add('strong');
+            }
+        }
+
+        // Profile menu dropdown
+        function showProfileMenu() {
+            if (!currentUser) return;
+
+            const logoutChoice = confirm(`Logged in as ${currentUser.first_name || currentUser.email}\n\nClick OK to logout, Cancel to continue.`);
+            if (logoutChoice) {
+                logout();
+            }
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('user_data');
+            currentUser = null;
+
+            const profileBtn = document.getElementById('user-profile-btn');
+            profileBtn.style.display = 'none';
+
+            showAuthSuccess('Logged out successfully!');
+            setTimeout(() => {
+                openAuthModal();
+            }, 500);
+        }
+
+        // Handle login form submission
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+            const loginBtn = document.getElementById('login-btn');
+
+            // Validate inputs
+            if (!email || !password) {
+                showAuthError('Please enter both email and password');
+                return;
+            }
+
+            if (password.length < 6) {
+                showAuthError('Password must be at least 6 characters');
+                return;
+            }
+
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Signing in...';
+
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.status === 'success') {
+                    // Store auth data
+                    if (data.access_token) {
+                        localStorage.setItem('auth_token', data.access_token);
+                    }
+                    if (data.user) {
+                        localStorage.setItem('user_data', JSON.stringify(data.user));
+                        currentUser = data.user;
+                    }
+
+                    showAuthSuccess('Login successful! Welcome back.');
+                    closeAuthModal();
+                    showUserProfile();
+
+                    // Add welcome message to chat
+                    setTimeout(() => {
+                        if (typeof addAIMessage === 'function') {
+                            addAIMessage(`Welcome back, ${currentUser.first_name || 'user'}! How can I help you today?`);
+                        }
+                    }, 500);
+                } else {
+                    showAuthError(data.detail || 'Login failed. Please check your credentials.');
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Sign In';
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showAuthError('Unable to connect to server. Please try again.');
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Sign In';
+            }
+        });
+
+        // Handle signup form submission
+        document.getElementById('signup-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const firstName = document.getElementById('signup-firstname').value.trim();
+            const lastName = document.getElementById('signup-lastname').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm-password').value;
+            const signupBtn = document.getElementById('signup-btn');
+
+            // Validate inputs
+            if (!firstName || !lastName || !email || !password) {
+                showAuthError('Please fill in all fields');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showAuthError('Passwords do not match!');
+                return;
+            }
+
+            if (password.length < 6) {
+                showAuthError('Password must be at least 6 characters long.');
+                return;
+            }
+
+            signupBtn.disabled = true;
+            signupBtn.textContent = 'Creating account...';
+
+            try {
+                const response = await fetch(`${API_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        first_name: firstName,
+                        last_name: lastName,
+                        email: email,
+                        password: password,
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.status === 'success') {
+                    showAuthSuccess('Account created successfully! You can now login.');
+
+                    setTimeout(() => {
+                        showLoginForm();
+                        // Auto-fill email
+                        document.getElementById('login-email').value = email;
+                        document.getElementById('login-password').value = '';
+                        document.getElementById('login-password').focus();
+                    }, 2000);
+                } else {
+                    showAuthError(data.detail || 'Registration failed. Please try again.');
+                    signupBtn.disabled = false;
+                    signupBtn.textContent = 'Create Account';
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                showAuthError('Unable to connect to server. Please try again.');
+                signupBtn.disabled = false;
+                signupBtn.textContent = 'Create Account';
+            }
+        });
+
+        // Password strength indicator on input
+        document.getElementById('signup-password').addEventListener('input', (e) => {
+            checkPasswordStrength(e.target.value);
+        });
+
+        // Close modal on overlay click disabled - user must login/signup
+        // Overlay click removed - user cannot close modal without authenticating
+        // Escape key disabled - user must authenticate first
     </script>
 </body>
 </html>

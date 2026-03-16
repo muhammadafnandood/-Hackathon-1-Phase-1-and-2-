@@ -4,12 +4,11 @@
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.8+-blue)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green)](https://fastapi.tiangolo.com)
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/muhammadafnandood/-Hackathon-1-Phase-1-and-2-)
 
-> **Not just a textbook - An AI-powered learning platform for robotics education!**
+> **AI-powered interactive learning platform for robotics education!**
 
 An interactive AI textbook that transforms how students learn Physical AI & Humanoid Robotics. Features include AI chat assistance, personalized learning levels, automatic diagram generation, Urdu translation, and source citations.
-
-![AI Tutor Demo](docs/demo-banner.png)
 
 ---
 
@@ -19,18 +18,21 @@ An interactive AI textbook that transforms how students learn Physical AI & Huma
 
 | Feature | Description | Status |
 |---------|-------------|--------|
-| 📖 **Interactive Textbook** | 3-column layout with chapters, content, and AI chat | ✅ Complete |
-| 💬 **AI Chat Assistant** | Real-time Q&A about textbook content | ✅ Complete |
-| 🎓 **Personalized Learning** | 4 levels: Beginner, Student, Engineer, Researcher | ✅ Complete |
-| 🏗️ **Automatic Diagrams** | Mermaid.js visualizations for concepts | ✅ Complete |
-| 🌐 **Urdu Translation** | Native language support for Urdu speakers | ✅ Complete |
-| 📚 **Source Citations** | Chapter references with clickable links | ✅ Complete |
-| 📝 **Text Selection Q&A** | Select text → Get AI explanation | ✅ Complete |
+| 📖 **Interactive Textbook** | 3-column layout with chapters, content, and AI chat | ✅ |
+| 💬 **AI Chat Assistant** | Real-time Q&A about textbook content | ✅ |
+| 🎓 **Personalized Learning** | 4 levels: Beginner, Student, Engineer, Researcher | ✅ |
+| 🏗️ **Automatic Diagrams** | Mermaid.js visualizations for concepts | ✅ |
+| 🌐 **Urdu Translation** | Native language support for Urdu speakers | ✅ |
+| 📚 **Source Citations** | Chapter references with clickable links | ✅ |
+| 📝 **Text Selection Q&A** | Select text → Get AI explanation | ✅ |
+| 🔐 **User Authentication** | Login/Signup with session management | ✅ |
 
 ### 🎨 User Experience
 
 ```
 User Opens Platform
+        ↓
+Login/Signup
         ↓
 Selects Expertise Level
         ↓
@@ -38,7 +40,7 @@ Reads Interactive Content
         ↓
 Asks AI Questions
         ↓
-Gets Personalized Answers
+Gets Personalized Answers (with diagrams!)
         ↓
 Sees Source Citations
         ↓
@@ -73,7 +75,6 @@ start "source-citations.html"
 #### Prerequisites
 - Python 3.8+
 - Node.js 16+ (optional)
-- Qdrant Cloud Account (optional)
 
 #### Installation
 
@@ -92,11 +93,10 @@ venv\Scripts\activate
 source venv/bin/activate
 
 # Install dependencies
-cd rag-chatbot
+cd backend
 pip install -r requirements.txt
 
 # Start backend server
-cd backend
 python main.py
 ```
 
@@ -106,6 +106,55 @@ python main.py
 # Backend API: http://localhost:8000
 # API Docs: http://localhost:8000/docs
 # Frontend: Open HTML files in browser
+```
+
+---
+
+## 🌐 Deployment
+
+### Deploy to Vercel (Frontend)
+
+1. **Install Vercel CLI:**
+   ```bash
+   npm install -g vercel
+   ```
+
+2. **Login to Vercel:**
+   ```bash
+   vercel login
+   ```
+
+3. **Deploy:**
+   ```bash
+   vercel
+   ```
+
+4. **Production Deploy:**
+   ```bash
+   vercel --prod
+   ```
+
+### Deploy Backend (Separate)
+
+**Option 1: Railway**
+```bash
+# Connect to Railway
+railway login
+railway init
+railway up
+```
+
+**Option 2: Render**
+```bash
+# Connect GitHub repo to Render
+# Add requirements.txt
+# Deploy automatically
+```
+
+**Option 3: Local Server**
+```bash
+cd backend
+python main.py
 ```
 
 ---
@@ -126,23 +175,21 @@ Hackathon-1/
 │   └── text-selection-chat.html       # Text selection Q&A
 │
 ├── 🔐 Auth Pages/
-│   ├── login.html                     # Login UI
-│   └── signup.html                    # Signup UI
+│   ├── login.html                     # Login/Signup UI
 │
 ├── 🤖 Backend/
-│   └── rag-chatbot/
-│       ├── backend/
-│       │   ├── main.py                # FastAPI server
-│       │   ├── rag_pipeline.py        # RAG logic
-│       │   ├── urdu_translator.py     # Translation
-│       │   └── diagram_generator.py   # Diagrams
-│       ├── chat-widget.js             # Chat widget
+│   └── backend/
+│       ├── main.py                    # FastAPI server
 │       └── requirements.txt           # Dependencies
 │
 ├── 📚 Documentation/
 │   ├── README.md                      # This file
-│   ├── HACKATHON_FEATURES.md          # Feature list
 │   └── docs/                          # Additional docs
+│
+├── 🔧 Configuration/
+│   ├── .gitignore                     # Git ignore rules
+│   ├── package.json                   # NPM package config
+│   └── vercel.json                    # Vercel deployment config
 │
 └── 🎨 Assets/
     └── docs/
@@ -164,21 +211,19 @@ Hackathon-1/
 6. Show AI explanation
 
 ### Minute 3: Personalization
-7. Open `personalized-learning.html`
+7. Open level selector
 8. Select "Beginner" → Ask "What is SLAM?"
 9. Change to "Researcher" → Show technical answer
 
 ### Minute 4: Visualizations
-10. Open `automatic-diagrams.html`
-11. Click "ROS 2 Architecture"
-12. Show diagram generates
-13. Demo Zoom In/Out
+10. Ask about "ROS 2 architecture"
+11. Show diagram generates automatically! 🏗️
+12. Demo Zoom In/Out
 
 ### Minute 5: Citations & Translation
-14. Open `source-citations.html`
-15. Show sources below answer
-16. Click chapter link
-17. Click "Translate to Urdu"
+13. Show sources below answer
+14. Click chapter link
+15. Click "Translate to Urdu"
 
 ---
 
@@ -205,8 +250,6 @@ Hackathon-1/
 ### Backend
 - **FastAPI** - REST API
 - **Python 3.8+** - Core logic
-- **OpenAI GPT** - AI responses
-- **Qdrant** - Vector database
 - **RAG Pipeline** - Retrieval-Augmented Generation
 
 ### Features
@@ -220,10 +263,10 @@ Hackathon-1/
 
 | Metric | Value |
 |--------|-------|
-| Features Implemented | 7/7 ✅ |
+| Features Implemented | 8/8 ✅ |
 | Pages Created | 10+ |
 | Lines of Code | 5,000+ |
-| Diagram Templates | 6 |
+| Diagram Templates | 15+ |
 | Learning Levels | 4 |
 | Languages Supported | 2 (EN + UR) |
 | Chapters | 8 |
@@ -256,18 +299,15 @@ Hackathon-1/
 
 ### Environment Variables
 
-Create `.env` file in `rag-chatbot/backend/`:
+Create `.env` file in `backend/`:
 
 ```env
-# OpenAI API
+# OpenAI API (Optional - for advanced features)
 OPENAI_API_KEY=your-api-key-here
 
-# Qdrant Vector DB
+# Qdrant Vector DB (Optional)
 QDRANT_URL=https://your-qdrant-cluster.qdrant.io
 QDRANT_API_KEY=your-qdrant-api-key
-
-# Database (optional)
-DATABASE_URL=postgresql://user:pass@localhost:5432/dbname
 ```
 
 ---
@@ -291,27 +331,50 @@ DATABASE_URL=postgresql://user:pass@localhost:5432/dbname
 curl http://localhost:8000/health
 
 # Test chat endpoint
-curl -X POST http://localhost:8000/chat \
+curl -X POST http://localhost:8000/api/chat \
   -H "Content-Type: application/json" \
-  -d '{"message": "What is ROS 2?", "top_k": 5}'
+  -d '{"message": "What is ROS 2?", "level": "Beginner", "top_k": 5}'
 
-# Test translation endpoint
-curl -X POST http://localhost:8000/api/translate/urdu \
+# Test login endpoint
+curl -X POST http://localhost:8000/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"content": "Hello world", "language": "urdu"}'
+  -d '{"email": "test@example.com", "password": "password123"}'
 ```
 
 ---
 
 ## 📝 API Endpoints
 
-### Chat
+### Authentication
 ```http
-POST /chat
+POST /auth/register
 Content-Type: application/json
 
 {
-  "message": "What is SLAM?",
+  "first_name": "John",
+  "last_name": "Doe",
+  "email": "john@example.com",
+  "password": "password123"
+}
+```
+
+```http
+POST /auth/login
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "password123"
+}
+```
+
+### Chat
+```http
+POST /api/chat
+Content-Type: application/json
+
+{
+  "message": "What is ROS 2?",
   "level": "Beginner",
   "top_k": 5
 }
@@ -323,8 +386,8 @@ POST /api/translate/urdu
 Content-Type: application/json
 
 {
-  "content": "ROS 2 is a middleware...",
-  "language": "urdu"
+  "text": "Hello world",
+  "target_language": "urdu"
 }
 ```
 
@@ -364,7 +427,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Hackathon Phase 1 & 2
 - Physical AI & Humanoid Robotics Course
 - OpenAI for GPT API
-- Qdrant for Vector Database
 - Mermaid.js for Diagrams
 
 ---
