@@ -1,0 +1,41 @@
+/* Style overrides for DocItem Layout with PersonalizeButton */
+
+.docItemContainer {
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.docItemContainer header + *,
+.docItemContainer article > *:first-child {
+  margin-top: 0;
+}
+
+.docItemWrapper {
+  max-width: 100%;
+}
+
+.docItemCol {
+  max-width: 75% !important;
+}
+
+/* Personalize button container spacing */
+.personalize-button-container {
+  margin-bottom: 2rem;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 996px) {
+  .docItemCol {
+    max-width: 100% !important;
+  }
+  
+  .docItemContainer {
+    padding: 1rem 0;
+  }
+}
+
+/* Dark mode adjustments */
+[data-theme='dark'] .personalize-button-container {
+  background-color: var(--ifm-background-surface-color) !important;
+  border-color: var(--ifm-color-emphasis-200) !important;
+}

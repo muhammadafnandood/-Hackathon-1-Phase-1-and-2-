@@ -199,21 +199,76 @@
             display: flex;
             flex-direction: column;
             gap: 16px;
+            background: #f8fafc;
+            min-height: 300px;
         }
-
-        .message {
+        .chat-messages .message {
             display: flex;
             gap: 12px;
             max-width: 85%;
         }
-
-        .message.user {
+        .chat-messages .message.user {
             align-self: flex-end;
             flex-direction: row-reverse;
         }
-
-        .message.ai {
+        .chat-messages .message.ai {
             align-self: flex-start;
+        }
+        .chat-message {
+            margin-bottom: 12px;
+            display: flex;
+        }
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+        .chat-message.bot {
+            justify-content: flex-start;
+        }
+        .chat-message .message-content {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .chat-message.user .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        .chat-message.bot .message-content {
+            background: white;
+            color: #1e293b;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+        .typing .message-content {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+        }
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #94a3b8;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
+            30% {
+                transform: translateY(-4px);
+                opacity: 1;
+            }
         }
 
         .message-avatar {
@@ -281,15 +336,18 @@
             padding: 20px;
             border-top: 1px solid #e2e8f0;
             background: #f8fafc;
+            flex-shrink: 0; /* Prevent input area from shrinking */
         }
 
         .chat-input-wrapper {
             display: flex;
             gap: 8px;
+            align-items: center;
         }
 
         .chat-input {
             flex: 1;
+            min-width: 0; /* Allow input to shrink if needed */
             border: 2px solid #e2e8f0;
             border-radius: 24px;
             padding: 12px 20px;
@@ -305,6 +363,8 @@
         .chat-send-btn {
             width: 44px;
             height: 44px;
+            min-width: 44px; /* Prevent button from shrinking */
+            flex-shrink: 0; /* Prevent button from shrinking */
             border-radius: 50%;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
@@ -319,27 +379,6 @@
         .chat-send-btn:hover {
             transform: scale(1.05);
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-        }
-
-        /* Text Selection Popup */
-        .selection-popup {
-            position: fixed;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 24px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
-            display: none;
-            z-index: 10000;
-            transition: all 0.2s;
-        }
-
-        .selection-popup:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.7);
         }
 
         /* Level Selector */
@@ -410,6 +449,51 @@
                 height: 50vh;
                 border-left: none;
                 border-top: 1px solid #e2e8f0;
+            }
+        }
+
+        /* Ask AI Selection Popup */
+        #ask-ai-popup {
+            position: fixed;
+            z-index: 99999;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 6px 14px;
+            display: none;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s ease;
+            animation: popupFadeIn 0.2s ease;
+        }
+
+        #ask-ai-popup:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        #ask-ai-popup svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        #ask-ai-popup span {
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        @keyframes popupFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
             }
         }
 
@@ -617,6 +701,42 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        
+        /* Password Input Wrapper & Toggle */
+        .password-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .password-input-wrapper input {
+            width: 100%;
+            padding-right: 45px;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+            z-index: 10;
+        }
+        .password-toggle:hover {
+            opacity: 1;
+        }
+        .password-toggle svg {
+            color: #64748b;
+        }
+        .password-toggle:hover svg {
+            color: #3b82f6;
+        }
     </style>
     <!-- Mermaid.js for diagrams -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
@@ -625,11 +745,6 @@
     </script>
 </head>
 <body>
-    <!-- Text Selection Popup -->
-    <div id="selection-popup" class="selection-popup" onclick="askSelectedText()">
-        💬 Ask AI about this
-    </div>
-
     <!-- User Profile Button -->
     <button id="user-profile-btn" class="user-profile-btn" onclick="showProfileMenu()">
         <div class="user-avatar">👤</div>
@@ -638,6 +753,14 @@
             <polyline points="6 9 12 15 18 9"></polyline>
         </svg>
     </button>
+
+    <!-- Ask AI Selection Popup -->
+    <div id="ask-ai-popup" onclick="handleAskAIClick()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+        </svg>
+        <span>Ask AI</span>
+    </div>
 
     <!-- Auth Modal -->
     <div id="auth-modal-overlay" class="auth-modal-overlay">
@@ -657,11 +780,23 @@
                     <form id="login-form">
                         <div class="auth-form-group">
                             <label for="login-email">Email Address</label>
-                            <input type="email" id="login-email" required placeholder="you@example.com" autocomplete="email">
+                            <input type="email" id="login-email" name="login_email" required placeholder="you@example.com" autocomplete="email">
                         </div>
                         <div class="auth-form-group">
                             <label for="login-password">Password</label>
-                            <input type="password" id="login-password" required placeholder="Enter your password" autocomplete="current-password">
+                            <div class="password-input-wrapper">
+                                <input type="password" id="login-password" name="login_password" required placeholder="Enter your password" autocomplete="current-password">
+                                <button type="button" class="password-toggle" onclick="togglePassword('login-password', this)" tabindex="-1">
+                                    <svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                    <svg class="eye-off-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                         <button type="submit" class="auth-btn-primary" id="login-btn">Sign In</button>
                     </form>
@@ -682,25 +817,49 @@
                         <div class="auth-form-row">
                             <div class="auth-form-group">
                                 <label for="signup-firstname">First Name</label>
-                                <input type="text" id="signup-firstname" required placeholder="John" autocomplete="given-name">
+                                <input type="text" id="signup-firstname" name="signup_firstname" required placeholder="John" autocomplete="given-name">
                             </div>
                             <div class="auth-form-group">
                                 <label for="signup-lastname">Last Name</label>
-                                <input type="text" id="signup-lastname" required placeholder="Doe" autocomplete="family-name">
+                                <input type="text" id="signup-lastname" name="signup_lastname" required placeholder="Doe" autocomplete="family-name">
                             </div>
                         </div>
                         <div class="auth-form-group">
                             <label for="signup-email">Email Address</label>
-                            <input type="email" id="signup-email" required placeholder="you@example.com" autocomplete="email">
+                            <input type="email" id="signup-email" name="signup_email" required placeholder="you@example.com" autocomplete="email">
                         </div>
                         <div class="auth-form-group">
                             <label for="signup-password">Password</label>
-                            <input type="password" id="signup-password" required placeholder="Create a strong password" autocomplete="new-password" minlength="8">
+                            <div class="password-input-wrapper">
+                                <input type="password" id="signup-password" name="signup_password" required placeholder="Create a strong password" autocomplete="new-password" minlength="8">
+                                <button type="button" class="password-toggle" onclick="togglePassword('signup-password', this)" tabindex="-1">
+                                    <svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                    <svg class="eye-off-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                                    </svg>
+                                </button>
+                            </div>
                             <div id="password-strength" class="password-strength"></div>
                         </div>
                         <div class="auth-form-group">
                             <label for="signup-confirm-password">Confirm Password</label>
-                            <input type="password" id="signup-confirm-password" required placeholder="Confirm your password" autocomplete="new-password">
+                            <div class="password-input-wrapper">
+                                <input type="password" id="signup-confirm-password" name="signup_confirm_password" required placeholder="Confirm your password" autocomplete="new-password">
+                                <button type="button" class="password-toggle" onclick="togglePassword('signup-confirm-password', this)" tabindex="-1">
+                                    <svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                    <svg class="eye-off-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                         <button type="submit" class="auth-btn-primary" id="signup-btn">Create Account</button>
                     </form>
@@ -898,75 +1057,116 @@
     </div>
 
     <script>
-        let selectedText = "";
         let currentLevel = "Beginner";
+        let selectedTextForPopup = '';
 
-        // Text selection handler
+        // Ask AI Selection Popup Handler
+        let hidePopupTimeout;
+
         document.addEventListener('mouseup', function() {
-            setTimeout(function() {
-                selectedText = window.getSelection().toString().trim();
-                const popup = document.getElementById('selection-popup');
-
-                if (selectedText.length > 10) {
-                    const range = window.getSelection().getRangeAt(0);
-                    const rect = range.getBoundingClientRect();
-
-                    popup.style.display = 'block';
-                    popup.style.left = (rect.left + rect.width/2 - 80) + 'px';
-                    popup.style.top = (rect.top - 45 + window.scrollY) + 'px';
-                } else {
-                    popup.style.display = 'none';
-                }
-            }, 10);
+            clearTimeout(hidePopupTimeout);
+            hidePopupTimeout = setTimeout(showAskAIPopup, 100);
         });
 
-        // Ask AI about selected text
-        async function askSelectedText() {
-            const popup = document.getElementById('selection-popup');
-            popup.style.display = 'none';
+        document.addEventListener('mousedown', function(e) {
+            const popup = document.getElementById('ask-ai-popup');
+            if (popup && !popup.contains(e.target)) {
+                popup.style.display = 'none';
+            }
+        });
 
-            if (selectedText) {
-                addMessage(selectedText, 'user');
+        function showAskAIPopup() {
+            const selection = window.getSelection();
+            const text = selection.toString().trim();
 
-                // Show loading indicator
+            console.log('🔍 Text selected:', text);
+
+            // Hide if no text or too short
+            if (!text || text.length < 3) {
+                document.getElementById('ask-ai-popup').style.display = 'none';
+                return;
+            }
+
+            // Don't show if inside chat sidebar
+            if (selection.anchorNode) {
+                const chatSidebar = document.querySelector('.chat-sidebar');
+                if (chatSidebar?.contains(selection.anchorNode)) {
+                    document.getElementById('ask-ai-popup').style.display = 'none';
+                    return;
+                }
+            }
+
+            // Get selection position
+            const range = selection.getRangeAt(0);
+            const rect = range.getBoundingClientRect();
+
+            // Calculate position - center above selection
+            let popupTop = rect.top + window.scrollY - 50;
+            let popupLeft = rect.left + window.scrollX + (rect.width / 2) - 40;
+
+            // Keep on screen
+            const popupWidth = 80;
+            const windowWidth = window.innerWidth;
+
+            if (popupLeft < 10) popupLeft = 10;
+            if (popupLeft + popupWidth > windowWidth - 10) {
+                popupLeft = windowWidth - popupWidth - 10;
+            }
+
+            // If too close to top, show below
+            if (popupTop < 60) {
+                popupTop = rect.bottom + window.scrollY + 10;
+            }
+
+            console.log('✅ Showing popup at:', popupTop, popupLeft);
+            selectedTextForPopup = text;
+
+            const popup = document.getElementById('ask-ai-popup');
+            popup.style.top = popupTop + 'px';
+            popup.style.left = popupLeft + 'px';
+            popup.style.display = 'flex';
+        }
+
+        function handleAskAIClick() {
+            console.log('🚀 Ask AI clicked!');
+            if (selectedTextForPopup) {
+                // Add message to chat
+                addMessage('Explain this: ' + selectedTextForPopup, 'user');
+
+                // Show loading
                 const loadingId = showLoading();
 
-                try {
-                    // Get user level
-                    const levelSelect = document.getElementById('user-level');
-                    const userLevel = levelSelect ? levelSelect.value : 'Beginner';
+                // Call API
+                const levelSelect = document.getElementById('user-level');
+                const userLevel = levelSelect ? levelSelect.value : 'Beginner';
 
-                    // Call backend API with selected text
-                    const response = await fetch(`${API_URL}/api/chat`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            message: `Explain this: ${selectedText}`,
-                            level: userLevel,
-                            top_k: 5
-                        }),
-                    });
-
-                    // Remove loading
+                fetch(`${API_URL}/api/chat`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: 'Explain this from the book: ' + selectedTextForPopup,
+                        level: userLevel,
+                        top_k: 5
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
                     removeLoading(loadingId);
-
-                    if (response.ok) {
-                        const data = await response.json();
-                        displayAIResponse(data);
-                    } else {
-                        // Fallback to local AI
-                        const explanation = generateExplanation(selectedText);
-                        addAIMessage(explanation);
-                    }
-                } catch (error) {
+                    displayAIResponse(data);
+                })
+                .catch(error => {
                     console.error('Chat error:', error);
                     removeLoading(loadingId);
-                    // Fallback to local AI
-                    const explanation = generateExplanation(selectedText);
-                    addAIMessage(explanation);
-                }
+                    const localResponse = getAIResponse('Explain this: ' + selectedTextForPopup);
+                    addAIMessage(localResponse);
+                });
+
+                // Hide popup and clear selection
+                document.getElementById('ask-ai-popup').style.display = 'none';
+                window.getSelection().removeAllRanges();
+                selectedTextForPopup = '';
             }
         }
 
@@ -1157,6 +1357,13 @@
                 .replace(/(\d+)\./g, '$1.')
                 .replace(/^- /gm, '• ');
             return formatted;
+        }
+
+        // Escape HTML to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         }
 
         // Handle Enter key
@@ -1674,250 +1881,1230 @@
             `;
         }
 
-        // Get AI response for questions
-        function getAIResponse(question) {
+        // ==================== ADVANCED AI ENGINE 2.0 ====================
+        
+        // Advanced AI with multi-level explanations, examples, analogies, and quizzes
+        const ADVANCED_AI_CONFIG = {
+            levels: {
+                Beginner: {
+                    complexity: 1,
+                    useAnalogies: true,
+                    technicalDepth: 'basic',
+                    includeExamples: true,
+                    includeQuiz: true
+                },
+                Student: {
+                    complexity: 2,
+                    useAnalogies: true,
+                    technicalDepth: 'intermediate',
+                    includeExamples: true,
+                    includeQuiz: true
+                },
+                Engineer: {
+                    complexity: 3,
+                    useAnalogies: false,
+                    technicalDepth: 'advanced',
+                    includeExamples: true,
+                    includeQuiz: false
+                },
+                Researcher: {
+                    complexity: 4,
+                    useAnalogies: false,
+                    technicalDepth: 'expert',
+                    includeExamples: false,
+                    includeQuiz: false
+                }
+            },
+            
+            // Real-world examples database
+            examples: {
+                ros2: {
+                    title: '🏭 Real-World Example: Warehouse Robot',
+                    content: `Imagine a warehouse robot that needs to:
+1. **Sense** packages on a conveyor belt (using cameras)
+2. **Communicate** with the central system (via ROS 2 topics)
+3. **Pick** the right package (using arm control)
+4. **Navigate** to the shipping area (using motion planning)
+
+ROS 2 allows all these components to work together seamlessly!`
+                },
+                sensors: {
+                    title: '🚗 Real-World Example: Self-Driving Car',
+                    content: `A self-driving car uses multiple sensors:
+- **Cameras** (like human eyes) - Read traffic signs, detect lanes
+- **LiDAR** (like bat echolocation) - Measure distance to objects
+- **IMU** (like inner ear) - Know if car is accelerating or turning
+- **Radar** (like weather radar) - Detect speed of other vehicles
+
+All these sensors work together to create a complete picture!`
+                },
+                humanoid: {
+                    title: '🤖 Real-World Example: Tesla Optimus',
+                    content: `Tesla's Optimus humanoid robot:
+- **Height**: 5'8" (173 cm)
+- **Weight**: 125 lbs (57 kg)
+- **Payload**: 45 lbs (20 kg)
+- **Tasks**: Pick objects, walk, sort items
+
+It uses the same principles we study: sensors, actuators, AI, and control systems!`
+                },
+                ml: {
+                    title: '🎮 Real-World Example: Robot Learning to Walk',
+                    content: `How a robot learns to walk using Reinforcement Learning:
+1. **Trial**: Robot tries to move leg
+2. **Error**: Falls down
+3. **Reward**: Gets points for staying upright
+4. **Learn**: Adjusts motor commands
+5. **Repeat**: After 1000s of tries, learns to walk!
+
+Just like a baby learns to walk through practice.`
+                }
+            },
+            
+            // Analogies for complex concepts
+            analogies: {
+                ros2: 'ROS 2 is like WhatsApp for robots - just as WhatsApp lets people exchange messages, ROS 2 lets robot parts (sensors, motors, computers) talk to each other!',
+                nodes: 'A Node is like an app on your phone - each app does one thing (camera, maps, music), and nodes do one thing (read sensors, control motors, make decisions).',
+                topics: 'Topics are like YouTube channels - anyone can publish videos (data), and anyone can subscribe to watch. Publishers don\'t know who watches, and watchers don\'t know who published.',
+                sensors: 'Robot sensors are like human senses - cameras are eyes, microphones are ears, force sensors are touch, and IMU is your sense of balance!',
+                ai: 'Physical AI is like teaching a dog tricks - the dog sees a treat (perception), decides to sit (cognition), and sits down (action) to get the reward!'
+            },
+            
+            // Quiz questions database
+            quizzes: {
+                ros2: [
+                    {
+                        question: 'What does ROS 2 stand for?',
+                        options: ['Robot Operating System 2', 'Remote Operation System 2', 'Robotic Open Source 2'],
+                        correct: 0,
+                        explanation: 'ROS 2 = Robot Operating System 2'
+                    },
+                    {
+                        question: 'Which communication pattern does ROS 2 use?',
+                        options: ['Request-Response only', 'Publish-Subscribe', 'Both Publish-Subscribe and Request-Response'],
+                        correct: 2,
+                        explanation: 'ROS 2 uses Topics (pub-sub), Services (request-response), and Actions!'
+                    },
+                    {
+                        question: 'What is a Node in ROS 2?',
+                        options: ['A robot part', 'A process that performs a task', 'A type of sensor'],
+                        correct: 1,
+                        explanation: 'A Node is a process that performs a specific function!'
+                    }
+                ],
+                sensors: [
+                    {
+                        question: 'Which sensor is best for measuring distance?',
+                        options: ['Camera', 'LiDAR', 'Microphone'],
+                        correct: 1,
+                        explanation: 'LiDAR uses laser pulses to measure precise distances!'
+                    },
+                    {
+                        question: 'What does IMU measure?',
+                        options: ['Temperature', 'Acceleration & Orientation', 'Sound'],
+                        correct: 1,
+                        explanation: 'IMU (Inertial Measurement Unit) measures acceleration and angular velocity!'
+                    }
+                ],
+                ai: [
+                    {
+                        question: 'What are the 3 components of Physical AI?',
+                        options: ['Input-Process-Output', 'Perception-Cognition-Action', 'Sense-Think-Act'],
+                        correct: 1,
+                        explanation: 'Physical AI combines Perception (sensing), Cognition (thinking), and Action (movement)!'
+                    }
+                ]
+            },
+            
+            // Related topics suggestions
+            relatedTopics: {
+                ros2: ['DDS Middleware', 'Nodes and Topics', 'ROS 2 Services', 'Action Servers'],
+                sensors: ['Sensor Fusion', 'Computer Vision', 'LiDAR Processing', 'IMU Calibration'],
+                humanoid: ['Balance Control', 'Bipedal Locomotion', 'Arm Manipulation', 'Human-Robot Interaction'],
+                ml: ['Deep Learning', 'Reinforcement Learning', 'Neural Networks', 'Training vs Inference'],
+                vla: ['Large Language Models', 'Vision Transformers', 'Robot Control', 'Multimodal AI']
+            }
+        };
+        
+        // Generate quiz HTML
+        function generateQuizHTML(topic, level) {
+            const quizData = ADVANCED_AI_CONFIG.quizzes[topic];
+            if (!quizData || level === 'Researcher' || level === 'Engineer') return '';
+            
+            let quizHTML = `
+                <div style="margin-top: 24px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #fbbf24; border-radius: 12px; padding: 20px;">
+                    <h4 style="color: #92400e; display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                        </svg>
+                        📝 Quick Quiz - Test Your Understanding!
+                    </h4>
+            `;
+            
+            quizData.forEach((quiz, index) => {
+                quizHTML += `
+                    <div style="margin-bottom: 16px; background: white; padding: 16px; border-radius: 8px;">
+                        <p style="color: #1e293b; font-weight: 600; margin-bottom: 12px;">Q${index + 1}: ${quiz.question}</p>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            ${quiz.options.map((opt, i) => `
+                                <button onclick="checkQuizAnswer(this, ${quiz.correct}, '${quiz.explanation}')" 
+                                        style="padding: 10px 16px; border: 2px solid #e2e8f0; border-radius: 8px; background: white; cursor: pointer; text-align: left; transition: all 0.2s;"
+                                        onmouseover="this.style.borderColor='#667eea'; this.style.background='#eff6ff'"
+                                        onmouseout="this.style.borderColor='#e2e8f0'; this.style.background='white'">
+                                    ${String.fromCharCode(65 + i)}. ${opt}
+                                </button>
+                            `).join('')}
+                        </div>
+                        <div id="quiz-feedback-${index}" style="margin-top: 12px; display: none; padding: 12px; border-radius: 8px;"></div>
+                    </div>
+                `;
+            });
+            
+            quizHTML += `</div>`;
+            return quizHTML;
+        }
+        
+        // Check quiz answer (global function)
+        window.checkQuizAnswer = function(button, correctIndex, explanation) {
+            const parent = button.parentElement;
+            const feedback = parent.nextElementSibling;
+            const selectedIndex = Array.from(parent.children).indexOf(button);
+            
+            // Disable all buttons
+            Array.from(parent.children).forEach(btn => {
+                btn.disabled = true;
+                btn.style.cursor = 'not-allowed';
+                btn.style.opacity = '0.6';
+            });
+            
+            if (selectedIndex === correctIndex) {
+                button.style.background = '#d1fae5';
+                button.style.borderColor = '#10b981';
+                feedback.style.display = 'block';
+                feedback.style.background = '#d1fae5';
+                feedback.style.color = '#065f46';
+                feedback.innerHTML = `✅ <strong>Correct!</strong> ${explanation}`;
+            } else {
+                button.style.background = '#fee2e2';
+                button.style.borderColor = '#dc2626';
+                feedback.style.display = 'block';
+                feedback.style.background = '#fee2e2';
+                feedback.style.color = '#991b1b';
+                feedback.innerHTML = `❌ <strong>Not quite!</strong> ${explanation}`;
+                
+                // Highlight correct answer
+                parent.children[correctIndex].style.background = '#d1fae5';
+                parent.children[correctIndex].style.borderColor = '#10b981';
+            }
+        };
+        
+        // Generate example HTML
+        function generateExampleHTML(topic) {
+            const example = ADVANCED_AI_CONFIG.examples[topic];
+            if (!example) return '';
+            
+            return `
+                <div style="margin-top: 20px; background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border-left: 4px solid #2563eb; border-radius: 12px; padding: 20px;">
+                    <h4 style="color: #1e40af; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        </svg>
+                        ${example.title}
+                    </h4>
+                    <div style="color: #1e40af; line-height: 1.7;">
+                        ${example.content.replace(/\n/g, '<br>')}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Generate analogy HTML
+        function generateAnalogyHTML(topic, level) {
+            if (level === 'Engineer' || level === 'Researcher') return '';
+            
+            const analogy = ADVANCED_AI_CONFIG.analogies[topic];
+            if (!analogy) return '';
+            
+            return `
+                <div style="margin-top: 20px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-left: 4px solid #f59e0b; border-radius: 12px; padding: 20px;">
+                    <h4 style="color: #92400e; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                        💡 Simple Analogy
+                    </h4>
+                    <p style="color: #92400e; line-height: 1.7; font-style: italic;">
+                        "${analogy}"
+                    </p>
+                </div>
+            `;
+        }
+        
+        // Generate related topics HTML
+        function generateRelatedTopicsHTML(topic) {
+            const topics = ADVANCED_AI_CONFIG.relatedTopics[topic];
+            if (!topics || topics.length === 0) return '';
+            
+            return `
+                <div style="margin-top: 20px; padding: 16px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
+                    <h4 style="color: #475569; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                        🔗 Related Topics to Explore
+                    </h4>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        ${topics.map(t => `
+                            <span style="padding: 6px 14px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 20px; font-size: 13px; cursor: pointer;"
+                                  onclick="document.getElementById('chat-input').value='Explain ${t}'; sendMessage();"
+                                  onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 4px 12px rgba(102, 126, 234, 0.4)'"
+                                  onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+                                ${t}
+                            </span>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Detect topic from question
+        function detectTopicFromQuestion(question) {
             const q = question.toLowerCase();
             
-            // ROS 2 questions
-            if (q.includes('what is ros') || q.includes('ros 2')) {
-                return `
-                    <div class="ai-explanation">
-                        <h4>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                            </svg>
-                            AI Explanation
-                        </h4>
-                        <p>
-                            <strong>ROS 2 (Robot Operating System 2)</strong> is a flexible framework
-                            for writing robot software. It provides tools and libraries to help you
-                            create robot applications, including hardware abstraction, device drivers,
-                            communication between processes, and package management. ROS 2 uses a
-                            publish-subscribe architecture that makes it easy to build complex robot
-                            systems from simpler components.
-                        </p>
-                    </div>
-                `;
+            if (q.includes('ros') || q.includes('node') || q.includes('topic') || q.includes('publisher')) return 'ros2';
+            if (q.includes('sensor') || q.includes('lidar') || q.includes('camera') || q.includes('imu')) return 'sensors';
+            if (q.includes('humanoid') || q.includes('robot part') || q.includes('actuator')) return 'humanoid';
+            if (q.includes('machine learning') || q.includes('ml') || q.includes('learning') || q.includes('neural')) return 'ml';
+            if (q.includes('vla') || q.includes('vision-language') || q.includes('language action')) return 'vla';
+            if (q.includes('physical ai') || q.includes('perception') || q.includes('cognition')) return 'ai';
+            if (q.includes('motion') || q.includes('planning') || q.includes('path')) return 'motion';
+            if (q.includes('control') || q.includes('pid') || q.includes('feedback')) return 'control';
+            
+            return null;
+        }
+        
+        // Conversation history for context awareness
+        let conversationHistory = [];
+        let currentTopic = null;
+        let lastSearchResults = null;
+
+        // Extract text content from HTML (strip tags)
+        function extractTextFromHTML(html) {
+            const tmp = document.createElement('div');
+            tmp.innerHTML = html;
+            return tmp.textContent || tmp.innerText || '';
+        }
+
+        // Advanced NLP: Detect question type and intent
+        function detectQuestionIntent(question) {
+            const q = question.toLowerCase().trim();
+            
+            // What questions
+            if (/^what (is|are)/.test(q)) return { type: 'definition', confidence: 0.9 };
+            if (/^who (is|are)/.test(q)) return { type: 'identity', confidence: 0.9 };
+            if (/^where/.test(q)) return { type: 'location', confidence: 0.85 };
+            if (/^when/.test(q)) return { type: 'time', confidence: 0.85 };
+            if (/^why/.test(q)) return { type: 'reason', confidence: 0.9 };
+            if (/^how (does|do|can|will|would)/.test(q)) return { type: 'process', confidence: 0.9 };
+            if (/^how to/.test(q)) return { type: 'instruction', confidence: 0.9 };
+            if (/^explain/.test(q)) return { type: 'explanation', confidence: 0.95 };
+            if (/^compare/.test(q) || /difference between/.test(q)) return { type: 'comparison', confidence: 0.9 };
+            if (/^list/.test(q) || /examples of/.test(q)) return { type: 'list', confidence: 0.85 };
+            if (/^can |could |is it possible/.test(q)) return { type: 'possibility', confidence: 0.8 };
+            if (/\?/.test(q)) return { type: 'question', confidence: 0.7 };
+            
+            return { type: 'statement', confidence: 0.6 };
+        }
+
+        // Extract key concepts from question
+        function extractKeyConcepts(question) {
+            const q = question.toLowerCase();
+            const concepts = [];
+            
+            // Technical terms to look for
+            const technicalTerms = [
+                'ros 2', 'ros2', 'robot operating system', 'dds', 'data distribution service',
+                'node', 'nodes', 'topic', 'topics', 'publisher', 'subscriber', 'service', 'services',
+                'action', 'actions', 'middleware', 'robot', 'robots', 'robotics', 'humanoid',
+                'sensor', 'sensors', 'lidar', 'camera', 'cameras', 'imu', 'actuator', 'actuators',
+                'physical ai', 'machine learning', 'ml', 'deep learning', 'neural network', 'neural networks',
+                'vla', 'vision-language-action', 'vision language action', 'rt-2', 'gato',
+                'motion planning', 'path planning', 'obstacle avoidance', 'trajectory',
+                'perception', 'cognition', 'action', 'control', 'controller', 'pid', 'mpc',
+                'transformer', 'transformers', 'vit', 'vision transformer', 'cnn', 'convolutional',
+                'reinforcement learning', 'supervised learning', 'imitation learning', 'self-supervised',
+                'balance', 'locomotion', 'manipulation', 'grasping', 'navigation', 'mapping',
+                'system integration', 'hardware', 'software', 'deployment', 'testing'
+            ];
+            
+            technicalTerms.forEach(term => {
+                if (q.includes(term)) {
+                    concepts.push(term);
+                }
+            });
+            
+            return concepts.length > 0 ? concepts : q.split(/\s+/).filter(w => w.length > 3);
+        }
+
+        // Advanced search with semantic understanding
+        function advancedSearchContent(question, chapterNum) {
+            const chapterContent = getChapterContent(chapterNum);
+            const concepts = extractKeyConcepts(question);
+            const intent = detectQuestionIntent(question);
+            
+            // Split into sections
+            const sections = [];
+            const headingRegex = /<(h[1-3])[^>]*>(.*?)<\/\1>/gi;
+            let lastIdx = 0;
+            let match;
+            
+            while ((match = headingRegex.exec(chapterContent)) !== null) {
+                if (lastIdx < match.index) {
+                    const prevText = chapterContent.substring(lastIdx, match.index);
+                    if (prevText.trim()) {
+                        sections.push({
+                            heading: 'Introduction',
+                            content: prevText,
+                            fullText: prevText,
+                            type: 'intro'
+                        });
+                    }
+                }
+                const nextHeadingIdx = chapterContent.indexOf('<h', match.index + 1);
+                const sectionContent = chapterContent.substring(match.index, nextHeadingIdx !== -1 ? nextHeadingIdx : chapterContent.length);
+                sections.push({
+                    heading: match[2].replace(/<[^>]*>/g, ''),
+                    content: sectionContent,
+                    fullText: sectionContent,
+                    type: 'section'
+                });
+                lastIdx = nextHeadingIdx !== -1 ? nextHeadingIdx : chapterContent.length;
             }
             
-            // DDS questions
+            if (sections.length === 0) {
+                sections.push({
+                    heading: 'Chapter Content',
+                    content: chapterContent,
+                    fullText: chapterContent,
+                    type: 'full'
+                });
+            }
+            
+            // Score sections with advanced algorithm
+            const scoredSections = sections.map(section => {
+                const sectionText = extractTextFromHTML(section.fullText).toLowerCase();
+                const sectionHeading = section.heading.toLowerCase();
+                
+                let score = 0;
+                let matchDetails = [];
+                
+                // Concept matching with weights
+                concepts.forEach(concept => {
+                    const conceptInHeading = sectionHeading.includes(concept);
+                    const conceptInText = sectionText.includes(concept);
+                    
+                    if (conceptInHeading) {
+                        score += 10;
+                        matchDetails.push(`heading match: ${concept}`);
+                    }
+                    if (conceptInText) {
+                        // Count occurrences
+                        const regex = new RegExp(concept.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+                        const matches = sectionText.match(regex);
+                        const count = matches ? matches.length : 0;
+                        score += Math.min(count * 2, 8); // Cap at 8 points per concept
+                        if (count > 0) matchDetails.push(`text matches (${count}x): ${concept}`);
+                    }
+                });
+                
+                // Intent-based boosting
+                if (intent.type === 'definition' && /is a|is an|are|refers to|means|defined as/.test(sectionText)) {
+                    score += 5;
+                }
+                if (intent.type === 'process' && /works by|process|method|approach|steps|how to/.test(sectionText)) {
+                    score += 5;
+                }
+                
+                // Proximity scoring - concepts appearing close together
+                if (concepts.length > 1) {
+                    for (let i = 0; i < concepts.length - 1; i++) {
+                        const idx1 = sectionText.indexOf(concepts[i]);
+                        const idx2 = sectionText.indexOf(concepts[i + 1]);
+                        if (idx1 !== -1 && idx2 !== -1 && Math.abs(idx1 - idx2) < 200) {
+                            score += 3;
+                        }
+                    }
+                }
+                
+                return { 
+                    ...section, 
+                    score, 
+                    plainText: sectionText,
+                    matchDetails,
+                    relevance: score > 15 ? 'high' : score > 8 ? 'medium' : 'low'
+                };
+            });
+            
+            // Sort by score
+            scoredSections.sort((a, b) => b.score - a.score);
+            
+            return scoredSections.filter(s => s.score > 0);
+        }
+
+        // Generate intelligent answer from content
+        function generateIntelligentAnswer(question, chapterNum) {
+            const matches = advancedSearchContent(question, chapterNum);
+            const intent = detectQuestionIntent(question);
+            
+            if (matches.length > 0) {
+                const bestMatch = matches[0];
+                const chapterTitle = getChapterTitle(chapterNum);
+                
+                // Extract content based on intent
+                let answer = '';
+                let keyPoints = [];
+                
+                // Get paragraphs
+                const paragraphs = bestMatch.content.match(/<p[^>]*>(.*?)<\/p>/gi) || [];
+                const infoBoxes = bestMatch.content.match(/<div class="(highlight-box|info-box|warning-box)"[^>]*>(.*?)<\/div>/gi) || [];
+                const lists = bestMatch.content.match(/<(ul|ol)[^>]*>(.*?)<\/\1>/gi) || [];
+                
+                // Build answer based on intent
+                if (intent.type === 'definition') {
+                    // Look for definition patterns
+                    const defPattern = /(is a|is an|are|refers to|means|defined as|called|known as)[^.]+/gi;
+                    const text = extractTextFromHTML(bestMatch.fullText);
+                    const defMatches = text.match(defPattern);
+                    if (defMatches) {
+                        answer = defMatches.slice(0, 2).join('. ').trim();
+                    } else if (paragraphs.length > 0) {
+                        answer = extractTextFromHTML(paragraphs[0]).trim();
+                    }
+                } else if (intent.type === 'process' || intent.type === 'instruction') {
+                    // Look for process descriptions
+                    answer = paragraphs.slice(0, 3).map(p => extractTextFromHTML(p).trim()).join('\n\n');
+                    if (lists.length > 0) {
+                        const listText = extractTextFromHTML(lists[0]).trim();
+                        answer += '\n\nKey Steps:\n• ' + listText.replace(/\n+/g, '\n• ');
+                    }
+                } else if (intent.type === 'list') {
+                    // Look for lists and examples
+                    if (lists.length > 0) {
+                        answer = extractTextFromHTML(lists[0]).trim();
+                    } else {
+                        answer = paragraphs.slice(0, 2).map(p => extractTextFromHTML(p).trim()).join('\n\n');
+                    }
+                } else {
+                    // Default: get main content
+                    answer = paragraphs.slice(0, 3).map(p => extractTextFromHTML(p).trim()).join('\n\n');
+                }
+                
+                // Add key points from info boxes
+                if (infoBoxes.length > 0) {
+                    const keyConcept = extractTextFromHTML(infoBoxes[0]).trim();
+                    keyPoints.push(keyConcept);
+                }
+                
+                // Build rich response
+                let response = {
+                    answer: answer,
+                    keyPoints: keyPoints,
+                    section: bestMatch.heading,
+                    chapter: chapterTitle,
+                    relevance: bestMatch.relevance,
+                    found: true,
+                    confidence: bestMatch.score / 20 // Normalize score to 0-1
+                };
+                
+                return response;
+            }
+            
+            return { found: false };
+        }
+
+        // Get chapter title
+        function getChapterTitle(chapterNum) {
+            const titles = {
+                1: 'Introduction to ROS 2',
+                2: 'Physical AI Fundamentals',
+                3: 'Humanoid Robotics',
+                4: 'Sensors and Perception',
+                5: 'Motion Planning and Control',
+                6: 'Machine Learning for Robotics',
+                7: 'Vision-Language-Action Models',
+                8: 'System Integration'
+            };
+            return titles[chapterNum] || 'Unknown Chapter';
+        }
+
+        // Get current chapter number
+        function getCurrentChapterNumber() {
+            const activeItem = document.querySelector('.chapter-item.active');
+            if (activeItem) {
+                const chapterNum = activeItem.getAttribute('onclick');
+                const match = chapterNum.match(/loadChapter\((\d+)/);
+                if (match) return parseInt(match[1]);
+            }
+            return 1;
+        }
+
+        // Add to conversation history
+        function addToHistory(question, answer) {
+            conversationHistory.push({
+                question: question,
+                answer: answer,
+                timestamp: Date.now()
+            });
+            
+            // Keep last 10 messages
+            if (conversationHistory.length > 10) {
+                conversationHistory.shift();
+            }
+        }
+
+        // Get context from previous conversation
+        function getContextFromHistory() {
+            if (conversationHistory.length === 0) return null;
+            
+            const lastMsg = conversationHistory[conversationHistory.length - 1];
+            return lastMsg;
+        }
+
+        // Advanced AI response generator - WITH DIAGRAMS
+        function getAIResponse(question) {
+            const currentChapter = getCurrentChapterNumber();
+            const concepts = extractKeyConcepts(question);
+            const intent = detectQuestionIntent(question);
+            
+            // Detect if we should show a diagram
+            const diagram = detectDiagramFromQuestion(question);
+            
+            // Check for context-dependent questions (follow-ups)
+            const context = getContextFromHistory();
+            if (context && /it|they|them|this|that|these|those/.test(question.toLowerCase())) {
+                // Context-dependent question, use previous topic
+                console.log('🔍 Using context from previous conversation');
+            }
+            
+            // Search current chapter first
+            const contentAnswer = generateIntelligentAnswer(question, currentChapter);
+            
+            if (contentAnswer.found && contentAnswer.answer && contentAnswer.confidence > 0.3) {
+                addToHistory(question, contentAnswer.answer);
+                
+                let html = `
+                    <div class="ai-explanation" style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 1px solid #86efac;">
+                        <h4 style="color: #166534; display: flex; align-items: center; gap: 8px;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                            AI Explanation - ${contentAnswer.section}
+                        </h4>
+                        <p style="color: #166534; line-height: 1.7;">${contentAnswer.answer.replace(/\n\n/g, '</p><p style="color: #166534; line-height: 1.7; margin-top: 12px;">')}</p>
+                `;
+                
+                if (contentAnswer.keyPoints && contentAnswer.keyPoints.length > 0) {
+                    html += `
+                        <div style="margin-top: 16px; padding: 12px; background: rgba(255,255,255,0.6); border-radius: 8px; border-left: 3px solid #16a34a;">
+                            <strong style="color: #166534; font-size: 13px;">💡 Key Insight:</strong>
+                            <p style="color: #166534; font-size: 13px; margin: 6px 0 0 0;">${contentAnswer.keyPoints[0]}</p>
+                        </div>
+                    `;
+                }
+                
+                // Add diagram if detected
+                if (diagram) {
+                    const messageId = 'diagram-' + Date.now();
+                    html += `
+                        <div style="margin-top: 20px;">
+                            <strong style="color: #166534; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                    <polyline points="21 15 16 10 5 21"></polyline>
+                                </svg>
+                                ${diagram.title}
+                            </strong>
+                            <div id="diagram-${messageId}" style="margin-top: 12px; background: white; padding: 16px; border-radius: 12px; border: 2px solid #86efac; overflow: auto;">
+                                <div class="mermaid">${diagram.mermaid}</div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    setTimeout(() => renderDiagramInMessage(messageId, diagram), 100);
+                }
+                
+                html += `
+                        <p style="margin-top: 16px; font-size: 12px; color: #166534; opacity: 0.8; border-top: 1px dashed #86efac; padding-top: 12px;">
+                            📖 From: <strong>${contentAnswer.chapter}</strong> • Section: <em>${contentAnswer.section}</em>
+                        </p>
+                    </div>
+                `;
+                
+                return html;
+            }
+            
+            // Search all chapters
+            for (let ch = 1; ch <= 8; ch++) {
+                if (ch !== currentChapter) {
+                    const crossAnswer = generateIntelligentAnswer(question, ch);
+                    if (crossAnswer.found && crossAnswer.answer && crossAnswer.confidence > 0.3) {
+                        addToHistory(question, crossAnswer.answer);
+                        
+                        let html = `
+                            <div class="ai-explanation" style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border: 1px solid #93c5fd;">
+                                <h4 style="color: #1e40af; display: flex; align-items: center; gap: 8px;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                    </svg>
+                                    AI Explanation - ${crossAnswer.section}
+                                </h4>
+                                <p style="color: #1e40af; line-height: 1.7;">${crossAnswer.answer.replace(/\n\n/g, '</p><p style="color: #1e40af; line-height: 1.7; margin-top: 12px;">')}</p>
+                                ${crossAnswer.keyPoints && crossAnswer.keyPoints.length > 0 ? `
+                                    <div style="margin-top: 16px; padding: 12px; background: rgba(255,255,255,0.6); border-radius: 8px; border-left: 3px solid #3b82f6;">
+                                        <strong style="color: #1e40af; font-size: 13px;">💡 Key Insight:</strong>
+                                        <p style="color: #1e40af; font-size: 13px; margin: 6px 0 0 0;">${crossAnswer.keyPoints[0]}</p>
+                                    </div>
+                                ` : ''}
+                        `;
+                        
+                        // Add diagram if detected
+                        if (diagram) {
+                            const messageId = 'diagram-' + Date.now();
+                            html += `
+                                <div style="margin-top: 20px;">
+                                    <strong style="color: #1e40af; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                            <polyline points="21 15 16 10 5 21"></polyline>
+                                        </svg>
+                                        ${diagram.title}
+                                    </strong>
+                                    <div id="diagram-${messageId}" style="margin-top: 12px; background: white; padding: 16px; border-radius: 12px; border: 2px solid #93c5fd; overflow: auto;">
+                                        <div class="mermaid">${diagram.mermaid}</div>
+                                    </div>
+                                </div>
+                            `;
+                            
+                            setTimeout(() => renderDiagramInMessage(messageId, diagram), 100);
+                        }
+                        
+                        html += `
+                                <p style="margin-top: 16px; font-size: 12px; color: #1e40af; opacity: 0.8; border-top: 1px dashed #93c5fd; padding-top: 12px;">
+                                    📖 From: <strong>${crossAnswer.chapter}</strong> • Section: <em>${crossAnswer.section}</em>
+                                </p>
+                            </div>
+                        `;
+                        
+                        return html;
+                    }
+                }
+            }
+            
+            // Enhanced keyword-based responses with rich content AND DIAGRAMS
+            const q = question.toLowerCase();
+            
+            // Helper to create diagram HTML
+            function createDiagramHTML(diagramTemplate) {
+                const messageId = 'diagram-' + Date.now();
+                setTimeout(() => renderDiagramInMessage(messageId, diagramTemplate), 100);
+                return `
+                    <div style="margin-top: 20px;">
+                        <strong style="color: #92400e; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                <polyline points="21 15 16 10 5 21"></polyline>
+                            </svg>
+                            ${diagramTemplate.title}
+                        </strong>
+                        <div id="${messageId}" style="margin-top: 12px; background: white; padding: 16px; border-radius: 12px; border: 2px solid #fcd34d; overflow: auto;">
+                            <div class="mermaid">${diagramTemplate.mermaid}</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // ROS 2
+            if (q.includes('ros') || q.includes('robot operating')) {
+                addToHistory(question, 'ROS 2 explanation');
+                const rosDiagram = detectDiagramFromQuestion(question) || DIAGRAM_TEMPLATES.ros2_architecture;
+                return `
+                    <div class="ai-explanation" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 1px solid #fcd34d;">
+                        <h4 style="color: #92400e; display: flex; align-items: center; gap: 8px;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            About ROS 2
+                        </h4>
+                        <p style="color: #92400e; line-height: 1.7;">
+                            <strong>ROS 2 (Robot Operating System 2)</strong> is a flexible framework for writing robot software. It provides:
+                        </p>
+                        <ul style="margin: 12px 0; padding-left: 24px; color: #92400e;">
+                            <li style="margin-bottom: 6px;">🔧 <strong>Tools & Libraries</strong> for building robot applications</li>
+                            <li style="margin-bottom: 6px;">📡 <strong>Publish-Subscribe</strong> architecture for communication</li>
+                            <li style="margin-bottom: 6px;">🌐 <strong>DDS Middleware</strong> for distributed systems</li>
+                            <li style="margin-bottom: 6px;">⚡ <strong>Real-time</strong> control capabilities</li>
+                        </ul>
+                        ${createDiagramHTML(rosDiagram)}
+                        <p style="margin-top: 16px; font-size: 12px; color: #92400e; border-top: 1px dashed #fcd34d; padding-top: 12px;">
+                            📖 See: <strong>Chapter 1 - Introduction to ROS 2</strong>
+                        </p>
+                    </div>
+                `;
+            }
+
+            // DDS
             if (q.includes('dds') || q.includes('data distribution')) {
                 return `
-                    <div class="ai-explanation">
-                        <h4>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                            </svg>
-                            AI Explanation
-                        </h4>
-                        <p>
-                            <strong>DDS (Data Distribution Service)</strong> is the middleware that
-                            ROS 2 uses for communication. It implements a publish-subscribe pattern
-                            where nodes can send and receive data without knowing about each other.
-                            DDS provides features like reliability, durability, and real-time performance,
-                            making it perfect for robotics applications.
+                    <div class="ai-explanation" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 1px solid #fcd34d;">
+                        <h4 style="color: #92400e;">📡 About DDS</h4>
+                        <p style="color: #92400e; line-height: 1.7;">
+                            <strong>DDS (Data Distribution Service)</strong> is the middleware ROS 2 uses. Key features:
+                        </p>
+                        <ul style="margin: 12px 0; padding-left: 24px; color: #92400e;">
+                            <li style="margin-bottom: 6px;">✅ <strong>Reliability</strong> - Guaranteed message delivery</li>
+                            <li style="margin-bottom: 6px;">⏱️ <strong>Real-time</strong> performance</li>
+                            <li style="margin-bottom: 6px;">🔄 <strong>durability</strong> - Late-joining subscribers receive historical data</li>
+                        </ul>
+                        <p style="margin-top: 16px; font-size: 12px; color: #92400e; border-top: 1px dashed #fcd34d; padding-top: 12px;">
+                            📖 See: <strong>Chapter 1</strong>
                         </p>
                     </div>
                 `;
             }
 
-            // Node questions
+            // Nodes
             if (q.includes('node') || q.includes('nodes')) {
                 return `
-                    <div class="ai-explanation">
-                        <h4>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                            </svg>
-                            AI Explanation
-                        </h4>
-                        <p>
-                            A <strong>Node</strong> is the basic building block of ROS 2. Each node
-                            is a separate process that performs a specific task - like reading sensor
-                            data, controlling a motor, or running an algorithm. Nodes communicate with
-                            each other through topics, services, or actions. This modular design makes
-                            it easy to build, test, and maintain complex robot systems.
+                    <div class="ai-explanation" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 1px solid #fcd34d;">
+                        <h4 style="color: #92400e;">🔧 About Nodes</h4>
+                        <p style="color: #92400e; line-height: 1.7;">
+                            A <strong>Node</strong> is the basic building block of ROS 2 - a separate process performing a specific task like:
+                        </p>
+                        <ul style="margin: 12px 0; padding-left: 24px; color: #92400e;">
+                            <li style="margin-bottom: 6px;">📷 Reading sensor data</li>
+                            <li style="margin-bottom: 6px;">🦾 Controlling motors</li>
+                            <li style="margin-bottom: 6px;">🧮 Running algorithms</li>
+                        </ul>
+                        <p style="margin-top: 16px; font-size: 12px; color: #92400e; border-top: 1px dashed #fcd34d; padding-top: 12px;">
+                            📖 See: <strong>Chapter 1</strong>
                         </p>
                     </div>
                 `;
             }
 
-            // Topic questions
-            if (q.includes('topic') || q.includes('topics') || q.includes('publish') || q.includes('subscribe')) {
+            // Topics
+            if (q.includes('topic') || q.includes('publish') || q.includes('subscribe')) {
                 return `
-                    <div class="ai-explanation">
-                        <h4>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                            </svg>
-                            AI Explanation
-                        </h4>
-                        <p>
-                            <strong>Topics</strong> are how nodes communicate in ROS 2. A topic is like
-                            a named channel or bus. Nodes can <strong>publish</strong> messages to a
-                            topic (send data) or <strong>subscribe</strong> to a topic (receive data).
-                            The beauty is that publishers and subscribers don't need to know about each
-                            other - they just use the same topic name. This makes the system very flexible!
+                    <div class="ai-explanation" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 1px solid #fcd34d;">
+                        <h4 style="color: #92400e;">📡 About Topics</h4>
+                        <p style="color: #92400e; line-height: 1.7;">
+                            <strong>Topics</strong> are named channels for node communication using publish-subscribe:
+                        </p>
+                        <div style="margin: 12px 0; padding: 12px; background: rgba(255,255,255,0.6); border-radius: 8px;">
+                            <p style="color: #92400e; margin: 0;"><strong>Publisher</strong> → Topic → <strong>Subscriber</strong></p>
+                        </div>
+                        <p style="margin-top: 16px; font-size: 12px; color: #92400e; border-top: 1px dashed #fcd34d; padding-top: 12px;">
+                            📖 See: <strong>Chapter 1</strong>
                         </p>
                     </div>
                 `;
             }
 
-            // Service questions
-            if (q.includes('service') || q.includes('services')) {
+            // Physical AI
+            if (q.includes('physical ai') || q.includes('physical artificial')) {
                 return `
-                    <div class="ai-explanation">
-                        <h4>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                            </svg>
-                            AI Explanation
-                        </h4>
-                        <p>
-                            <strong>Services</strong> in ROS 2 provide request-response communication.
-                            Unlike topics (which are one-way), services are two-way: a client node
-                            sends a request, and a server node sends back a response. This is useful
-                            for operations that need to complete before continuing, like "calculate
-                            the path from A to B" or "turn the gripper on".
+                    <div class="ai-explanation" style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border: 1px solid #93c5fd;">
+                        <h4 style="color: #1e40af;">🤖 About Physical AI</h4>
+                        <p style="color: #1e40af; line-height: 1.7;">
+                            <strong>Physical AI</strong> combines three key components:
+                        </p>
+                        <ul style="margin: 12px 0; padding-left: 24px; color: #1e40af;">
+                            <li style="margin-bottom: 6px;">👁️ <strong>Perception</strong> - Sensing the environment</li>
+                            <li style="margin-bottom: 6px;">🧠 <strong>Cognition</strong> - Processing & decision making</li>
+                            <li style="margin-bottom: 6px;">🦾 <strong>Action</strong> - Physical movement & manipulation</li>
+                        </ul>
+                        <p style="margin-top: 16px; font-size: 12px; color: #1e40af; border-top: 1px dashed #93c5fd; padding-top: 12px;">
+                            📖 See: <strong>Chapter 2 - Physical AI Fundamentals</strong>
                         </p>
                     </div>
                 `;
             }
 
-            // Action questions
-            if (q.includes('action') || q.includes('actions')) {
+            // Humanoid
+            if (q.includes('humanoid')) {
                 return `
-                    <div class="ai-explanation">
-                        <h4>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                            </svg>
-                            AI Explanation
-                        </h4>
-                        <p>
-                            <strong>Actions</strong> are for long-running tasks in ROS 2. They're like
-                            services but with three key differences: (1) they can take a long time to
-                            complete, (2) they provide feedback during execution, and (3) they can be
-                            cancelled. Perfect for tasks like "navigate to this location" or "pick up
-                            that object" where you want to know the progress and might need to stop.
+                    <div class="ai-explanation" style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border: 1px solid #93c5fd;">
+                        <h4 style="color: #1e40af;">🤖 About Humanoid Robots</h4>
+                        <p style="color: #1e40af; line-height: 1.7;">
+                            <strong>Humanoid robots</strong> mimic human anatomy with head, torso, arms, and legs. Examples:
+                        </p>
+                        <ul style="margin: 12px 0; padding-left: 24px; color: #1e40af;">
+                            <li style="margin-bottom: 6px;">🏃 Boston Dynamics' <strong>Atlas</strong></li>
+                            <li style="margin-bottom: 6px;">🤖 Tesla's <strong>Optimus</strong></li>
+                        </ul>
+                        <p style="margin-top: 16px; font-size: 12px; color: #1e40af; border-top: 1px dashed #93c5fd; padding-top: 12px;">
+                            📖 See: <strong>Chapter 3 - Humanoid Robotics</strong>
                         </p>
                     </div>
                 `;
             }
 
-            // Middleware questions
-            if (q.includes('middleware')) {
+            // Sensors
+            if (q.includes('sensor') || q.includes('lidar') || q.includes('camera')) {
                 return `
-                    <div class="ai-explanation">
-                        <h4>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                            </svg>
-                            AI Explanation
-                        </h4>
-                        <p>
-                            <strong>Middleware</strong> is software that sits between different parts
-                            of a system and enables them to communicate. In ROS 2, DDS serves as the
-                            middleware. It handles all the complex networking stuff - finding other
-                            nodes, sending messages, handling errors - so you can focus on writing
-                            robot logic instead of network code.
+                    <div class="ai-explanation" style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border: 1px solid #93c5fd;">
+                        <h4 style="color: #1e40af;">👁️ About Sensors</h4>
+                        <p style="color: #1e40af; line-height: 1.7;">
+                            <strong>Sensors</strong> are the robot's senses:
+                        </p>
+                        <ul style="margin: 12px 0; padding-left: 24px; color: #1e40af;">
+                            <li style="margin-bottom: 6px;">📷 <strong>Cameras</strong> - Visual information</li>
+                            <li style="margin-bottom: 6px;">📡 <strong>LiDAR</strong> - 3D distance mapping</li>
+                            <li style="margin-bottom: 6px;">📍 <strong>IMU</strong> - Orientation & acceleration</li>
+                            <li style="margin-bottom: 6px;">💪 <strong>Force/Torque</strong> - Delicate manipulation</li>
+                        </ul>
+                        <p style="margin-top: 16px; font-size: 12px; color: #1e40af; border-top: 1px dashed #93c5fd; padding-top: 12px;">
+                            📖 See: <strong>Chapter 4 - Sensors and Perception</strong>
                         </p>
                     </div>
                 `;
             }
 
-            // Robot questions
-            if (q.includes('robot') || q.includes('robotics')) {
+            // Machine Learning
+            if (q.includes('machine learning') || q.includes('deep learning')) {
                 return `
-                    <div class="ai-explanation">
-                        <h4>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                            </svg>
-                            AI Explanation
-                        </h4>
-                        <p>
-                            <strong>Robotics</strong> is the field of designing, building, and
-                            programming robots. Modern robotics combines mechanical engineering
-                            (the physical robot), electrical engineering (sensors and circuits),
-                            and computer science (AI and control algorithms). ROS 2 helps robot
-                            developers by providing standard tools and communication patterns.
+                    <div class="ai-explanation" style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border: 1px solid #93c5fd;">
+                        <h4 style="color: #1e40af;">🧠 About Machine Learning</h4>
+                        <p style="color: #1e40af; line-height: 1.7;">
+                            <strong>ML approaches</strong> for robotics:
+                        </p>
+                        <ul style="margin: 12px 0; padding-left: 24px; color: #1e40af;">
+                            <li style="margin-bottom: 6px;">📚 <strong>Supervised</strong> - Training on labeled data</li>
+                            <li style="margin-bottom: 6px;">🎮 <strong>Reinforcement</strong> - Trial & error with rewards</li>
+                            <li style="margin-bottom: 6px;">👀 <strong>Imitation</strong> - Learning by watching</li>
+                        </ul>
+                        <p style="margin-top: 16px; font-size: 12px; color: #1e40af; border-top: 1px dashed #93c5fd; padding-top: 12px;">
+                            📖 See: <strong>Chapter 6 - Machine Learning for Robotics</strong>
                         </p>
                     </div>
                 `;
             }
 
-            // Communication questions
-            if (q.includes('communicat') || q.includes('message')) {
+            // VLA
+            if (q.includes('vla') || q.includes('vision-language')) {
                 return `
-                    <div class="ai-explanation">
-                        <h4>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                            </svg>
-                            AI Explanation
-                        </h4>
-                        <p>
-                            <strong>Communication</strong> in ROS 2 happens in three ways:
-                            (1) <strong>Topics</strong> for streaming data (one-way),
-                            (2) <strong>Services</strong> for request-response (two-way),
-                            (3) <strong>Actions</strong> for long tasks with feedback.
-                            Messages are the actual data packets sent between nodes - they can
-                            contain anything from sensor readings to motor commands.
+                    <div class="ai-explanation" style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border: 1px solid #93c5fd;">
+                        <h4 style="color: #1e40af;">🚀 About VLA Models</h4>
+                        <p style="color: #1e40af; line-height: 1.7;">
+                            <strong>Vision-Language-Action (VLA)</strong> models combine:
+                        </p>
+                        <div style="margin: 12px 0; padding: 12px; background: rgba(255,255,255,0.6); border-radius: 8px; text-align: center; color: #1e40af;">
+                            👁️ Vision + 💬 Language + 🦾 Action
+                        </div>
+                        <p style="color: #1e40af; line-height: 1.7; margin-top: 12px;">
+                            Examples: Google's <strong>RT-2</strong>, DeepMind's <strong>GATO</strong>
+                        </p>
+                        <p style="margin-top: 16px; font-size: 12px; color: #1e40af; border-top: 1px dashed #93c5fd; padding-top: 12px;">
+                            📖 See: <strong>Chapter 7 - Vision-Language-Action Models</strong>
                         </p>
                     </div>
                 `;
             }
 
-            // Default response - but more helpful
+            // Motion Planning
+            if (q.includes('motion') || q.includes('planning') || q.includes('path')) {
+                return `
+                    <div class="ai-explanation" style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border: 1px solid #93c5fd;">
+                        <h4 style="color: #1e40af;">🗺️ About Motion Planning</h4>
+                        <p style="color: #1e40af; line-height: 1.7;">
+                            <strong>Motion Planning</strong> finds collision-free paths:
+                        </p>
+                        <ul style="margin: 12px 0; padding-left: 24px; color: #1e40af;">
+                            <li style="margin-bottom: 6px;">🌲 <strong>RRT</strong> - Rapidly-exploring Random Trees</li>
+                            <li style="margin-bottom: 6px;">🗺️ <strong>PRM</strong> - Probabilistic Road Maps</li>
+                            <li style="margin-bottom: 6px;">📐 <strong>Optimization</strong> - Cost function minimization</li>
+                        </ul>
+                        <p style="margin-top: 16px; font-size: 12px; color: #1e40af; border-top: 1px dashed #93c5fd; padding-top: 12px;">
+                            📖 See: <strong>Chapter 5 - Motion Planning and Control</strong>
+                        </p>
+                    </div>
+                `;
+            }
+
+            // Default helpful response
+            addToHistory(question, 'General response');
             return `
-                <div class="ai-explanation">
-                    <h4>
+                <div class="ai-explanation" style="background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%); border: 1px solid #cbd5e1;">
+                    <h4 style="color: #475569; display: flex; align-items: center; gap: 8px;">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10"></circle>
                             <line x1="12" y1="16" x2="12" y2="12"></line>
                             <line x1="12" y1="8" x2="12.01" y2="8"></line>
                         </svg>
-                        AI Explanation
+                        AI Assistant
                     </h4>
-                    <p>
-                        Great question! To give you the best answer, try selecting specific text
-                        from the chapter above. The highlighted sections contain detailed information
-                        about ROS 2 concepts like nodes, topics, DDS, and services.
+                    <p style="color: #475569; line-height: 1.7;">
+                        Great question! Here's how I can help:
                     </p>
-                    <p style="margin-top: 8px;">
-                        Or try asking about:
-                        <strong>"What is ROS 2?"</strong>, 
-                        <strong>"How does DDS work?"</strong>, or
-                        <strong>"What is a node?"</strong>
-                    </p>
+                    <ul style="margin: 12px 0; padding-left: 24px; color: #475569;">
+                        <li style="margin-bottom: 8px;">📖 <strong>Select text</strong> from any chapter and click "Ask AI"</li>
+                        <li style="margin-bottom: 8px;">🔍 <strong>Ask specific questions</strong> like "What is ROS 2?" or "How do sensors work?"</li>
+                        <li style="margin-bottom: 8px;">📚 <strong>Navigate chapters</strong> to explore different topics</li>
+                    </ul>
+                    <div style="margin-top: 16px; padding: 12px; background: rgba(255,255,255,0.6); border-radius: 8px;">
+                        <p style="color: #475569; font-size: 13px; margin: 0;">
+                            💡 <strong>Popular topics:</strong> ROS 2, DDS, Nodes, Physical AI, Humanoid Robots, Sensors, Machine Learning, VLA Models
+                        </p>
+                    </div>
                 </div>
             `;
         }
 
-        // Escape HTML
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
+        // ==================== DIAGRAM GENERATION ====================
+        
+        // Diagram templates for different topics
+        const DIAGRAM_TEMPLATES = {
+            ros2_architecture: {
+                keywords: ['ros 2', 'ros2', 'ros architecture', 'ros nodes'],
+                title: '🏗️ ROS 2 Architecture',
+                mermaid: `graph TB
+    subgraph ROS2_Network["ROS 2 Network (DDS)"]
+        direction TB
+        subgraph Node1["Node 1 - Sensor"]
+            Pub1[📤 Publisher]
+        end
+        subgraph Node2["Node 2 - Processing"]
+            Sub1[📥 Subscriber]
+            Pub2[📤 Publisher]
+        end
+        subgraph Node3["Node 3 - Control"]
+            Sub2[📥 Subscriber]
+        end
+    end
+    
+    Pub1 -->|/sensor_data| Sub1
+    Pub2 -->|/processed_data| Sub2
+    
+    style Pub1 fill:#667eea,color:#fff
+    style Sub1 fill:#764ba2,color:#fff
+    style Pub2 fill:#667eea,color:#fff
+    style Sub2 fill:#764ba2,color:#fff`
+            },
+            
+            ros2_pubsub: {
+                keywords: ['publisher', 'subscriber', 'publish subscribe', 'topics'],
+                title: '📡 ROS 2 Publisher-Subscriber Model',
+                mermaid: `graph LR
+    Publisher[📤 Publisher Node] -->|Publishes| Topic[("📝 Topic: /sensor_data")]
+    Topic -->|Subscribes| Subscriber1[📥 Subscriber 1]
+    Topic -->|Subscribes| Subscriber2[📥 Subscriber 2]
+    Topic -->|Subscribes| Subscriber3[📥 Subscriber 3]
+    
+    style Publisher fill:#667eea,color:#fff
+    style Topic fill:#fbbf24,color:#000
+    style Subscriber1 fill:#764ba2,color:#fff
+    style Subscriber2 fill:#764ba2,color:#fff
+    style Subscriber3 fill:#764ba2,color:#fff`
+            },
+            
+            physical_ai: {
+                keywords: ['physical ai', 'perception cognition action', 'robot intelligence'],
+                title: '🤖 Physical AI Loop',
+                mermaid: `graph LR
+    Perception[👁️ Perception<br/>Sensors] --> Cognition[🧠 Cognition<br/>AI Processing]
+    Cognition --> Action[🦾 Action<br/>Motors/Actuators]
+    Action --> Environment[🌍 Environment]
+    Environment --> Perception
+    
+    style Perception fill:#667eea,color:#fff
+    style Cognition fill:#764ba2,color:#fff
+    style Action fill:#16a34a,color:#fff
+    style Environment fill:#2563eb,color:#fff`
+            },
+            
+            sensor_fusion: {
+                keywords: ['sensors', 'sensor fusion', 'lidar', 'camera', 'imu'],
+                title: '👁️ Robot Sensor Suite',
+                mermaid: `graph TB
+    subgraph Sensors["Robot Sensors"]
+        direction TB
+        Camera[📷 RGB/Depth Camera]
+        LiDAR[📡 LiDAR]
+        IMU[📍 IMU]
+        Force[💪 Force/Torque]
+    end
+    
+    Sensors --> Fusion[🔄 Sensor Fusion]
+    Fusion --> Perception[🧠 Perception System]
+    
+    style Camera fill:#667eea,color:#fff
+    style LiDAR fill:#764ba2,color:#fff
+    style IMU fill:#16a34a,color:#fff
+    style Force fill:#2563eb,color:#fff
+    style Fusion fill:#fbbf24,color:#000
+    style Perception fill:#dc2626,color:#fff`
+            },
+            
+            humanoid_parts: {
+                keywords: ['humanoid', 'robot parts', 'robot components'],
+                title: '🤖 Humanoid Robot Components',
+                mermaid: `graph TB
+    subgraph Humanoid["Humanoid Robot"]
+        Head[👤 Head<br/>Cameras + Mics]
+        Torso[💼 Torso<br/>Computer + Battery]
+        ArmL[🦾 Left Arm<br/>6-DOF]
+        ArmR[🦾 Right Arm<br/>6-DOF]
+        HandL[✋ Left Hand<br/>Gripper]
+        HandR[✋ Right Hand<br/>Gripper]
+        LegL[🦵 Left Leg]
+        LegR[🦵 Right Leg]
+    end
+    
+    Head --> Torso
+    ArmL --> Torso
+    ArmR --> Torso
+    LegL --> Torso
+    LegR --> Torso
+    
+    style Head fill:#fbbf24,color:#000
+    style Torso fill:#667eea,color:#fff
+    style ArmL fill:#764ba2,color:#fff
+    style ArmR fill:#764ba2,color:#fff
+    style HandL fill:#16a34a,color:#fff
+    style HandR fill:#16a34a,color:#fff
+    style LegL fill:#2563eb,color:#fff
+    style LegR fill:#2563eb,color:#fff`
+            },
+            
+            machine_learning: {
+                keywords: ['machine learning', 'ml', 'deep learning', 'neural'],
+                title: '🧠 Machine Learning for Robotics',
+                mermaid: `graph TB
+    subgraph ML_Types["ML Approaches"]
+        Supervised[📚 Supervised<br/>Labeled Data]
+        RL[🎮 Reinforcement<br/>Rewards]
+        Imitation[👀 Imitation<br/>Demonstrations]
+    end
+    
+    Data[📊 Training Data] --> ML_Types
+    ML_Types --> Robot[🤖 Robot Behavior]
+    
+    style Supervised fill:#667eea,color:#fff
+    style RL fill:#764ba2,color:#fff
+    style Imitation fill:#16a34a,color:#fff
+    style Data fill:#fbbf24,color:#000
+    style Robot fill:#dc2626,color:#fff`
+            },
+            
+            vla_model: {
+                keywords: ['vla', 'vision-language', 'vision language action'],
+                title: '🚀 Vision-Language-Action Model',
+                mermaid: `graph LR
+    Image[📷 Camera Image] --> VisionEnc[👁️ Vision Encoder<br/>ViT/ResNet]
+    Text[💬 Language Input] --> LangEnc[📝 Language Encoder<br/>LLM]
+    
+    VisionEnc --> Fusion[🔄 Fusion Layer]
+    LangEnc --> Fusion
+    
+    Fusion --> ActionHead[🦾 Action Head]
+    ActionHead --> RobotCmd[🤖 Robot Commands]
+    
+    style Image fill:#667eea,color:#fff
+    style Text fill:#764ba2,color:#fff
+    style VisionEnc fill:#16a34a,color:#fff
+    style LangEnc fill:#2563eb,color:#fff
+    style Fusion fill:#fbbf24,color:#000
+    style ActionHead fill:#dc2626,color:#fff
+    style RobotCmd fill:#059669,color:#fff`
+            },
+            
+            motion_planning: {
+                keywords: ['motion planning', 'path planning', 'obstacle avoidance'],
+                title: '🗺️ Motion Planning Pipeline',
+                mermaid: `graph LR
+    Start[🟢 Start Pose] --> Planner[🧠 Motion Planner<br/>RRT/PRM/A*]
+    Goal[🎯 Goal Pose] --> Planner
+    Map[🗺️ Environment Map] --> Planner
+    
+    Planner --> Path[📍 Collision-Free Path]
+    Path --> Controller[🎮 Controller<br/>PID/MPC]
+    Controller --> Robot[🤖 Robot Motion]
+    
+    style Start fill:#16a34a,color:#fff
+    style Goal fill:#dc2626,color:#fff
+    style Map fill:#2563eb,color:#fff
+    style Planner fill:#764ba2,color:#fff
+    style Path fill:#fbbf24,color:#000
+    style Controller fill:#667eea,color:#fff
+    style Robot fill:#059669,color:#fff`
+            },
+            
+            control_loop: {
+                keywords: ['control', 'feedback', 'pid', 'controller'],
+                title: '🔄 Robot Control Loop',
+                mermaid: `graph LR
+    Reference[📋 Desired State] --> Sum((⊕))
+    Sum --> Controller[🎮 PID Controller]
+    Controller --> Robot[🤖 Robot]
+    Robot --> Sensor[👁️ Sensors]
+    Sensor --> Feedback[📊 Feedback]
+    Feedback --> Sum
+    
+    style Reference fill:#2563eb,color:#fff
+    style Controller fill:#764ba2,color:#fff
+    style Robot fill:#667eea,color:#fff
+    style Sensor fill:#16a34a,color:#fff
+    style Feedback fill:#fbbf24,color:#000`
+            }
+        };
+        
+        // Detect diagram from question
+        function detectDiagramFromQuestion(question) {
+            const q = question.toLowerCase();
+            
+            for (const [key, template] of Object.entries(DIAGRAM_TEMPLATES)) {
+                for (const keyword of template.keywords) {
+                    if (q.includes(keyword)) {
+                        console.log('🎨 Diagram detected:', key);
+                        return template;
+                    }
+                }
+            }
+            
+            return null;
+        }
+        
+        // Render diagram in message
+        function renderDiagramInMessage(messageId, diagram) {
+            setTimeout(() => {
+                const diagramContainer = document.getElementById(`diagram-${messageId}`);
+                if (diagramContainer && typeof mermaid !== 'undefined') {
+                    try {
+                        mermaid.initialize({ startOnLoad: false, theme: 'default' });
+                        const mermaidElement = diagramContainer.querySelector('.mermaid');
+                        if (mermaidElement) {
+                            mermaid.run({
+                                nodes: [mermaidElement]
+                            });
+                        }
+                    } catch (error) {
+                        console.error('Diagram rendering error:', error);
+                        diagramContainer.innerHTML = '<p style="color: #dc2626;">❌ Diagram rendering failed</p>';
+                    }
+                }
+            }, 100);
         }
 
         // Change user level
@@ -2482,11 +3669,15 @@
                 });
                 if (response.ok) {
                     backendAvailable = true;
-                    console.log('✅ Backend connected');
+                    console.log('✅ Backend connected at', API_URL);
                 }
             } catch (error) {
                 backendAvailable = false;
-                console.warn('⚠️ Backend not available - Demo mode enabled');
+                console.warn('⚠️ Backend not available at', API_URL);
+                console.warn('📝 Please start the backend server:');
+                console.warn('   cd backend');
+                console.warn('   python main.py');
+                console.warn('📝 Demo mode enabled - user data will be auto-generated');
             }
         }
 
@@ -2495,18 +3686,28 @@
             const token = localStorage.getItem('auth_token');
             const user = localStorage.getItem('user_data');
 
+            console.log('🔍 Checking auth status...');
+            console.log('📝 Token:', token ? 'Found' : 'Not found');
+            console.log('📝 User data:', user ? 'Found' : 'Not found');
+            
             if (token && user) {
                 try {
                     currentUser = JSON.parse(user);
+                    console.log('✅ User loaded:', currentUser);
+                    console.log('👤 First name:', currentUser.first_name);
+                    console.log('👤 Last name:', currentUser.last_name);
+                    console.log('👤 Email:', currentUser.email);
                     showUserProfile();
                     // Hide modal if logged in
                     document.getElementById('auth-modal-overlay').classList.remove('active');
                 } catch (e) {
+                    console.error('❌ Error parsing user data:', e);
                     localStorage.removeItem('user_data');
                     localStorage.removeItem('auth_token');
                     openAuthModal();
                 }
             } else {
+                console.log('⚠️ No auth data found, showing login modal');
                 // Show login modal
                 openAuthModal();
             }
@@ -2518,11 +3719,41 @@
             const nameDisplay = document.getElementById('user-name-display');
             const textbookContainer = document.getElementById('textbook-container');
 
+            console.log('👤 showUserProfile called');
+            console.log('👤 currentUser:', currentUser);
+            
             if (currentUser) {
-                nameDisplay.textContent = currentUser.first_name || 'User';
+                // Try multiple fields to get the user's name
+                let displayName = 'User';
+                
+                console.log('🔍 Checking name fields...');
+                console.log('  - first_name:', currentUser.first_name);
+                console.log('  - firstName:', currentUser.firstName);
+                console.log('  - name:', currentUser.name);
+                
+                if (currentUser.first_name) {
+                    displayName = currentUser.first_name;
+                    console.log('✓ Using first_name:', displayName);
+                } else if (currentUser.firstName) {
+                    displayName = currentUser.firstName;
+                    console.log('✓ Using firstName:', displayName);
+                } else if (currentUser.name) {
+                    displayName = currentUser.name;
+                    console.log('✓ Using name:', displayName);
+                } else if (currentUser.email) {
+                    // Extract name from email if no name available
+                    const emailPrefix = currentUser.email.split('@')[0];
+                    displayName = emailPrefix.charAt(0).toUpperCase() + emailPrefix.slice(1);
+                    console.log('✓ Using email prefix:', displayName);
+                }
+                
+                console.log('✅ Final displayName:', displayName);
+                nameDisplay.textContent = displayName;
                 profileBtn.style.display = 'flex';
                 // Show textbook content after login
                 textbookContainer.style.display = 'grid';
+            } else {
+                console.error('❌ currentUser is null!');
             }
         }
 
@@ -2547,6 +3778,23 @@
             document.getElementById('auth-modal-title').textContent = 'Welcome Back';
             document.getElementById('auth-modal-subtitle').textContent = 'Sign in to continue learning';
             hideAuthMessages();
+        }
+
+        // Toggle password visibility
+        function togglePassword(inputId, button) {
+            const input = document.getElementById(inputId);
+            const eyeIcon = button.querySelector('.eye-icon');
+            const eyeOffIcon = button.querySelector('.eye-off-icon');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                eyeIcon.style.display = 'none';
+                eyeOffIcon.style.display = 'block';
+            } else {
+                input.type = 'password';
+                eyeIcon.style.display = 'block';
+                eyeOffIcon.style.display = 'none';
+            }
         }
 
         // Show signup form
@@ -2612,7 +3860,17 @@
         function showProfileMenu() {
             if (!currentUser) return;
 
-            const logoutChoice = confirm(`Logged in as ${currentUser.first_name || currentUser.email}\n\nClick OK to logout, Cancel to continue.`);
+            // Get display name
+            let displayName = 'User';
+            if (currentUser.first_name) {
+                displayName = currentUser.first_name;
+            } else if (currentUser.firstName) {
+                displayName = currentUser.firstName;
+            } else if (currentUser.email) {
+                displayName = currentUser.email.split('@')[0];
+            }
+
+            const logoutChoice = confirm(`Logged in as ${displayName} (${currentUser.email})\n\nClick OK to logout, Cancel to continue.`);
             if (logoutChoice) {
                 logout();
             }
@@ -2667,6 +3925,9 @@
                 const data = await response.json();
 
                 if (response.ok && data.status === 'success') {
+                    console.log('✅ Login successful!', data);
+                    console.log('👤 User data received:', data.user);
+                    
                     // Store auth data
                     if (data.access_token) {
                         localStorage.setItem('auth_token', data.access_token);
@@ -2674,6 +3935,11 @@
                     if (data.user) {
                         localStorage.setItem('user_data', JSON.stringify(data.user));
                         currentUser = data.user;
+                        console.log('💾 User data stored:', {
+                            first_name: data.user.first_name,
+                            last_name: data.user.last_name,
+                            email: data.user.email
+                        });
                     }
 
                     showAuthSuccess('Login successful! Welcome back.');
@@ -2683,7 +3949,15 @@
                     // Add welcome message to chat
                     setTimeout(() => {
                         if (typeof addAIMessage === 'function') {
-                            addAIMessage(`Welcome back, ${currentUser.first_name || 'user'}! How can I help you today?`);
+                            // Get display name for welcome message
+                            let displayName = 'user';
+                            if (currentUser && currentUser.first_name) {
+                                displayName = currentUser.first_name;
+                            } else if (currentUser && currentUser.firstName) {
+                                displayName = currentUser.firstName;
+                            }
+                            console.log('🎉 Welcome message for:', displayName);
+                            addAIMessage(`Welcome back, ${displayName}! How can I help you today?`);
                         }
                     }, 500);
                 } else {

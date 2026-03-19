@@ -1,269 +1,249 @@
-# 🚀 How to Run the Hackathon Project
+# 🚀 How to Run the Physical AI Textbook
 
-## ✅ Quick Start (Already Running!)
+## Quick Start (Recommended)
 
-Your project is **currently running**! Here's what's active:
-
-### Backend Server
-- **Status**: ✅ Running
-- **URL**: `http://localhost:8000`
-- **Health**: Healthy
-- **PID**: 9960
-
-### Frontend
-- **Main Page**: `index.html` (opened in browser)
-- **Custom Chat**: `custom-chat.html`
-- **Text Selection Demo**: `text-selection-chat.html`
+### Windows - Double Click Method:
+1. **Double-click** `start.bat` file
+2. Server starts automatically
+3. Interactive textbook opens in your browser at: **http://localhost:3000/interactive-textbook.html**
 
 ---
 
-## 🎯 Features to Demo
+## Alternative Methods
 
-### 1. 💬 Floating Chat Button
-**Location**: Bottom-right corner of `index.html`
+### Method 1: Using npm (Cross-platform)
 
-**How to use**:
-1. Look for the purple chat button 💬
-2. Click it to open the chat
-3. Ask a question like: "Explain ROS 2 architecture"
-
-**What happens**:
-- Chat window opens
-- AI responds with answer
-- **Diagram appears automatically** for architecture questions! 🏗️
-- Source citations shown below
-- "Translate to Urdu" button available
-
----
-
-### 2. 📝 Text Selection Popup
-**Location**: Any text on the page
-
-**How to use**:
-1. Select any text (minimum 10 characters)
-2. A purple popup appears: "💬 Ask AI about this"
-3. Click the popup
-4. Chat opens and automatically asks about selected text
-
-**What happens**:
-- Chat widget opens
-- Selected text is sent as question
-- AI explains the selected concept
-
----
-
-### 3. 📊 User Level Selector
-**Location**: Inside chat window (header)
-
-**Options**:
-- 🌱 **Beginner** - Simple language, analogies
-- 📚 **Student** - Educational explanation
-- ⚙️ **Engineer** - Technical details
-- 🔬 **Researcher** - In-depth analysis
-
-**How to use**:
-1. Open chat
-2. Select your level from dropdown
-3. Ask a question
-4. AI adapts explanation to your level!
-
----
-
-### 4. 🌐 Urdu Translation
-**Location**: Below every AI answer
-
-**How to use**:
-1. Get an answer in English
-2. Click "🌐 Translate to Urdu" button
-3. Urdu translation appears below
-4. Toggle between English/Urdu
-
----
-
-### 5. 🏗️ Automatic Diagrams
-**Trigger keywords**:
-- "ROS 2 architecture"
-- "RAG pipeline"
-- "VLA model"
-- "perception pipeline"
-- "control loop"
-
-**How to use**:
-1. Ask: "Explain ROS 2 architecture"
-2. AI answer appears
-3. **Diagram renders automatically** below!
-4. Use Zoom In/Out buttons
-
----
-
-### 6. 📚 Source Citations
-**Location**: Below AI answer
-
-**Shows**:
-- Source: Chapter 5
-- Confidence: 82%
-
-**How to use**:
-- Click chapter link to open `/docs/chapter5`
-
----
-
-## 🛠️ Manual Start (If Needed)
-
-### Start Backend Server
 ```bash
-cd D:\Hackathon 1\rag-chatbot\backend
-..\..\venv\Scripts\python.exe main.py
+# Install dependencies (only needed once)
+npm install
+
+# Start server and open textbook
+npm start
 ```
 
-### Open Frontend
-Double-click any of these files:
-- `index.html` - Main textbook page
-- `custom-chat.html` - Custom chat interface
-- `text-selection-chat.html` - Text selection demo
+This will:
+- Start Python HTTP server on port 3000
+- Automatically open http://localhost:3000/interactive-textbook.html in your default browser
+
+### Method 2: Manual Python Command
+
+```bash
+# Navigate to project folder
+cd "D:\Hackathon 1"
+
+# Start server
+python -m http.server 3000
+
+# Open browser and go to:
+http://localhost:3000/interactive-textbook.html
+```
+
+### Method 3: Using npm dev command
+
+```bash
+npm run dev
+```
 
 ---
 
-## 🧪 Test Scenarios for Judges
+## 📖 What Opens?
 
-### Scenario 1: Architecture Question with Diagram
-1. Open chat (click 💬 button)
-2. Select level: "Student"
-3. Ask: "Explain ROS 2 publisher subscriber architecture"
-4. **Watch**: Diagram appears! 🏗️
-5. **Watch**: Source citations shown
-6. Click "Translate to Urdu"
+When you run any of the above commands, you'll get:
 
-### Scenario 2: Text Selection
-1. Go to main page
-2. Select text: "ROS 2 is a robotics middleware..."
-3. Click popup: "💬 Ask AI about this"
-4. **Watch**: Chat opens with auto-question
+**Main Page:** http://localhost:3000/interactive-textbook.html
 
-### Scenario 3: Personalized Learning
-1. Open chat
-2. Change level to "Beginner"
-3. Ask: "What is RAG?"
-4. Note: Simple explanation
-5. Change level to "Researcher"
-6. Ask same question
-7. Note: Technical, detailed answer
-
-### Scenario 4: Multi-language Support
-1. Ask any question
-2. Click "Translate to Urdu"
-3. Toggle between English/Urdu
-4. Show Urdu text (RTL formatting)
+This page includes:
+- ✅ **Complete Textbook** - All chapters on the left sidebar
+- ✅ **Reading Area** - Main content in the center
+- ✅ **AI Chatbot** - Right sidebar with AI assistant
+- ✅ **User Login** - Top-right profile button
+- ✅ **Level Selector** - Choose Beginner/Student/Engineer/Researcher
 
 ---
 
-## 🎨 Visual Features
+## 🎯 Features Available
 
-### Color Scheme
-- **Primary**: Purple gradient (#667eea → #764ba2)
-- **Urdu**: Green gradient (#10b981 → #059669)
-- **Diagrams**: Blue accents (#2563eb)
+### In the Interactive Textbook:
 
-### Animations
-- Chat button hover: Scale up + shadow
-- Popup hover: Lift effect
-- Diagram zoom: Smooth scaling
+1. **Chapter Navigation** (Left Sidebar)
+   - Module 1: ROS 2 Basics
+   - Module 2: Simulation
+   - Module 3: AI Brain (Isaac)
+   - Module 4: VLA Robotics
+   - Module 5: RAG System
 
----
+2. **AI Chatbot** (Right Sidebar)
+   - Ask questions about any topic
+   - Get answers based on your level
+   - See robot pictures in every response
+   - Urdu translation available
 
-## 📁 File Structure
+3. **User Profile** (Top Right)
+   - Login/Signup
+   - Set your experience level
+   - Personalize learning
 
-```
-D:\Hackathon 1\
-├── index.html                    # Main page (OPEN THIS)
-├── custom-chat.html              # Standalone chat
-├── text-selection-chat.html      # Text selection demo
-│
-├── rag-chatbot/
-│   ├── chat-widget.js            # Floating chat (865 lines)
-│   └── backend/
-│       ├── main.py               # FastAPI server (RUNNING)
-│       ├── diagram_generator.py  # Mermaid diagrams
-│       └── urdu_translator.py    # Urdu translation
-│
-└── history/prompts/master/       # PHR documentation
-    ├── 004-source-citation...
-    ├── 005-urdu-translation...
-    ├── 006-personalized-level...
-    └── 007-diagram-generation...
-```
+4. **Level Selector** (In Chat Sidebar)
+   - 🌱 Beginner
+   - 📚 Student
+   - ⚙️ Engineer
+   - 🔬 Researcher
 
 ---
 
 ## 🔧 Troubleshooting
 
-### Chat button not showing?
-- Refresh page (F5)
-- Check browser console (F12)
-- Verify backend running: `http://localhost:8000/health`
+### Server Won't Start?
 
-### Text selection popup not appearing?
-- Select at least 10 characters
-- Make sure mouseup event fires
-- Check browser console for errors
-
-### Diagrams not rendering?
-- Check internet connection (Mermaid CDN)
-- Wait 1-2 seconds for CDN to load
-- Try different query: "ROS 2 architecture"
-
-### Urdu translation not working?
-- Backend must be running
-- Check `/api/translate/urdu` endpoint
-- Verify OpenAI API key in `.env`
-
----
-
-## 🎯 Success Criteria
-
-✅ Floating chat button clickable  
-✅ Text selection popup appears  
-✅ Level selector changes AI responses  
-✅ Diagrams render for architecture questions  
-✅ Urdu translation works  
-✅ Source citations shown  
-✅ All features work together  
-
----
-
-## 🏆 Hackathon Features Summary
-
-| Feature | Status | Files |
-|---------|--------|-------|
-| 💬 Floating Chat | ✅ Working | `chat-widget.js` |
-| 📝 Text Selection | ✅ Working | `index.html` |
-| 📊 User Levels | ✅ Working | All chat files |
-| 🌐 Urdu Translation | ✅ Working | All chat files |
-| 🏗️ Diagrams | ✅ Working | All chat files |
-| 📚 Citations | ✅ Working | All chat files |
-
-**Total**: 6 major features implemented! 🎉
-
----
-
-## 📞 Quick Commands
-
-### Check Backend Status
+**Check if Python is installed:**
 ```bash
-curl http://localhost:8000/health
+python --version
 ```
 
-### Stop Backend
+Should show: `Python 3.x.x`
+
+If not installed, download from: https://python.org
+
+### Port 3000 Already in Use?
+
+**Stop other servers or use different port:**
 ```bash
-taskkill /F /T /PID 9960
+# Edit start.bat and change 3000 to 3001
+python -m http.server 3001
+
+# Then open: http://localhost:3001/interactive-textbook.html
 ```
 
-### Restart Backend
+### Browser Doesn't Open Automatically?
+
+**Manual open:**
+1. Start server: `python -m http.server 3000`
+2. Open browser
+3. Go to: http://localhost:3000/interactive-textbook.html
+
+### Chatbot Not Working?
+
+**Start the backend server:**
 ```bash
-cd D:\Hackathon 1\rag-chatbot\backend
-..\..\venv\Scripts\python.exe main.py
+cd backend
+python main.py
+```
+
+Backend runs on: http://localhost:8000
+
+---
+
+## 📁 Project Structure
+
+```
+Hackathon-1/
+├── interactive-textbook.html    ← MAIN PAGE (opens automatically)
+├── index.html                   ← Redirects to interactive-textbook.html
+├── start.bat                    ← Windows startup script
+├── package.json                 ← npm configuration
+├── backend/
+│   └── main.py                  ← FastAPI backend (for chatbot)
+└── README-RUNNING.md            ← This file
 ```
 
 ---
 
-**Good luck with your hackathon! 🚀**
+## 🎨 What You'll See
+
+### Homepage Layout:
+
+```
+┌─────────────────────────────────────────────────────┐
+│ 👤 User Profile          [Level Selector]           │
+├──────────┬──────────────────────────┬───────────────┤
+│          │                          │               │
+│ Chapters │   Reading Content        │  AI Chatbot   │
+│          │                          │               │
+│ • ROS 2  │   Chapter Title          │  💬 Ask AI    │
+│ • URDF   │                          │               │
+│ • SLAM   │   Chapter content...     │  [Messages]   │
+│ • etc.   │                          │               │
+│          │   [Code examples]        │  [Input] [➤]  │
+│          │                          │               │
+└──────────┴──────────────────────────┴───────────────┘
+```
+
+---
+
+## ✅ Quick Checklist
+
+Before running:
+- [ ] Python 3.x installed
+- [ ] Port 3000 is free
+- [ ] Backend running (for chatbot features)
+
+After running:
+- [ ] Server started on port 3000
+- [ ] Browser opened automatically
+- [ ] Page shows: http://localhost:3000/interactive-textbook.html
+- [ ] Textbook content is visible
+- [ ] Chatbot sidebar is on the right
+
+---
+
+## 🆘 Need Help?
+
+### Common Issues:
+
+**1. "Address already in use"**
+- Close other servers or use different port
+- Run: `netstat -ano | findstr :3000` to find what's using port 3000
+
+**2. "Python not found"**
+- Install Python from https://python.org
+- Add Python to PATH during installation
+
+**3. "Page not found"**
+- Make sure server is running
+- Check URL: http://localhost:3000/interactive-textbook.html
+- Not: http://localhost:3000/index.html
+
+---
+
+## 🎯 Default Page Configuration
+
+**Main Entry Point:**
+```
+http://localhost:3000/interactive-textbook.html
+```
+
+**Why this page?**
+- ✅ Complete textbook with all chapters
+- ✅ Built-in AI chatbot (right sidebar)
+- ✅ User authentication
+- ✅ Level selector
+- ✅ All features in one place
+
+**Other Pages (Optional):**
+- `index.html` - Redirects to interactive-textbook.html
+- `login.html` - Standalone login page
+- `personalized-learning.html` - Personalization demo
+
+---
+
+## 🚀 Quick Commands Reference
+
+| Command | What it does |
+|---------|--------------|
+| `start.bat` | Starts server + opens textbook (Windows) |
+| `npm start` | Starts server + opens textbook |
+| `npm run dev` | Same as npm start |
+| `npm run open` | Opens textbook (server must be running) |
+| `python -m http.server 3000` | Starts server only |
+
+---
+
+<div align="center">
+
+**Ready to Start! 🎉**
+
+Just double-click `start.bat` or run `npm start`
+
+Main Page: **http://localhost:3000/interactive-textbook.html**
+
+</div>

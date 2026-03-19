@@ -1,87 +1,119 @@
-# 🤖 AI Tutor for Robotics - Physical AI Textbook
+# 🤖 Physical AI & Humanoid Robotics Textbook
 
-[![Hackathon](https://img.shields.io/badge/Hackathon-Winner-blue)](https://github.com/muhammadafnandood/-Hackathon-1-Phase-1-and-2-)
+[![Hackathon](https://img.shields.io/badge/Hackathon-Phase%201%20%26%202-blue)](https://github.com/muhammadafnandood/-Hackathon-1-Phase-1-and-2-)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.8+-blue)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green)](https://fastapi.tiangolo.com)
-[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/muhammadafnandood/-Hackathon-1-Phase-1-and-2-)
+[![Docusaurus](https://img.shields.io/badge/Docusaurus-3.9-blue)](https://docusaurus.io)
+[![Deploy](https://img.shields.io/badge/Deploy-Vercel-black)](https://vercel.com)
 
-> **AI-powered interactive learning platform for robotics education!**
+> **AI-powered interactive textbook for Physical AI & Humanoid Robotics with Urdu translation support!**
 
-An interactive AI textbook that transforms how students learn Physical AI & Humanoid Robotics. Features include AI chat assistance, personalized learning levels, automatic diagram generation, Urdu translation, and source citations.
-
----
-
-## ✨ Features
-
-### 🎯 Core Features
-
-| Feature | Description | Status |
-|---------|-------------|--------|
-| 📖 **Interactive Textbook** | 3-column layout with chapters, content, and AI chat | ✅ |
-| 💬 **AI Chat Assistant** | Real-time Q&A about textbook content | ✅ |
-| 🎓 **Personalized Learning** | 4 levels: Beginner, Student, Engineer, Researcher | ✅ |
-| 🏗️ **Automatic Diagrams** | Mermaid.js visualizations for concepts | ✅ |
-| 🌐 **Urdu Translation** | Native language support for Urdu speakers | ✅ |
-| 📚 **Source Citations** | Chapter references with clickable links | ✅ |
-| 📝 **Text Selection Q&A** | Select text → Get AI explanation | ✅ |
-| 🔐 **User Authentication** | Login/Signup with session management | ✅ |
-
-### 🎨 User Experience
-
-```
-User Opens Platform
-        ↓
-Login/Signup
-        ↓
-Selects Expertise Level
-        ↓
-Reads Interactive Content
-        ↓
-Asks AI Questions
-        ↓
-Gets Personalized Answers (with diagrams!)
-        ↓
-Sees Source Citations
-        ↓
-Views Auto-Generated Diagrams
-        ↓
-Translates to Native Language
-        ↓
-✅ Learning Complete!
-```
+An advanced learning platform that transforms how students learn robotics. Features AI chat assistance, personalized learning levels, automatic Urdu translation, RAG-powered chatbot, and source citations.
 
 ---
 
-## 🚀 Quick Start
+## 🏆 Features & Points Breakdown
 
-### Option 1: Frontend Only (No Backend Required)
+| Feature | Points | Status | Description |
+|---------|--------|--------|-------------|
+| **RAG Chatbot** | 5 pts | ✅ | OpenAI + FastAPI + Neon + Qdrant powered AI chat |
+| **Better-Auth Login** | 5 pts | ✅ | User authentication with background survey |
+| **Personalize Chapter** | 5 pts | ✅ | AI rewrites content based on user level |
+| **Urdu Translation** | 5 pts | ✅ | Full chapter translation with caching |
+| **Urdu-Aware Chatbot** | Bonus ✅ | | Chatbot responds in Urdu when page is in Urdu mode |
+| **TOTAL** | **20 + Bonus** | ✅ | All features implemented |
 
-Most features work **without backend** - perfect for demos!
+---
 
-```bash
-# Open main demo page
-start "interactive-textbook.html"
+## ✨ Key Features
 
-# Or open all pages
-start "interactive-textbook.html"
-start "personalized-learning.html"
-start "automatic-diagrams.html"
-start "source-citations.html"
+### 🧠 RAG Chatbot (5 points)
+- Real-time Q&A about textbook content
+- Retrieves relevant chapters using vector search
+- Cites sources with chapter references
+- Generates diagrams automatically
+- Context-aware responses
+
+### 🔐 Better-Auth Login System (5 points)
+- Secure user authentication
+- User profile with experience level
+- Background survey (software/hardware)
+- Learning goals tracking
+- Session management
+
+### 🎯 Personalize Chapter Button (5 points)
+- AI-powered content adaptation
+- Three levels: Beginner, Intermediate, Advanced
+- Adds analogies for beginners
+- Skips basics for advanced users
+- Preserves code blocks unchanged
+
+### 🌐 Urdu Translation (5 points)
+- Full chapter translation to Urdu
+- Neon Postgres caching (no re-translation)
+- Noto Nastaliq Urdu font
+- RTL layout support
+- Code blocks remain in English
+- Technical terms preserved
+
+### 🤖 Urdu-Aware Chatbot (Bonus)
+- Detects page language mode
+- Responds in Urdu when page is translated
+- Seamless language switching
+- Context-aware responses
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+```
+- Docusaurus 3.9 (React-based static site generator)
+- TypeScript
+- React 19
+- Mermaid.js (diagrams)
+- Google Fonts (Noto Nastaliq Urdu)
 ```
 
-### Option 2: Full Stack (With Backend)
+### Backend
+```
+- FastAPI 0.104+ (Python 3.8+)
+- OpenAI/Qwen API (AI features)
+- Neon Postgres (user data + cache)
+- Qdrant (vector search for RAG)
+- Better-Auth (authentication)
+```
 
-#### Prerequisites
+### Infrastructure
+```
+- Vercel (frontend hosting)
+- Railway/Render (backend hosting)
+- Neon (serverless Postgres)
+- Qdrant Cloud (vector DB)
+```
+
+---
+
+## 🚀 How to Run Locally
+
+### Prerequisites
 - Python 3.8+
-- Node.js 16+ (optional)
+- Node.js 20+
+- Git
 
-#### Installation
+### Step 1: Clone Repository
 
 ```bash
-# Clone repository
 git clone https://github.com/muhammadafnandood/-Hackathon-1-Phase-1-and-2-.git
 cd "-Hackathon-1-Phase-1-and-2-"
+```
+
+### Step 2: Setup Backend
+
+```bash
+# Navigate to backend
+cd backend
 
 # Create virtual environment
 python -m venv venv
@@ -93,69 +125,47 @@ venv\Scripts\activate
 source venv/bin/activate
 
 # Install dependencies
-cd backend
 pip install -r requirements.txt
+
+# Create .env file
+cp .env.example .env
+
+# Edit .env and add your API keys:
+# - QWEN_API_KEY or OPENAI_API_KEY
+# - DATABASE_URL (Neon Postgres)
+# - QDRANT_URL (optional, for RAG)
+# - QDRANT_API_KEY (optional)
 
 # Start backend server
 python main.py
 ```
 
-#### Access Application
+Backend runs on: **http://localhost:8000**
+
+### Step 3: Setup Frontend
 
 ```bash
-# Backend API: http://localhost:8000
-# API Docs: http://localhost:8000/docs
-# Frontend: Open HTML files in browser
+# Open new terminal
+# Navigate to Docusaurus site
+cd physical-ai-book
+
+# Install dependencies
+npm install
+
+# Start development server
+npm start
 ```
 
----
+Frontend runs on: **http://localhost:3000**
 
-## 🌐 Deployment
+### Step 4: Test Features
 
-### Deploy to Vercel (Frontend)
-
-1. **Install Vercel CLI:**
-   ```bash
-   npm install -g vercel
-   ```
-
-2. **Login to Vercel:**
-   ```bash
-   vercel login
-   ```
-
-3. **Deploy:**
-   ```bash
-   vercel
-   ```
-
-4. **Production Deploy:**
-   ```bash
-   vercel --prod
-   ```
-
-### Deploy Backend (Separate)
-
-**Option 1: Railway**
-```bash
-# Connect to Railway
-railway login
-railway init
-railway up
-```
-
-**Option 2: Render**
-```bash
-# Connect GitHub repo to Render
-# Add requirements.txt
-# Deploy automatically
-```
-
-**Option 3: Local Server**
-```bash
-cd backend
-python main.py
-```
+1. **Open textbook**: http://localhost:3000
+2. **Login/Signup**: Create account or login
+3. **Open any chapter**: Navigate to a chapter
+4. **Test Personalize**: Click "Personalize for Me"
+5. **Test Urdu**: Click "اردو میں پڑھیں"
+6. **Test Chatbot**: Click "💬 Ask AI" button
 
 ---
 
@@ -163,237 +173,184 @@ python main.py
 
 ```
 Hackathon-1/
-├── 📖 Interactive Pages/
-│   ├── interactive-textbook.html      # ⭐ Main demo page
-│   ├── personalized-learning.html     # Level-based learning
-│   ├── automatic-diagrams.html        # Mermaid diagrams
-│   └── source-citations.html          # Chapter citations
+├── 📖 physical-ai-book/       # Docusaurus textbook
+│   ├── docs/                  # Chapter content
+│   ├── src/
+│   │   ├── components/        # React components
+│   │   │   ├── PersonalizeButton.tsx
+│   │   │   ├── UrduTranslateButton.tsx
+│   │   │   └── ChapterToolbar.tsx
+│   │   ├── theme/             # Swizzled components
+│   │   │   └── DocItem/
+│   │   │       └── Layout/
+│   │   │           └── index.tsx
+│   │   └── css/
+│   │       └── custom.css     # Urdu styles + skeletons
+│   └── static/
+│       └── chatbot.js         # Chat widget
 │
-├── 💬 Chat Pages/
-│   ├── index.html                     # Homepage with chat
-│   ├── custom-chat.html               # Standalone chat
-│   └── text-selection-chat.html       # Text selection Q&A
+├── 🤖 backend/
+│   ├── main.py                # FastAPI app
+│   ├── routes/
+│   │   ├── personalize.py     # Personalization endpoint
+│   │   └── translate.py       # Urdu translation endpoint
+│   ├── migrations/
+│   │   └── 002_urdu_cache.sql # Database migrations
+│   └── requirements.txt       # Python dependencies
 │
-├── 🔐 Auth Pages/
-│   ├── login.html                     # Login/Signup UI
-│
-├── 🤖 Backend/
-│   └── backend/
-│       ├── main.py                    # FastAPI server
-│       └── requirements.txt           # Dependencies
-│
-├── 📚 Documentation/
-│   ├── README.md                      # This file
-│   └── docs/                          # Additional docs
-│
-├── 🔧 Configuration/
-│   ├── .gitignore                     # Git ignore rules
-│   ├── package.json                   # NPM package config
-│   └── vercel.json                    # Vercel deployment config
-│
-└── 🎨 Assets/
-    └── docs/
-        └── demo-banner.png            # Demo banner
+├── 📚 docs/                   # Additional documentation
+├── .agents/                   # AI agent skill files
+├── DEPLOYMENT.md              # Deployment guide
+└── README.md                  # This file
 ```
 
 ---
 
-## 🎯 Demo Flow (5 Minutes)
+## 📸 Screenshots
 
-### Minute 1: First Impression
-1. Open `interactive-textbook.html`
-2. Show 3-column layout
-3. Explain: "This is an AI tutor, not just a textbook"
+### Homepage
+```
+┌─────────────────────────────────────────┐
+│  Physical AI & Humanoid Robotics       │
+│  Master the art of building intelligent │
+│  humanoid robots                        │
+│                                         │
+│  [Get Started] [View on GitHub]        │
+└─────────────────────────────────────────┘
+```
 
-### Minute 2: AI Interaction
-4. Click Chapter 2 (Physical AI)
-5. Select text → Click "Ask AI"
-6. Show AI explanation
+### Chapter with Toolbar
+```
+┌─────────────────────────────────────────┐
+│ Chapter 1: Introduction to ROS 2        │
+├─────────────────────────────────────────┤
+│ [Personalize for Me] [اردو میں پڑھیں]  │
+├─────────────────────────────────────────┤
+│                                         │
+│ ROS 2 is a middleware framework...      │
+│                                         │
+│ ```python                               │
+│ import rclpy                            │
+│ from rclpy.node import Node             │
+│ ```                                     │
+│                                         │
+└─────────────────────────────────────────┘
+```
 
-### Minute 3: Personalization
-7. Open level selector
-8. Select "Beginner" → Ask "What is SLAM?"
-9. Change to "Researcher" → Show technical answer
+### Urdu Translation Mode
+```
+┌─────────────────────────────────────────┐
+│ باب 1: ROS 2 کا تعارف                   │
+├─────────────────────────────────────────┤
+│ [Personalize for Me] [انگریزی میں واپس]│
+├─────────────────────────────────────────┤
+│                                         │
+│ ROS 2 (روس 2) روبوٹکس کے لیے ایک       │
+│ مڈل ویئر فریم ورک ہے۔                  │
+│                                         │
+│ ```python                               │
+│ import rclpy                            │
+│ from rclpy.node import Node             │
+│ ```                                     │
+│                                         │
+└─────────────────────────────────────────┘
+```
 
-### Minute 4: Visualizations
-10. Ask about "ROS 2 architecture"
-11. Show diagram generates automatically! 🏗️
-12. Demo Zoom In/Out
-
-### Minute 5: Citations & Translation
-13. Show sources below answer
-14. Click chapter link
-15. Click "Translate to Urdu"
-
----
-
-## 🏆 Competitive Advantages
-
-| Feature | This Project | Traditional |
-|---------|--------------|-------------|
-| AI Chat Assistance | ✅ | ❌ |
-| Personalized Levels | ✅ | ❌ |
-| Urdu Translation | ✅ | ❌ |
-| Auto Diagrams | ✅ | ❌ |
-| Source Citations | ✅ | ❌ |
-| Text Selection Q&A | ✅ | ❌ |
-
----
-
-## 🛠️ Technology Stack
-
-### Frontend
-- **HTML5/CSS3** - Modern UI
-- **JavaScript (ES6+)** - Interactivity
-- **Mermaid.js** - Diagram generation
-
-### Backend
-- **FastAPI** - REST API
-- **Python 3.8+** - Core logic
-- **RAG Pipeline** - Retrieval-Augmented Generation
-
-### Features
-- **Urdu Translation** - Custom translator
-- **JWT Auth** - Secure authentication
-- **Diagram Generator** - Mermaid.js integration
-
----
-
-## 📊 Performance Metrics
-
-| Metric | Value |
-|--------|-------|
-| Features Implemented | 8/8 ✅ |
-| Pages Created | 10+ |
-| Lines of Code | 5,000+ |
-| Diagram Templates | 15+ |
-| Learning Levels | 4 |
-| Languages Supported | 2 (EN + UR) |
-| Chapters | 8 |
-
----
-
-## 🎓 Use Cases
-
-### For Students
-- Ask questions in real-time
-- Get explanations at your level
-- Read in native language
-- See visual diagrams
-
-### For Educators
-- Track student progress
-- Cite sources transparently
-- Adapt to different levels
-- Reduce repetitive questions
-
-### For Institutions
-- Scalable AI tutoring
-- Multi-language support
-- Analytics ready
-- Easy deployment
-
----
-
-## 🔧 Configuration
-
-### Environment Variables
-
-Create `.env` file in `backend/`:
-
-```env
-# OpenAI API (Optional - for advanced features)
-OPENAI_API_KEY=your-api-key-here
-
-# Qdrant Vector DB (Optional)
-QDRANT_URL=https://your-qdrant-cluster.qdrant.io
-QDRANT_API_KEY=your-qdrant-api-key
+### AI Chatbot
+```
+┌─────────────────────────────────────────┐
+│ 💬 Ask AI                               │
+├─────────────────────────────────────────┤
+│ 🤖 Physical AI Assistant                │
+│                                         │
+│ You: What is ROS 2?                     │
+│                                         │
+│ Bot: ROS 2 is a middleware framework... │
+│      Sources: Chapter 1, Chapter 3      │
+│                                         │
+│ [Type your question...] [Send]          │
+└─────────────────────────────────────────┘
 ```
 
 ---
 
-## 🧪 Testing
+## 📖 Documentation
 
-### Frontend Testing (No Backend)
+- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Complete deployment guide
+- **[AGENTS.md](AGENTS.md)** - AI agent skills documentation
+- **[PERSONALIZE-FEATURE-COMPLETE.md](PERSONALIZE-FEATURE-COMPLETE.md)** - Personalization feature docs
 
+---
+
+## 🧪 Testing Each Feature
+
+### 1. RAG Chatbot Test
 ```bash
-# All these work without backend:
-- interactive-textbook.html ✅
-- personalized-learning.html ✅
-- automatic-diagrams.html ✅
-- source-citations.html ✅
+# Open chat widget
+- Click "💬 Ask AI"
+- Ask: "What is ROS 2?"
+- Expected: Response with textbook content + sources
 ```
 
-### Backend Testing
-
+### 2. Login Test
 ```bash
-# Test health endpoint
-curl http://localhost:8000/health
+# Register new user
+- Go to /login
+- Click "Sign Up"
+- Fill form
+- Expected: User created, logged in
+```
 
-# Test chat endpoint
-curl -X POST http://localhost:8000/api/chat \
-  -H "Content-Type: application/json" \
-  -d '{"message": "What is ROS 2?", "level": "Beginner", "top_k": 5}'
+### 3. Personalize Test
+```bash
+# Test personalization
+- Login as "beginner" level
+- Open chapter
+- Click "Personalize for Me"
+- Expected: Content rewritten for beginners
+```
 
-# Test login endpoint
-curl -X POST http://localhost:8000/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email": "test@example.com", "password": "password123"}'
+### 4. Urdu Translation Test
+```bash
+# Test translation
+- Open chapter
+- Click "اردو میں پڑھیں"
+- Expected: Urdu translation with RTL layout
+- Expected: Code blocks remain English
+```
+
+### 5. Urdu Chatbot Test
+```bash
+# Test Urdu-aware chat
+- Click "اردو میں پڑھیں" first
+- Open chat
+- Ask question
+- Expected: Chatbot responds in Urdu
 ```
 
 ---
 
-## 📝 API Endpoints
+## 🎯 API Endpoints
 
 ### Authentication
 ```http
 POST /auth/register
-Content-Type: application/json
-
-{
-  "first_name": "John",
-  "last_name": "Doe",
-  "email": "john@example.com",
-  "password": "password123"
-}
-```
-
-```http
 POST /auth/login
-Content-Type: application/json
-
-{
-  "email": "john@example.com",
-  "password": "password123"
-}
 ```
 
-### Chat
+### AI Features
 ```http
-POST /api/chat
-Content-Type: application/json
-
-{
-  "message": "What is ROS 2?",
-  "level": "Beginner",
-  "top_k": 5
-}
+POST /api/chat              # RAG chatbot
+POST /api/personalize-chapter  # Personalization
+POST /api/translate-urdu    # Urdu translation
+GET  /api/translate-urdu/health  # Health check
 ```
 
-### Translation
-```http
-POST /api/translate/urdu
-Content-Type: application/json
-
-{
-  "text": "Hello world",
-  "target_language": "urdu"
-}
-```
-
-### Health Check
+### Health Checks
 ```http
 GET /health
+GET /api/personalize-chapter/health
+GET /api/translate-urdu/health
 ```
 
 ---
@@ -418,7 +375,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Muhammad Afnan**
 - GitHub: [@muhammadafnandood](https://github.com/muhammadafnandood)
-- Project: AI Tutor for Robotics
+- Project: Physical AI & Humanoid Robotics Textbook
 
 ---
 
@@ -427,7 +384,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Hackathon Phase 1 & 2
 - Physical AI & Humanoid Robotics Course
 - OpenAI for GPT API
-- Mermaid.js for Diagrams
+- Qwen for translation API
+- Docusaurus team
+- Neon Database
+- Qdrant Vector DB
 
 ---
 
@@ -435,7 +395,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For questions and support:
 - Open an issue on GitHub
-- Email: [your-email@example.com]
+- Check [DEPLOYMENT.md](DEPLOYMENT.md) for troubleshooting
 
 ---
 
@@ -445,6 +405,6 @@ For questions and support:
 
 **Built with ❤️ for the future of robotics education**
 
-[Back to Top](#-ai-tutor-for-robotics---physical-ai-textbook)
+[Back to Top](#-physical-ai--humanoid-robotics-textbook)
 
 </div>

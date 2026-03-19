@@ -357,7 +357,7 @@
     </div>
 
     <script>
-        const API_URL = 'http://127.0.0.1:8000';
+        const API_URL = 'http://localhost:8000';
 
         // Show login form
         function showLoginForm() {
@@ -470,12 +470,16 @@
                 const data = await response.json();
 
                 if (response.ok && data.status === 'success') {
+                    console.log('✅ Login successful!', data);
+                    console.log('👤 User data:', data.user);
+                    
                     // Store auth data
                     if (data.access_token) {
                         localStorage.setItem('auth_token', data.access_token);
                     }
                     if (data.user) {
                         localStorage.setItem('user_data', JSON.stringify(data.user));
+                        console.log('💾 Stored user_data:', data.user);
                     }
 
                     showSuccess('Login successful! Welcome back. Redirecting...');

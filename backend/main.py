@@ -6,6 +6,11 @@ import uuid
 import hashlib
 import re
 
+# Import routers
+from routes.personalize import router as personalize_router
+from routes.translate import router as translate_router
+from routes.chat import router as chat_router
+
 app = FastAPI(title="AI Tutor Backend", version="1.0.0")
 
 # CORS - Allow all origins for development
@@ -16,6 +21,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Include routers
+app.include_router(personalize_router)
+app.include_router(translate_router)
+app.include_router(chat_router)
 
 # In-memory user database (for demo/development)
 users_db: Dict[str, Dict[str, Any]] = {}
@@ -106,14 +116,19 @@ def login(data: LoginRequest):
         # Validate email format
         if "@" not in data.email or "." not in data.email:
             raise HTTPException(status_code=400, detail="Invalid email format")
-        
+
         # Check if user exists
         if data.email not in users_db:
             # Auto-register new users for demo purposes
+            # Extract name from email and capitalize it properly
+            email_prefix = data.email.split('@')[0]
+            # Convert dots/underscores to spaces and capitalize
+            friendly_name = email_prefix.replace('.', ' ').replace('_', ' ').title()
+            
             user_id = str(uuid.uuid4())
             users_db[data.email] = {
                 "id": user_id,
-                "first_name": data.email.split('@')[0],
+                "first_name": friendly_name,
                 "last_name": "User",
                 "email": data.email,
                 "password_hash": hash_password(data.password),
@@ -124,12 +139,12 @@ def login(data: LoginRequest):
             user = users_db[data.email]
             if user["password_hash"] != hash_password(data.password):
                 raise HTTPException(status_code=401, detail="Invalid email or password")
-        
+
         user = users_db[data.email]
-        
+
         # Generate access token
         access_token = f"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.{user['id']}.{uuid.uuid4()}"
-        
+
         return {
             "status": "success",
             "message": "Login successful",
@@ -143,7 +158,7 @@ def login(data: LoginRequest):
                 "last_name": user["last_name"]
             }
         }
-    
+
     except HTTPException:
         raise
     except Exception as e:
@@ -689,6 +704,7 @@ class ChatRequest(BaseModel):
     message: str
     level: Optional[str] = "Beginner"
     top_k: Optional[int] = 5
+    is_urdu_mode: Optional[bool] = False  # Flag to detect if user is viewing Urdu content
 
 def find_relevant_content(query: str) -> List[Dict]:
     """Find relevant book content based on query"""
@@ -1327,21 +1343,63 @@ def chat(request: ChatRequest):
     """
     AI Chat endpoint with RAG (Retrieval-Augmented Generation)
     Combines book content with AI knowledge
+    
+    If is_urdu_mode is True, responds in Urdu.
     """
     try:
         query = request.message
         level = request.level or "Beginner"
-        
+        is_urdu_mode = request.is_urdu_mode  # Detect Urdu mode from frontend
+
         # Find relevant book content
         book_results = find_relevant_content(query)
-        
+
         # Generate diagram if applicable
         diagram = generate_diagram(query)
-        
+
         # Get product images
         images = get_product_images(query)
-        
-        # Build response
+
+        # URDU MODE: Respond in Urdu
+        if is_urdu_mode:
+            urdu_response = f"""🤖 **اردو جواب:**
+
+آپ کے سوال "{query}" کا جواب یہ ہے:
+
+**بنیادی معلومات:**
+یہ موضوع روبوٹکس اور AI کے وسیع میدان سے تعلق رکھتا ہے۔
+
+**اہم نکات:**
+1. اس موضوع کو سمجھنے کے لیے بنیادی تصورات کا علم ضروری ہے
+2. عملی مثالوں کے ساتھ مشق کریں
+3> مزید مدد کے لیے متعلقہ ابواب کا مطالعہ کریں
+
+**متعلقہ ابواب:**
+- باب 1: ROS 2 کی بنیادی باتیں
+- باب 2: فزیکل AI کے تصورات
+- باب 6: مشین لرننگ کے طریقے
+
+**مزید سیکھنے کے لیے:**
+- ROS 2 دستاویزات چیک کریں
+- تحقیقی مقالے دیکھیں
+- سیمولیشن پر مشق کریں
+
+اگر آپ کو مزید مدد چاہیے تو پوچھیں!"""
+            
+            response = {
+                "status": "success",
+                "message": urdu_response,
+                "sources": [],
+                "diagram": diagram,
+                "images": images,
+                "level": level,
+                "is_urdu_response": True,
+                "book_chunks_found": len(book_results),
+                "confidence": 0.8
+            }
+            return response
+
+        # ENGLISH MODE: Normal response
         if book_results:
             # Combine book content from multiple sources
             book_content = "\n\n".join([r["content"] for r in book_results])

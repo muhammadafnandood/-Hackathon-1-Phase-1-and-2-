@@ -24,10 +24,10 @@
       </div>
     </div>
     <div class="chat-widget-input">
-      <input 
-        type="text" 
-        id="chat-input" 
-        placeholder="Type your question..." 
+      <input
+        type="text"
+        id="chat-input"
+        placeholder="Type your question..."
         autocomplete="off"
       />
       <button id="chat-send">Send</button>
@@ -133,6 +133,10 @@
   async function sendMessage(question) {
     if (!question || isLoading) return;
 
+    // Detect if page is currently in Urdu mode (dir="rtl" on content)
+    const isUrduMode = document.querySelector('[dir="rtl"]') !== null ||
+                       document.querySelector('.urdu-content') !== null;
+
     // Add user message
     addMessage(question, 'user');
     chatInput.value = '';
@@ -140,21 +144,27 @@
     showTypingIndicator();
 
     try {
-      const response = await fetch(`${API_URL}/chat`, {
+      const response = await fetch(`${API_URL}/api/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ question }),
+        body: JSON.stringify({
+          message: question,  // Backend expects 'message' not 'question'
+          level: 'Beginner',
+          is_urdu_mode: isUrduMode
+        }),
       });
 
       removeTypingIndicator();
 
       if (response.ok) {
         const data = await response.json();
-        addMessage(data.answer || data.response || 'Got your question!', 'bot');
+        // Backend returns 'message' field
+        addMessage(data.message || data.answer || data.response || 'Got your question!', 'bot');
       } else {
-        addMessage('Sorry, I encountered an error. Please try again.', 'bot');
+        const errorData = await response.json().catch(() => ({}));
+        addMessage(`Error: ${errorData.detail || 'Please try again'}`, 'bot');
       }
     } catch (error) {
       removeTypingIndicator();
@@ -208,10 +218,13 @@
   }
 
   // Event listeners
-  sendButton.addEventListener('click', sendMessage);
+  sendButton.addEventListener('click', () => {
+    sendMessage(chatInput.value);
+  });
+  
   chatInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
-      sendMessage();
+      sendMessage(chatInput.value);
     }
   });
 })();

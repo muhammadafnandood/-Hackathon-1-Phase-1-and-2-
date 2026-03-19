@@ -2,10 +2,11 @@
   "name": "ai-tutor-robotics",
   "version": "1.0.0",
   "description": "AI-powered interactive textbook for Physical AI & Humanoid Robotics",
-  "main": "index.html",
+  "main": "interactive-textbook.html",
   "scripts": {
-    "start": "python -m http.server 3000",
-    "dev": "python -m http.server 3000",
+    "start": "python -m http.server 3000 && start http://localhost:3000/interactive-textbook.html",
+    "dev": "python -m http.server 3000 && start http://localhost:3000/interactive-textbook.html",
+    "open": "start http://localhost:3000/interactive-textbook.html",
     "build": "echo 'No build step required - Static site'",
     "test": "echo 'No tests configured'"
   },
