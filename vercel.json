@@ -1,56 +1,13 @@
 {
   "version": 2,
-  "name": "ai-tutor-robotics",
-  "builds": [
-    {
-      "src": "*.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "*.js",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "*.css",
-      "use": "@vercel/static"
-    }
-  ],
   "routes": [
+    {
+      "src": "^/$",
+      "dest": "/interactive-textbook.html"
+    },
     {
       "src": "/(.*)",
       "dest": "/$1"
-    }
-  ],
-  "outputDirectory": ".",
-  "public": true,
-  "alias": "ai-tutor-robotics",
-  "framework": null,
-  "installCommand": "echo 'No dependencies to install'",
-  "buildCommand": "echo 'No build step required'",
-  "devCommand": "echo 'Development mode'",
-  "regions": [
-    "iad1"
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  },
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        }
-      ]
     }
   ]
 }
